@@ -92,6 +92,7 @@ keys = [
     Key([alt, "shift"], "s", lazy.spawn("poweroff")),
     Key([alt], "j", lazy.spawn("brightnessctl set 10%-")),
     Key([alt], "k", lazy.spawn("brightnessctl set 10%+")),
+    Key([], "Print", lazy.spawn("flameshot gui")),
 ]
 
 
