@@ -174,7 +174,7 @@ screens = [
 					padding=10
 					),
 				
-				widget.CurrentLayout(foreground="#E6926C", font='Samim Bold'),
+				widget.CurrentLayout(foreground="#E6926C", font='Ubuntu semiBold'),
 				
 				widget.Sep(
 					foreground="#535965",
