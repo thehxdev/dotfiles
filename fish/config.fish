@@ -13,4 +13,4 @@ echo '
 end
 
 
-starship init fish | source
+##starship init fish | source

@@ -1,0 +1,15 @@
+configuration {
+  modi: "drun,run,window";
+  font: "Ubuntu Regular 14";
+  show-icons: true;
+  terminal: "kitty";
+  disable-history: false;
+  timeoutaction: "kb-cancel";
+  delay: 0;
+}
+
+filebrowser {
+  directories-first: true;
+  sorting-method: "name";
+}
+@theme "~/.config/rofi/theme.rasi"
