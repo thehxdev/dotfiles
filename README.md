@@ -15,3 +15,7 @@ sudo chown -R  hx:hx yay
 cd yay
 makepkg -si
 ```
+# install some aur pkgs:
+```sh
+yay -Sy flameshot xcursor-breeze nerd-fonts-mononoki ttf-mononoki pfetch samim-fonts
+```
