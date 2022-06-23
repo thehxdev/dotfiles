@@ -5,9 +5,9 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 ```
 in neovim (command mode) install plugins with ```:PlugInstall```
 
-# install yarn:
+# install yarn & some pkgs:
 ```sh
-sudo pacman -Sy yarn
+sudo pacman -Sy yarn jedi-language-server nodejs
 ```
 # then:
 ```sh
