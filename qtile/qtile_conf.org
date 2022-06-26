@@ -1,3 +1,23 @@
+#+title: Qtile Config
+#+PROPERTY: header-args :tangle config.py
+#+auto_tangle: t
+#+DISCRIPTION: My Qtile WM Cnfig File
+#+AUTHOR: Hossein Khosravi
+
+* TABLE OF CONTENTS :toc:
+- [[#imports][imports]]
+- [[#variables][Variables]]
+- [[#keys][Keys]]
+- [[#groups][Groups]]
+- [[#layouts][Layouts]]
+- [[#widgets][Widgets]]
+- [[#mouse-bindings][Mouse bindings]]
+- [[#autostart][AutoStart]]
+- [[#window-rules][Window Rules]]
+
+* imports
+These of the libraries that imported to qtile config file.
+#+begin_src python
 import os
 import subprocess
 import libqtile
@@ -8,12 +28,21 @@ from libqtile.utils import guess_terminal
 from libqtile import extension
 from libqtile.widget import keyboardlayout
 import libqtile.widget.keyboardlayout
+#+end_src
 
+* Variables
+- mod = super/windows key
+- you can change the terminal value to any terminal thar you use.
+#+begin_src python
 mod = "mod4"
 alt = "mod1"
 ctrl = "control"
 terminal = "kitty"
+#+end_src
 
+* Keys
+My key bindings.
+#+begin_src python
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -59,7 +88,13 @@ keys = [
     Key([alt], "k", lazy.spawn("brightnessctl set 10%+")),
     Key([], "Print", lazy.spawn("flameshot gui")),
 ]
+#+end_src
 
+* Groups
+Groups or Workspaces. You can change the icons to text or numbers if you like.
+You must install FontAwesome to render these icons.
+Find more icons form: https://fontawesome.com/
+#+begin_src python
 groups = [
 
     Group("",
@@ -90,7 +125,13 @@ groups = [
 for k, group in zip(["1", "2", "3", "4"], groups):
   keys.append(Key([mod], (k), lazy.group[group.name].toscreen()))
   keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
+#+end_src
 
+* Layouts
+Personaly I use these tow layout.
+If you want more, uncomment other layouts and sort them as you want.
+The first layout will be the default. But you can change it in Groups Section.
+#+begin_src python
 layouts = [
     #layout.Tile(border_focus="#a663cc", border_normal="#a4a4a4" , border_width=3, margin=8),
     #layout.Columns(border_focus="#a663cc", border_normal="#a4a4a4" , border_width=3, margin=8),
@@ -107,7 +148,13 @@ layouts = [
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
+#+end_src
 
+* Widgets
++ Install mononoki and mononoki-nerd-fonts from aur.
++ Install rofi.
++ power10K panel Style.
+#+begin_src python
 widget_defaults = dict(
     background='#3b3b3b',
     foreground='#e6e6e6',
@@ -307,19 +354,30 @@ screens = [
         ),
     ),
 ]
+#+end_src
 
+* Mouse bindings
++ mod + L.Click = drag window
++ mod + R.Click = Resize window
+#+begin_src python
 # Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
+#+end_src
 
+* AutoStart
+#+begin_src python
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.Popen([home])
+#+end_src
 
+* Window Rules
+#+begin_src python
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = False
@@ -328,7 +386,7 @@ cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
+        ,*layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
@@ -363,3 +421,4 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+#+end_src
