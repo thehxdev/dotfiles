@@ -3,13 +3,28 @@
 #+auto_tangle: t
 #+DISCRIPTION: My Qtile WM Cnfig File
 #+AUTHOR: Hossein Khosravi
+
+* TABLE OF CONTENTS :toc:
+- [[#install-deps][Install Deps]]
+- [[#install-yay][Install yay]]
+- [[#install-aur-pkgs][Install aur pkgs]]
+- [[#imports][imports]]
+- [[#variables][Variables]]
+- [[#keys][Keys]]
+- [[#groups][Groups]]
+- [[#layouts][Layouts]]
+- [[#widgets][Widgets]]
+- [[#mouse-bindings][Mouse bindings]]
+- [[#autostart][AutoStart]]
+- [[#window-rules][Window Rules]]
+
 * Install Deps
 #+begin_src shell
 # Bases
 sudo pacman -Sy --needed --noconfirm base-devel git xorg lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 # WMs & Needed Pkgs
-sudo pacman -S --needed --noconfirm awesome qtile firefox nitrogen picom pcmanfm lxappearance rofi kitty volumeicon network-manager-applet python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish
+sudo pacman -S --needed --noconfirm awesome qtile firefox alacritty nitrogen picom pcmanfm lxappearance rofi kitty volumeicon network-manager-applet python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish
 
 # Wallpapers & Themes
 sudo pacman -S --needed --noconfirm materia-gtk-theme papirus-icon-theme archlinux-wallpaper arc-gtk-theme
@@ -44,17 +59,6 @@ makepkg -si
 #+begin_src shell
 yay -Sy flameshot xcursor-breeze nerd-fonts-mononoki ttf-mononoki pfetch samim-fonts
 #+end_src
-
-* TABLE OF CONTENTS :toc:
-- [[#imports][imports]]
-- [[#variables][Variables]]
-- [[#keys][Keys]]
-- [[#groups][Groups]]
-- [[#layouts][Layouts]]
-- [[#widgets][Widgets]]
-- [[#mouse-bindings][Mouse bindings]]
-- [[#autostart][AutoStart]]
-- [[#window-rules][Window Rules]]
 
 * imports
 These of the libraries that imported to qtile config file.
@@ -150,8 +154,8 @@ groups = [
     Group("",
           layout="monadtall"),
 
-    #Group("",
-    #      layout="monadtall"),
+    Group("",
+          layout="monadtall"),
 
     #Group("",
     #      layout="monadtall"),
@@ -163,7 +167,7 @@ groups = [
     #      layout="monadtall"),
 ]
 
-for k, group in zip(["1", "2", "3", "4"], groups):
+for k, group in zip(["1", "2", "3", "4", "5"], groups):
   keys.append(Key([mod], (k), lazy.group[group.name].toscreen()))
   keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
 #+end_src
