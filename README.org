@@ -1,6 +1,5 @@
 #+title: Qtile Config
-#+PROPERTY: header-args :tangle config.py
-#+auto_tangle: t
+#+auto_tangle: nil
 #+DISCRIPTION: My Qtile WM Cnfig File
 #+AUTHOR: Hossein Khosravi
 
