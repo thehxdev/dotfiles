@@ -8,15 +8,16 @@
 - [[#install-deps][Install Deps]]
 - [[#install-yay][Install yay]]
 - [[#install-aur-pkgs][Install aur pkgs]]
-- [[#imports][imports]]
-- [[#variables][Variables]]
-- [[#keys][Keys]]
-- [[#groups][Groups]]
-- [[#layouts][Layouts]]
-- [[#widgets][Widgets]]
-- [[#mouse-bindings][Mouse bindings]]
-- [[#autostart][AutoStart]]
-- [[#window-rules][Window Rules]]
+- [[#qtile-config][Qtile Config]]
+  - [[#imports][imports]]
+  - [[#variables][Variables]]
+  - [[#keys][Keys]]
+  - [[#groups][Groups]]
+  - [[#layouts][Layouts]]
+  - [[#widgets][Widgets]]
+  - [[#mouse-bindings][Mouse bindings]]
+  - [[#autostart][AutoStart]]
+  - [[#window-rules][Window Rules]]
 
 * Install Deps
 #+begin_src shell
@@ -60,7 +61,8 @@ makepkg -si
 yay -Sy flameshot xcursor-breeze nerd-fonts-mononoki ttf-mononoki pfetch samim-fonts
 #+end_src
 
-* imports
+* Qtile Config
+** imports
 These of the libraries that imported to qtile config file.
 #+begin_src python
 import os
@@ -75,7 +77,7 @@ from libqtile.widget import keyboardlayout
 import libqtile.widget.keyboardlayout
 #+end_src
 
-* Variables
+** Variables
 - mod = super/windows key
 - you can change the terminal value to any terminal thar you use.
 #+begin_src python
@@ -85,7 +87,7 @@ ctrl = "control"
 terminal = "kitty"
 #+end_src
 
-* Keys
+** Keys
 My key bindings.
 #+begin_src python
 keys = [
@@ -135,7 +137,7 @@ keys = [
 ]
 #+end_src
 
-* Groups
+** Groups
 Groups or Workspaces. You can change the icons to text or numbers if you like.
 You must install FontAwesome to render these icons.
 Find more icons form: https://fontawesome.com/
@@ -172,7 +174,7 @@ for k, group in zip(["1", "2", "3", "4", "5"], groups):
   keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
 #+end_src
 
-* Layouts
+** Layouts
 Personaly I use these tow layout.
 If you want more, uncomment other layouts and sort them as you want.
 The first layout will be the default. But you can change it in Groups Section.
@@ -195,7 +197,7 @@ layouts = [
 ]
 #+end_src
 
-* Widgets
+** Widgets
 + Install mononoki and mononoki-nerd-fonts from aur.
 + Install rofi.
 + power10K panel Style.
@@ -401,7 +403,7 @@ screens = [
 ]
 #+end_src
 
-* Mouse bindings
+** Mouse bindings
 + mod + L.Click = drag window
 + mod + R.Click = Resize window
 #+begin_src python
@@ -413,7 +415,7 @@ mouse = [
 ]
 #+end_src
 
-* AutoStart
+** AutoStart
 #+begin_src python
 @hook.subscribe.startup_once
 def autostart():
@@ -421,7 +423,7 @@ def autostart():
     subprocess.Popen([home])
 #+end_src
 
-* Window Rules
+** Window Rules
 #+begin_src python
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
