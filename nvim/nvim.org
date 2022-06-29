@@ -1,0 +1,65 @@
+#+title: Neovim Configuration
+#+auto-tangle: nil
+#+AUTHOR: Hossein Khosravi
+
+* TABLE OF CONTENT :toc:
+- [[#install-vim-plug][Install vim-plug]]
+- [[#install-needed-pkgs][Install Needed PKGs]]
+- [[#install-dependencies-for-coc-after-install-cocnvim][Install dependencies for COC (after install coc.nvim)]]
+- [[#install-language-servers-for-coc][Install Language Servers for COC]]
+  - [[#python][Python]]
+  - [[#rust][Rust]]
+
+* Install vim-plug
+1. Install vim-plug as your neovim package manager.
++ you can install packages with ~:PlugInstall~ in neovim:
+#+begin_src shell
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+#+end_src
+
+* Install Needed PKGs
+#+begin_src shell
+sudo pacman -S nodejs npm typescript
+#+end_src
+
+* Install dependencies for COC (after install coc.nvim)
+#+begin_src shell
+cd $HOME/.local/share/nvim/plugged/coc.nvim
+yarn install
+#+end_src
+This will take some time. It depends on your internet speed.
+
+* Install Language Servers for COC
+** Python
+1. Open neovim and in command mode run ~CocInstall coc-pyright~
+
+** Rust
+1. Install rustup
+   #+begin_src shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   #+end_src
+
+2. Install some dependencies
+   #+begin_src shell
+sudo pacman -S npm gzip unrar unzip
+   #+end_src
+
+3. Install rust-analyzer from binary
+   #+begin_src shell
+mkdir -p ~/.local/bin
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+chmod +x ~/.local/bin/rust-analyzer
+   #+end_src
+
+4. Add cargo and rust-analyzer to your shell and system PATH
+   + ~fish_add_path $HOME/.local/bin~ and ~fish_add_path $HOME/.cargo/bin~ will add cargo and rust-analyzer to your fish shell path.
+   + add these lines to ~.xprofile~ (if you are using lighdm)
+     #+begin_src shell
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+     #+end_src
+   + If it not work, create a file in ~/etc/profile.d/~ and name it ~cargo.sh~ and add above line to it and make it executable.
+
+5. Install rust-analyzer for COC:
+   + In neovim run ~:CocInstall coc-rust-analyzer~
