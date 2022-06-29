@@ -69,4 +69,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
+inoremap <expr> <Return> pumvisible() ? coc#_select_confirm() : "<Return>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-h>"
+
