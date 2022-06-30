@@ -32,7 +32,7 @@ This will take some time. It depends on your internet speed.
 
 * Install Language Servers for COC
 ** Python
-1. Open neovim and in command mode run ~CocInstall coc-pyright~
+1. Open neovim and in command mode run ~:CocInstall coc-pyright~
 
 ** Rust
 1. Install rustup
