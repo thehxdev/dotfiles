@@ -53,7 +53,7 @@ keys = [
     # Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "s", lazy.spawn("rofi -show drun")),
     Key([mod, "shift"], "s", lazy.spawn("rofi -show window")),
-    Key([mod, "shift"], "f", lazy.spawn("firefox")),
+    Key([mod, "shift"], "f", lazy.spawn("qutebrowser")),
     Key([ctrl, "shift"], "s", lazy.spawn("poweroff")),
     Key([alt], "j", lazy.spawn("brightnessctl set 10%-")),
     Key([alt], "k", lazy.spawn("brightnessctl set 10%+")),
@@ -74,8 +74,8 @@ groups = [
     Group("",
           layout="monadtall"),
 
-    #Group("",
-    #      layout="monadtall"),
+    Group("",
+          layout="monadtall"),
 
     #Group("",
     #      layout="monadtall"),
@@ -87,14 +87,14 @@ groups = [
     #      layout="monadtall"),
 ]
 
-for k, group in zip(["1", "2", "3", "4"], groups):
+for k, group in zip(["1", "2", "3", "4", "5"], groups):
   keys.append(Key([mod], (k), lazy.group[group.name].toscreen()))
   keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
 
 layouts = [
     #layout.Tile(border_focus="#a663cc", border_normal="#a4a4a4" , border_width=3, margin=8),
     #layout.Columns(border_focus="#a663cc", border_normal="#a4a4a4" , border_width=3, margin=8),
-    layout.MonadTall(border_focus="#a663cc", border_normal="#454545" , border_width=2, margin=8),
+    layout.MonadTall(border_focus="#67D4E2", border_normal="#454545" , border_width=2, margin=4),
     layout.Max(),
     # layout.Floating(border_focus="#a663cc", border_normal="#a4a4a4" , border_width=1),
     # Try more layouts by unleashing below layouts.
@@ -165,7 +165,7 @@ screens = [
                     ),
                 widget.Prompt(),
 
-                widget.WindowName(font='Ubuntu semiBold' ,max_chars=20),
+                widget.WindowName(font='Ubuntu semiBold' ,max_chars=40),
 
                 widget.Chord(
                     chords_colors={
@@ -222,7 +222,7 @@ screens = [
                     background = '#583a81',
                     foreground='#ffffff',
                     format=" {down}",
-                    interface='wlan0',
+                    interface='wlp3s0',
                     padding=0),
 
                 widget.TextBox(
@@ -281,7 +281,7 @@ screens = [
                 widget.Clock(
                     background = '#5477bf',
                     foreground='#ffffff',
-                    format=" %a %b %d  %I:%M %P"
+                    format=" %d/%m/%y %a %H:%M"
                     ),
 
                 widget.TextBox(
