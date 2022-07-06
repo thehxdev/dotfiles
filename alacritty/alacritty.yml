@@ -226,40 +226,6 @@ draw_bold_text_with_bright_colors: true
 #######################################
 schemes:
 
-  ### Monokai Pro ###
-  Monokai: &Monokai
-  # Default colors
-    primary:
-      background: '#272822'
-      foreground: '#F8F8F2'
-
-  # Normal colors
-    normal:
-      black:   '#2c2525'
-      red:     '#F92672'
-      green:   '#A6E22E'
-      #yellow:  '#E6DB74'
-      yellow:  '#fff300'
-      blue:    '#66D9EF'
-      magenta: '#AE81FF'
-      cyan:    '#33ff93'
-      white:   '#fff1f3'
-      orange:  '#fd971f'
-
-  # Bright colors
-    bright:
-      black:   '#72696a'
-      red:     '#F92672'
-      green:   '#A6E22E'
-      #yellow:  '#E6DB74'
-      yellow:  '#fff300'
-      blue:    '#66D9EF'
-      magenta: '#AE81FF'
-      cyan:    '#33ff93'
-      white:   '#fff1f3'
-      orange:  '#fd971f'
-
-
   ### Doom One ###
   DoomOne: &DoomOne
     primary:
@@ -376,8 +342,8 @@ schemes:
       cyan:    '#8ec07c'
       white:   '#ebdbb2'
 
-### Monokai ###
-  Monokai: &Monokai
+### Monokai Pro ###
+  MonokaiPro: &MonokaiPro
     # Default colors
     primary:
       background: '#2D2A2E'
@@ -606,14 +572,13 @@ schemes:
 # *DoomOne
 # *Dracula
 # *GruvboxDark
-# *Monokai
+# *MonokaiPro
 # *Nord
 # *OceanicNext
 # *Palenight
 # *SolarizedLight
 # *SolarizedDark
 # *TomorrowNight
-# *MonokaiPro
 
 colors: *Dracula
 
