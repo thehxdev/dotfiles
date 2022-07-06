@@ -9,10 +9,10 @@ lxsession &
 setxkbmap -layout 'us,ir' -option 'grp:alt_shift_toggle' &
 
 ### Set Default Browser ###
-export Browser=/usr/bin/firefox
+export BROWSER=/usr/bin/firefox
 
 ### Set Default Editor ###
-export Editor=/usr/bin/nvim
+export EDITOR=/usr/bin/nvim
 
 ### devs ###
 #export PATH="$HOME/.cargo/bin:$PATH"      # Rust
