@@ -1,22 +1,19 @@
 nitrogen --restore &
 picom --experimental-backend &
+lxsession &
 volumeicon &
 nm-applet &
+flameshot &
 /usr/bin/emacs --daemon &
 xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
-flameshot &
-lxsession &
 setxkbmap -layout 'us,ir' -option 'grp:alt_shift_toggle' &
+xfce4-clipman &
+pulseaudio --start &
+./.config/dwm/dwm-bar/dwm_bar.sh &      # For DWM status-bar
 
-### Set Default Browser ###
-export BROWSER=/usr/bin/firefox
-
-### Set Default Editor ###
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=/usr/bin/nvim
-
-### devs ###
-#export PATH="$HOME/.cargo/bin:$PATH"      # Rust
-#export PATH="$HOME/.anaconda3/bin:$PATH"  # Python Anaconda
-#export PATH="$HOME/.ghcup/bin:$PATH"      # Haskell
-export PATH="$HOME/.local/bin:$PATH"       # bin directory in .local
-
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+# fix "xdg-open fork-bomb" export your preferred browser from here
+export BROWSER=/usr/bin/firefox
+export PATH="$HOME/.anaconda3/bin:$PATH"

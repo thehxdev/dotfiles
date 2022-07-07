@@ -26,7 +26,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", ""}; //, "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -70,6 +70,7 @@ static const char *rofi_drun[] = {"rofi", "-show", "drun"};
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *FileManager[] = { "pcmanfm", NULL};
 static const char *Browser[] = { "firefox", NULL};
+static const char *Emacs[] = { "/usr/bin/emacsclient", "-c", "-a", "\'emacs\'", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -77,6 +78,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = FileManager } },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = Browser } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = Emacs } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
