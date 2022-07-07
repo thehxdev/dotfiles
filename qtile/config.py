@@ -39,7 +39,7 @@ keys = [
     ),
     # Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "a", lazy.spawn(terminal)),
-    Key([mod], "d", lazy.spawn("pcmanfm")),
+    Key([mod], "d", lazy.spawn("thunar")),
     Key([mod], "e", lazy.spawn("/usr/bin/emacsclient -c -a 'emacs'")),
 
     # Keyboard layout changing
@@ -53,7 +53,7 @@ keys = [
     # Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "s", lazy.spawn("rofi -show drun")),
     Key([mod, "shift"], "s", lazy.spawn("rofi -show window")),
-    Key([mod, "shift"], "f", lazy.spawn("qutebrowser")),
+    Key([mod, "shift"], "f", lazy.spawn("firefox")),
     Key([ctrl, "shift"], "s", lazy.spawn("poweroff")),
     Key([alt], "j", lazy.spawn("brightnessctl set 10%-")),
     Key([alt], "k", lazy.spawn("brightnessctl set 10%+")),
@@ -62,7 +62,7 @@ keys = [
 
 groups = [
 
-    Group("",
+    Group("",
           layout="monadtall"),
 
     Group("",
@@ -83,7 +83,7 @@ groups = [
     #Group("",
     #      layout="monadtall"),
 
-    #Group("",
+    #Group("",
     #      layout="monadtall"),
 ]
 
@@ -193,20 +193,36 @@ screens = [
                 #    update_interval=1.0,
                 #    padding=0),
 
+                #widget.TextBox(
+                #    text = '',
+                #    font = 'Ubuntu Mono',
+                #    background = '#3b3b3b',
+                #    foreground = '#5477bf',
+                #    padding = 0,
+                #    fontsize = 57
+                #    ),
+
+                #widget.Memory(
+                #    background = '#5477bf',
+                #    foreground='#ffffff',
+                #    format=" {MemUsed:.0f} MB",
+                #    update_interval=1.0,
+                #    padding=0),
+
                 widget.TextBox(
                     text = '',
                     font = 'Ubuntu Mono',
-                    background = '#3b3b3b',
+                    background = '#3d3d3d',
                     foreground = '#5477bf',
                     padding = 0,
                     fontsize = 57
                     ),
 
-                widget.Memory(
+                widget.Net(
                     background = '#5477bf',
                     foreground='#ffffff',
-                    format=" {MemUsed:.0f} MB",
-                    update_interval=1.0,
+                    format=" {down}",
+                    interface='wlp3s0',
                     padding=0),
 
                 widget.TextBox(
@@ -218,24 +234,8 @@ screens = [
                     fontsize = 57
                     ),
 
-                widget.Net(
-                    background = '#583a81',
-                    foreground='#ffffff',
-                    format=" {down}",
-                    interface='wlp3s0',
-                    padding=0),
-
-                widget.TextBox(
-                    text = '',
-                    font = 'Ubuntu Mono',
-                    background = '#583a81',
-                    foreground = '#5477bf',
-                    padding = 0,
-                    fontsize = 57
-                    ),
-
                 widget.Battery(
-                    background = '#5477bf',
+                    background = '#583a81',
                     foreground='#ffffff',
                     format="{char} {percent:2.0%}",
                     charge_char=" ",
@@ -251,23 +251,23 @@ screens = [
                     ),
 
 
-                widget.TextBox(
-                    text = '',
-                    font = 'Ubuntu Mono',
-                    background = '#5477bf',
-                    foreground = '#583a81',
-                    padding = 0,
-                    fontsize = 57
-                    ),
+                #widget.TextBox(
+                #    text = '',
+                #    font = 'Ubuntu Mono',
+                #    background = '#5477bf',
+                #    foreground = '#583a81',
+                #    padding = 0,
+                #    fontsize = 57
+                #    ),
 
-                widget.KeyboardLayout(
-                    background = '#583a81',
-                    foreground='#ffffff',
-                    #display_map={'us': 'us', 'ir': 'ir'},
-                    #configured_keyboards=['us', 'us,ir'],
-                    display_map={'us':'us', 'ir':'ir'},
-                    configured_keyboards=['us','ir']
-                    ),
+                #widget.KeyboardLayout(
+                #    background = '#583a81',
+                #    foreground='#ffffff',
+                #    #display_map={'us': 'us', 'ir': 'ir'},
+                #    #configured_keyboards=['us', 'us,ir'],
+                #    display_map={'us':'us', 'ir':'ir'},
+                #    configured_keyboards=['us','ir']
+                #    ),
 
                 widget.TextBox(
                     text = '',
