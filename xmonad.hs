@@ -1,11 +1,9 @@
--- xmonad.hs
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
+{--
+
+Simple Xmonad WM configuration.
+My github: https://github.com/hxdevlover
+
+--}
 
 ---------------------------------------------
 -- Imports
@@ -27,7 +25,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 
--- ...
+-- Whatever
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import qualified XMonad.StackSet as W
@@ -41,6 +39,7 @@ myTerminal      = "kitty"
 myEmacs         = "emacsclient -c -a 'emacs' "
 myBrowser       = "brave"
 myFileManager   = "pcmanfm"
+--myEditor        = myTerminal ++  " -e nvim"
 rofiDrun        = "rofi -show drun"
 
 -- Whether focus follows the mouse pointer.
@@ -52,15 +51,14 @@ myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
 -- Width of the window border in pixels.
---
 myBorderWidth   = 2
 
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
+-- left alt      is mod1Mask
+-- right alt     is mod3Mask
+-- windows/super is mod4Mask
 --
 myModMask       = mod4Mask
+altMask         = mod1Mask
 
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
@@ -80,7 +78,7 @@ myFocusedBorderColor = "#ebdbb2"
 
 
 ---------------------------------------------
--- Keys
+-- Key bindings
 ---------------------------------------------
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -187,9 +185,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
-------------------------------------------------------------------------
--- Mouse bindings: default actions bound to mouse events
---
+---------------------------------------------
+-- Mouse bindings
+---------------------------------------------
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
@@ -206,17 +204,10 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-------------------------------------------------------------------------
--- Layouts:
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
+---------------------------------------------
+-- Layouts
+---------------------------------------------
 myLayout = avoidStruts(tiled ||| Full ||| simpleFloat)
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -231,21 +222,18 @@ myLayout = avoidStruts(tiled ||| Full ||| simpleFloat)
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-------------------------------------------------------------------------
--- Window rules:
 
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
+---------------------------------------------
+-- Window rules
+---------------------------------------------
+
 -- To find the property name associated with a program, use
 -- > xprop | grep WM_CLASS
 -- and click on the client you're interested in.
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
+
 myManageHook = composeAll
     [ className =? "MPlayer"          --> doFloat
     , className =? "confirm"          --> doFloat
@@ -258,17 +246,19 @@ myManageHook = composeAll
     , className =? "pinentry-gtk-2"   --> doFloat
     , className =? "splash"           --> doFloat
     , className =? "toolbar"          --> doFloat
-    , className =? "Yad"              --> doFloat
+    , className =? "Yad"              --> doCenterFloat
     , className =? "mpv"              --> doCenterFloat
     , className =? "rofi"             --> doIgnore >> doCenterFloat
     , className =? "TelegramDesktop"  --> doIgnore >> doCenterFloat
     , resource  =? "desktop_window"   --> doIgnore
     , resource  =? "kdesktop"         --> doIgnore ]
 
-------------------------------------------------------------------------
--- Event handling
 
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
+---------------------------------------------
+-- Event handling
+---------------------------------------------
+
+-- EwmhDesktops users should change this to ewmhDesktopsEventHook
 --
 -- Defines a custom handler function for X Events. The function should
 -- return (All True) if the default handler is to be run afterwards. To
@@ -276,32 +266,41 @@ myManageHook = composeAll
 --
 myEventHook = mempty
 
-------------------------------------------------------------------------
+
+---------------------------------------------
 -- Status bars and logging
+---------------------------------------------
 
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
 myLogHook = return ()
 
-------------------------------------------------------------------------
--- Startup hook
 
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
---
--- By default, do nothing.
+---------------------------------------------
+-- Startup hook
+---------------------------------------------
+
 myStartupHook :: X ()
 myStartupHook = do
 
   spawn "killall trayer"
-  spawn ("sleep 1 && trayer --tint 0x3b3b3b --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 20")
+  spawn ("sleep 0.5 && trayer --tint 0x3b3b3b --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 20")
+  -- spawnOnce "nitrogen --restore &"
+  -- spawnOnce "feh --bg-fill path/to/wallpaper.png"
+  -- spawnOnce "nm-applet"
+  -- spawnOnce "volumeicon"
+  -- spawnOnce "picom"
+  -- spawnOnce "lxsession"
 
   setWMName "LG3D"
 
-------------------------------------------------------------------------
+
+---------------------------------------------
 -- Command to launch the bar.
+---------------------------------------------
+
+-- Xmobar and the configuratino path
 myBar = "xmobar $HOME/.config/xmobar/xmobarrc"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
@@ -310,18 +309,13 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ffffff" "" . wrap "|" "|" }
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-------------------------------------------------------------------------
--- Now run xmonad with all the defaults we set up.
 
--- Run xmonad with the settings you specify. No need to modify this.
---
+---------------------------------------------
+-- Main
+---------------------------------------------
+
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
+
 defaults = def {
       -- simple stuff
         terminal           = myTerminal,
