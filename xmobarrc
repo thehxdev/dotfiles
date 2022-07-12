@@ -1,7 +1,7 @@
 Config { 
 
    -- appearance
-     font =         "xft:Ubuntu Mono:size=12:regualr:antialias=true"
+     font =         "xft:Ubuntu Mono:size=12:regualr:antialias=true:hinting=true"
    , bgColor =      "#3b3b3b"
    , fgColor =      "#e6e6e6"
    , position =     Top
@@ -68,9 +68,9 @@ Config {
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o"	, "<left>%"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#D8CCA3>Charging</fc>"
+                                       , "-O"	, "<fc=#D8CCA3>Charging <left>%</fc>"
                                        -- charged status
                                        , "-i"	, "<fc=#D8CCA3>Charged</fc>"
                              ] 50

@@ -38,7 +38,10 @@ import qualified Data.Map        as M
 -- Variables
 ---------------------------------------------
 myTerminal      = "kitty"
-myEmacs         = "/nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacsclient -c -a 'emacs'"
+myEmacs         = "emacsclient -c -a 'emacs' "
+myBrowser       = "brave"
+myFileManager   = "pcmanfm"
+rofiDrun        = "rofi -show drun"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -86,20 +89,23 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
     -- volume keys
     , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-    , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+    , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
-    -- launch rofi
-    , ((modm,               xK_s     ), spawn "rofi -show drun")
+    -- launch rofi drun
+    , ((modm,               xK_s     ), spawn $ rofiDrun)
 
     -- launch pcmanfm
-    , ((modm,               xK_d     ), spawn "pcmanfm")
+    , ((modm,               xK_d     ), spawn $ myFileManager)
 
     -- launch brave
-    , ((modm .|. shiftMask, xK_f     ), spawn "brave")
+    , ((modm .|. shiftMask, xK_f     ), spawn $ myBrowser)
 
     -- launch emacs
-    , ((modm,               xK_e     ), spawn (myEmacs))
+    , ((modm,               xK_e     ), spawn $ myEmacs)
+
+    -- launch flameshot gui
+    , ((0,                  xK_Print ), spawn "flameshot gui")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_q     ), kill)
@@ -159,7 +165,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,  xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm .|. shiftMask,    xK_r     ), spawn "xmonad --recompile; xmonad --restart")
     ]
     ++
 
@@ -170,15 +176,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
+    -- ++
 
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    
+    --[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    --    | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+    --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
 ------------------------------------------------------------------------
@@ -253,6 +259,7 @@ myManageHook = composeAll
     , className =? "splash"           --> doFloat
     , className =? "toolbar"          --> doFloat
     , className =? "Yad"              --> doFloat
+    , className =? "mpv"              --> doCenterFloat
     , className =? "rofi"             --> doIgnore >> doCenterFloat
     , className =? "TelegramDesktop"  --> doIgnore >> doCenterFloat
     , resource  =? "desktop_window"   --> doIgnore
