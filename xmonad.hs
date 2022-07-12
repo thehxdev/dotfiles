@@ -289,7 +289,7 @@ myStartupHook :: X ()
 myStartupHook = do
 
   spawn "killall trayer"
-  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
+  spawn ("sleep 1 && trayer --tint 0x3b3b3b --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 20")
 
   setWMName "LG3D"
 
