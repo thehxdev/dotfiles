@@ -1,6 +1,5 @@
-#+title: Qtile Config
+#+title: My dotfiles
 #+auto_tangle: nil
-#+DISCRIPTION: My Qtile WM Cnfig File
 #+AUTHOR: Hossein Khosravi
 
 * TABLE OF CONTENTS :toc:
