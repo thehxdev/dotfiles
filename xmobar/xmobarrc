@@ -1,7 +1,7 @@
 Config { 
 
    -- appearance
-     font =         "xft:Ubuntu Mono:size=12:regualr:antialias=true:hinting=true"
+     font =         "xft:Cascadia Mono:size=12:regualr:antialias=true:hinting=true"
    , bgColor =      "#3b3b3b"
    , fgColor =      "#e6e6e6"
    , position =     Top
@@ -10,7 +10,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% || %kbd% |           "
+   , template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% | %kbd% || %trayerpad%"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -40,7 +40,7 @@ Config {
         [ Run StdinReader 
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<dev>: <rx>kB/s"
+        , Run DynNetwork     [ "--template" , "<rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--low"      , "#D8CCA3"
@@ -77,11 +77,13 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m time)
-        , Run Date           "<fc=#ABABAB>%F (%a) %H:%M</fc>" "date" 10
+        , Run Date           "<fc=#fff>%F (%a) %H:%M</fc>" "date" 10
 
         -- keyboard layout indicator
         , Run Kbd            [ ("ir"         , "<fc=#D8CCA3>IR</fc>")
                              , ("us"         , "<fc=#D8CCA3>US</fc>")
                              ]
+        -- trayer padding
+        , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
         ]
    }
