@@ -1,4 +1,4 @@
-#!/nix/store/iffl6dlplhv22i2xy7n1w51a5r631kmi-bash-5.1-p16/bin/sh
+#! /usr/bin/bash
 
 $HOME/.config/bspwm/autostart.sh &
 
