@@ -1,7 +1,7 @@
 {--
 
 Simple Xmonad WM configuration.
-My github: https://github.com/hxdevlover
+Learn More: https://github.com/hxdevlover
 
 --}
 
@@ -39,12 +39,12 @@ myTerminal      = "kitty"
 myEmacs         = "emacsclient -c -a 'emacs' "
 myBrowser       = "brave"
 myFileManager   = "pcmanfm"
---myEditor        = myTerminal ++  " -e nvim"
+myEditor        = myTerminal ++  " -e nvim"
 rofiDrun        = "rofi -show drun"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 
 -- Whether clicking on a window to focus also passes the click to the window
 myClickJustFocuses :: Bool
@@ -73,8 +73,8 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#454545"
-myFocusedBorderColor = "#ebdbb2"
+myNormalBorderColor  = "#5a5e77"
+myFocusedBorderColor = "#bd93f9"
 
 
 ---------------------------------------------
@@ -101,6 +101,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch emacs
     , ((modm,               xK_e     ), spawn $ myEmacs)
+
+    -- launch nvim
+    , ((modm .|. shiftMask, xK_e     ), spawn $ myEditor)
 
     -- launch flameshot gui
     , ((0,                  xK_Print ), spawn "flameshot gui")
@@ -208,7 +211,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 ---------------------------------------------
 -- Layouts
 ---------------------------------------------
-myLayout = avoidStruts(tiled ||| Full ||| simpleFloat)
+myLayout = avoidStruts(tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -248,8 +251,13 @@ myManageHook = composeAll
     , className =? "toolbar"          --> doFloat
     , className =? "Yad"              --> doCenterFloat
     , className =? "mpv"              --> doCenterFloat
+    , className =? "vlc"              --> doCenterFloat
     , className =? "rofi"             --> doIgnore >> doCenterFloat
+    , className =? "GParted"          --> doIgnore >> doCenterFloat
+    , className =? "Viewnior"         --> doIgnore >> doCenterFloat
+    , className =? "Galculator"       --> doIgnore >> doCenterFloat
     , className =? "TelegramDesktop"  --> doIgnore >> doCenterFloat
+    , className =? ".arandr-wrapped"  --> doIgnore >> doCenterFloat
     , resource  =? "desktop_window"   --> doIgnore
     , resource  =? "kdesktop"         --> doIgnore ]
 
@@ -285,7 +293,7 @@ myStartupHook :: X ()
 myStartupHook = do
 
   spawn "killall trayer"
-  spawn ("sleep 0.5 && trayer --tint 0x3b3b3b --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 20")
+  spawn ("sleep 0.5 && trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
   -- spawnOnce "nitrogen --restore &"
   -- spawnOnce "feh --bg-fill path/to/wallpaper.png"
   -- spawnOnce "nm-applet"

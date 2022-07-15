@@ -2,15 +2,15 @@ Config {
 
    -- appearance
      font =         "xft:Cascadia Mono:size=12:regualr:antialias=true:hinting=true"
-   , bgColor =      "#3b3b3b"
-   , fgColor =      "#e6e6e6"
+   , bgColor =      "#44475a"
+   , fgColor =      "#f8f8f2"
    , position =     Top
    , border =       BottomB
    , borderColor =  "#646464"
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% | %kbd% || %trayerpad%"
+   , template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% | %kbd% ||%trayerpad%"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -40,12 +40,12 @@ Config {
         [ Run StdinReader 
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<rx>kB/s"
+        , Run DynNetwork     [ "--template" , "<rx> kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "#D8CCA3"
-                             , "--normal"   , "#D8CCA3"
-                             , "--high"     , "#D8CCA3"
+                             , "--low"      , "#bd93f9"
+                             , "--normal"   , "#bd93f9"
+                             , "--high"     , "#50fa7b"
                              ] 10
 
 
@@ -62,17 +62,17 @@ Config {
         , Run Battery        [ "--template" , "<acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "#D8CCA3"
-                             , "--normal"   , "#D8CCA3"
-                             , "--high"     , "#D8CCA3"
+                             , "--low"      , "#ff79c6"
+                             , "--normal"   , "#bd93f9"
+                             , "--high"     , "#50fa7b"
 
                              , "--" -- battery specific options
                                        -- discharging status
                                        , "-o"	, "<left>%"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#D8CCA3>Charging <left>%</fc>"
+                                       , "-O"	, "<fc=#9afcb3>Charging <left>%</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#D8CCA3>Charged</fc>"
+                                       , "-i"	, "<fc=#50fa7b>Charged</fc>"
                              ] 50
 
         -- time and date indicator 
@@ -80,8 +80,8 @@ Config {
         , Run Date           "<fc=#fff>%F (%a) %H:%M</fc>" "date" 10
 
         -- keyboard layout indicator
-        , Run Kbd            [ ("ir"         , "<fc=#D8CCA3>IR</fc>")
-                             , ("us"         , "<fc=#D8CCA3>US</fc>")
+        , Run Kbd            [ ("ir"         , "<fc=#bd93f9>IR</fc>")
+                             , ("us"         , "<fc=#bd93f9>US</fc>")
                              ]
         -- trayer padding
         , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
