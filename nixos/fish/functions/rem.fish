@@ -1,0 +1,3 @@
+function rem --wraps='killall /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs; /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon' --wraps='killall /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon; /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon' --wraps='killall emacs; /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon' --wraps='/nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon' --description 'alias rem /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon'
+  /nix/store/phmlm9svfq8swa034dial4x13nrzpiib-emacs-28.1/bin/emacs --daemon $argv; 
+end
