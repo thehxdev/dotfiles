@@ -13,7 +13,7 @@
 sudo pacman -Sy --needed --noconfirm base-devel git xorg lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 # WMs & Needed Pkgs
-sudo pacman -S --needed --noconfirm awesome qtile firefox alacritty nitrogen picom pcmanfm lxappearance rofi kitty volumeicon network-manager-applet python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish
+sudo pacman -S --needed --noconfirm xmonad xmonad-contrib qtile firefox alacritty nitrogen picom pcmanfm lxappearance rofi kitty volumeicon network-manager-applet python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish
 
 # Wallpapers & Themes
 sudo pacman -S --needed --noconfirm materia-gtk-theme papirus-icon-theme archlinux-wallpaper arc-gtk-theme
