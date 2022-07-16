@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-$HOME/.config/bspwm/autostart.sh &
+$HOME/.config/polybar/launch.sh &
 
 bspc monitor -d 1 2 3 4 5
 
