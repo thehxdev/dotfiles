@@ -1,5 +1,7 @@
 #! /run/current-system/sw/bin/bash
 
+$HOME/.config/polybar/launch.sh &
+
 #function run {
 #  if ! pgrep $1 ;
 #  then
@@ -14,7 +16,6 @@
 #xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
 #autorandr horizontal
 
-$HOME/.config/polybar/launch.sh &
 
 #change your keyboard if you need it
 #setxkbmap -layout be
