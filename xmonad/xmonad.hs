@@ -293,13 +293,17 @@ myStartupHook :: X ()
 myStartupHook = do
 
   spawn "killall trayer"
-  spawn ("sleep 0.5 && trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
-  -- spawnOnce "nitrogen --restore &"
+  spawn "killall volumeicon"
+
+  spawn ("sleep 0.5; trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
+  spawnOnce "/run/current-system/sw/bin/emacs --daemon"
+  spawnOnce "pulseaudio --start"
+  spawnOnce "nitrogen --restore"
   -- spawnOnce "feh --bg-fill path/to/wallpaper.png"
-  -- spawnOnce "nm-applet"
-  -- spawnOnce "volumeicon"
+  spawnOnce "nm-applet"
   -- spawnOnce "picom"
-  -- spawnOnce "lxsession"
+  spawnOnce "lxsession"
+  spawnOnce "sleep 0.5; volumeicon"
 
   setWMName "LG3D"
 

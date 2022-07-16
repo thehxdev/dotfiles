@@ -1,7 +1,18 @@
-#! /run/current-system/sw/bin/bash
+#! /run/current-system/sw/bin/sh
 
+# Auto Start Section
+killall volumeicon 
+
+pulseaudio --start &
+nitrogen --restore &
+xrdb ~/.Xresources &
 $HOME/.config/polybar/launch.sh &
+nm-applet &
+/run/current-system/sw/bin/emacs --daemon &
+sleep 1; volumeicon &
+flameshot &
 
+# bspwm 
 bspc monitor -d 1 2 3 4 5
 
 bspc config border_width         2
