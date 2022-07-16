@@ -1,0 +1,9 @@
+killall -q volumeicon
+nitrogen --restore &
+lxsession &
+volumeicon &
+nm-applet &
+flameshot &
+pulseaudio --start &
+/run/current-system/sw/bin/emacs --daemon &
+xrdb ~/.Xresources &
