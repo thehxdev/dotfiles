@@ -1,4 +1,4 @@
-#! /run/current-system/sw/bin/bash
+#! /usr/bin/env sh
 
 # Terminate already running bar instances
 # If all your bars have ipc enabled, you can use

@@ -1,4 +1,4 @@
-#! /run/current-system/sw/bin/sh
+#! /usr/bin/env sh
 
 # Auto Start Section
 killall volumeicon 

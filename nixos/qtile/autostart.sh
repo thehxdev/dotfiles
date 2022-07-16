@@ -1,4 +1,4 @@
-#! /run/current-system/sw/bin/sh
+#! /usr/bin/env sh
 killall volumeicon
 
 nitrogen --restore &
