@@ -66,8 +66,7 @@
       hpkgs.xmonad-extras
     ];
   };
-
-  # Fonts
+# Fonts
   fonts = {
     enableDefaultFonts = true;
   };
@@ -122,6 +121,7 @@
 
       # GTK themes
       libsForQt5.qtstyleplugin-kvantum
+      libsForQt5.qt5ct
       materia-theme
       pop-gtk-theme
 
@@ -140,6 +140,12 @@
       trayer
       polybar
       haskellPackages.xmobar
+      pyright
+      gcc
+      gparted
+      htop
+      pavucontrol
+      pcmanfm
     ];
   };
 
