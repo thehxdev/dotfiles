@@ -69,12 +69,12 @@
   };
 
   # dwm and dmenu config path
-  nixpkgs.overlays = [
-   (final: prev: {
-     dwm = prev.dwm.overrideAttrs (old: { src = /home/hx/.dwm/dwm ;});
-     dmenu = prev.dmenu.overrideAttrs (old: { src = /home/hx/.dwm/dmenu ;});
-   })
-  ];
+  #nixpkgs.overlays = [
+  # (final: prev: {
+  #   dwm = prev.dwm.overrideAttrs (old: { src = /home/hx/.dwm/dwm ;});
+  #   dmenu = prev.dmenu.overrideAttrs (old: { src = /home/hx/.dwm/dmenu ;});
+  # })
+  #];
 
   # Fonts
   fonts = {
