@@ -49,11 +49,10 @@
   # Enable the Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.defaultSession = "none+xmonad";
-  #services.xserver.desktopManager.xfce.enable = true;
-  #services.xserver.desktopManager.lxqt.enable = true;
+  services.xserver.desktopManager.lxqt.enable = true;
 
-  # Enable bspwm, qtile and xmonad
   services.xserver.windowManager = {
+    #dwm.enable = true;
     bspwm = {
       enable = true;
       configFile = "/home/hx/.config/bspwm/bspwmrc";
@@ -68,6 +67,14 @@
       hpkgs.xmonad-extras
     ];
   };
+
+  # dwm and dmenu config path
+  nixpkgs.overlays = [
+   (final: prev: {
+     dwm = prev.dwm.overrideAttrs (old: { src = /home/hx/.dwm/dwm ;});
+     dmenu = prev.dmenu.overrideAttrs (old: { src = /home/hx/.dwm/dmenu ;});
+   })
+  ];
 
   # Fonts
   fonts = {
@@ -120,9 +127,9 @@
       # Browsers
       firefox
       brave
+      bleachbit
 
       # GTK themes
-      libsForQt5.qtstyleplugin-kvantum
       materia-theme
       pop-gtk-theme
 
@@ -131,7 +138,6 @@
       papirus-icon-theme
 
       # Others
-      bleachbit
       nodejs
       xarchiver
       cinnamon.xreader
@@ -142,12 +148,6 @@
       trayer
       polybar
       haskellPackages.xmobar
-      pyright
-      gcc
-      gparted
-      htop
-      pavucontrol
-      pcmanfm
     ];
   };
 
@@ -179,11 +179,12 @@
     ripgrep
     fd
 
-    # Qtile
+    # Tools
     nitrogen
     rofi
     alacritty
     kitty
+    dmenu
     arandr
     vlc
     mpv
