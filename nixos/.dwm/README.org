@@ -1,0 +1,6 @@
+#+NAME: dwm for NixOS
+#+auto_tangle: nil
+#+author: Hossein Khosravi
+
+* Dwm Config files
+Put all of your config files to ~$HOME/.dwm/~ directory. ~autostart~ patch applied to dwm and it will execute ~autostart.sh~ file in ~$HOME/.dwm/~ directory.
