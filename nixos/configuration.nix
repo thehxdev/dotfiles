@@ -50,7 +50,9 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.defaultSession = "none+xmonad";
   #services.xserver.desktopManager.xfce.enable = true;
+  #services.xserver.desktopManager.lxqt.enable = true;
 
+  # Enable bspwm, qtile and xmonad
   services.xserver.windowManager = {
     bspwm = {
       enable = true;
@@ -66,7 +68,8 @@
       hpkgs.xmonad-extras
     ];
   };
-# Fonts
+
+  # Fonts
   fonts = {
     enableDefaultFonts = true;
   };
@@ -117,11 +120,9 @@
       # Browsers
       firefox
       brave
-      bleachbit
 
       # GTK themes
       libsForQt5.qtstyleplugin-kvantum
-      libsForQt5.qt5ct
       materia-theme
       pop-gtk-theme
 
@@ -130,6 +131,7 @@
       papirus-icon-theme
 
       # Others
+      bleachbit
       nodejs
       xarchiver
       cinnamon.xreader
@@ -159,9 +161,7 @@
   users.defaultUserShell = pkgs.fish;
   
   # QT Themes
-  qt5.enable = true;
-  qt5.platformTheme = "gtk2";
-  qt5.style = "gtk2";
+  programs.qt5ct.enable = true;
 
   # GPU acceleration
   hardware.opengl.extraPackages = [
