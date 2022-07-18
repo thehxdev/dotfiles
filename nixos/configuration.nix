@@ -217,6 +217,14 @@
     p7zip
     font-manager
     acpid
+    xorg.libX11
+    xorg.libXinerama
+    xorg.libXft
+    xorg.libxcb
+    xorg.xcbutil
+    xorg.xcbutilkeysyms
+    xorg.xcbutilwm
+    cmake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
