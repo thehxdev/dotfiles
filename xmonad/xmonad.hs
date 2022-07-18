@@ -87,7 +87,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm,              xK_a      ), spawn $ XMonad.terminal conf)
     
     -- volume keys
-    , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ((0, xF86XK_AudioMute),        spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
@@ -300,15 +300,15 @@ myStartupHook = do
   spawn "killall trayer"
   spawn "killall volumeicon"
 
-  spawn ("sleep 0.5; trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
-  spawn "pulseaudio --start"
-  spawnOnce "/run/current-system/sw/bin/emacs --daemon"
+  spawn ("pulseaudio --start")
+  spawnOnce "/usr/bin/env emacs --daemon"
   spawnOnce "nitrogen --restore"
+  spawn ("sleep 0.5; trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
   -- spawnOnce "feh --bg-fill path/to/wallpaper.png"
   spawnOnce "nm-applet"
   -- spawnOnce "picom"
   spawnOnce "lxsession"
-  spawnOnce "sleep 0.5; volumeicon"
+  spawnOnce "volumeicon"
 
   setWMName "LG3D"
 
