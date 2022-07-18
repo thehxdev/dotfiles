@@ -308,7 +308,7 @@ myStartupHook = do
   spawnOnce "nm-applet"
   -- spawnOnce "picom"
   spawnOnce "lxsession"
-  spawnOnce "volumeicon"
+  spawn "exec volumeicon &"
 
   setWMName "LG3D"
 
@@ -321,7 +321,7 @@ myStartupHook = do
 myBar = "xmobar $HOME/.config/xmobar/xmobarrc"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#ffffff" "" . wrap "|" "|" }
+myPP = xmobarPP { ppCurrent = xmobarColor "#ffffff" "" . wrap "<" ">" }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
