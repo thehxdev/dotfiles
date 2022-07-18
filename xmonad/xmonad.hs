@@ -40,7 +40,8 @@ myEmacs         = "emacsclient -c -a 'emacs' "
 myBrowser       = "brave"
 myFileManager   = "pcmanfm"
 myEditor        = myTerminal ++  " -e nvim"
-rofiDrun        = "rofi -show drun"
+--rofiDrun        = "rofi -show drun"
+dmenuRun        = "dmenu_run"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -90,8 +91,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
-    -- launch rofi drun
-    , ((modm,               xK_s     ), spawn $ rofiDrun)
+    -- launch dmenu
+    , ((modm,               xK_s     ), spawn $ dmenuRun)
 
     -- launch pcmanfm
     , ((modm,               xK_d     ), spawn $ myFileManager)
@@ -238,7 +239,8 @@ myLayout = avoidStruts(tiled ||| Full)
 -- 'className' and 'resource' are used below.
 
 myManageHook = composeAll
-    [ className =? "MPlayer"          --> doFloat
+    [
+      className =? "MPlayer"          --> doFloat
     , className =? "confirm"          --> doFloat
     , className =? "Gimp"             --> doFloat
     , className =? "file_progress"    --> doFloat
@@ -249,17 +251,20 @@ myManageHook = composeAll
     , className =? "pinentry-gtk-2"   --> doFloat
     , className =? "splash"           --> doFloat
     , className =? "toolbar"          --> doFloat
+    , resource  =? "desktop_window"   --> doIgnore
+    , resource  =? "kdesktop"         --> doIgnore 
     , className =? "Yad"              --> doCenterFloat
     , className =? "mpv"              --> doCenterFloat
     , className =? "vlc"              --> doCenterFloat
+    , isFullscreen                    --> doFullFloat
     , className =? "rofi"             --> doIgnore >> doCenterFloat
     , className =? "GParted"          --> doIgnore >> doCenterFloat
     , className =? "Viewnior"         --> doIgnore >> doCenterFloat
     , className =? "Galculator"       --> doIgnore >> doCenterFloat
     , className =? "TelegramDesktop"  --> doIgnore >> doCenterFloat
     , className =? ".arandr-wrapped"  --> doIgnore >> doCenterFloat
-    , resource  =? "desktop_window"   --> doIgnore
-    , resource  =? "kdesktop"         --> doIgnore ]
+    , className =? "firefox" <&&> resource =? "Dialog" --> doFloat  -- Float Firefox Dialog
+    ]
 
 
 ---------------------------------------------
@@ -296,8 +301,8 @@ myStartupHook = do
   spawn "killall volumeicon"
 
   spawn ("sleep 0.5; trayer --tint 0x44475a --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 22")
+  spawn "pulseaudio --start"
   spawnOnce "/run/current-system/sw/bin/emacs --daemon"
-  spawnOnce "pulseaudio --start"
   spawnOnce "nitrogen --restore"
   -- spawnOnce "feh --bg-fill path/to/wallpaper.png"
   spawnOnce "nm-applet"
