@@ -3,14 +3,14 @@
 # Auto Start Section
 killall volumeicon 
 
-pulseaudio --start &
+pulseaudio --start 
 nitrogen --restore &
 xrdb ~/.Xresources &
 $HOME/.config/polybar/launch.sh &
 nm-applet &
 /run/current-system/sw/bin/emacs --daemon &
-sleep 1; volumeicon &
 flameshot &
+sleep 1; exec volumeicon &
 
 # bspwm 
 bspc monitor -d 1 2 3 4 5
