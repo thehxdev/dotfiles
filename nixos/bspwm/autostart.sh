@@ -1,6 +1,6 @@
-#! /run/current-system/sw/bin/sh
+#! /usr/bin/env bash
 
-$HOME/.config/polybar/launch.sh &
+#$HOME/.config/polybar/launch.sh &
 
 #function run {
 #  if ! pgrep $1 ;
