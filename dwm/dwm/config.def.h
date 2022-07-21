@@ -18,8 +18,8 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#5491D4";
-static const char col_blue[]        = "#005577";
+static const char col_cyan[]        = "#bd93f9";
+static const char col_blue[]        = "#5a5e77";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", ""}; //, "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5"}; //, "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,7 +37,8 @@ static const Rule rules[] = {
 	/* class              instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",             NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",          NULL,       NULL,       1 << 8,       0,           -1 },
-    { "TelegramDesktop",  NULL,       NULL,       1,            1,           -1 },
+    { "TelegramDesktop",  NULL,       NULL,       0,            1,           -1 },
+    { "Galculator",       NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -68,10 +69,10 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 //static const char *rofi_drun[] = {"rofi", "-show", "drun"};
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *FileManager[] = { "thunar", NULL};
-static const char *Browser[] = { "firefox", NULL};
-static const char *Emacs[] = { "/usr/bin/emacsclient", "-c", "-a", "\'emacs\'", NULL};
+static const char *termcmd[]  = { "kitty", NULL };
+static const char *FileManager[] = { "pcmanfm", NULL};
+static const char *Browser[] = { "brave", NULL};
+static const char *Emacs[] = { "emacsclient", "-c", "-a", "\'emacs\'", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
