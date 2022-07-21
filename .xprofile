@@ -7,9 +7,9 @@ flameshot &
 /usr/bin/emacs --daemon &
 xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
 setxkbmap -layout 'us,ir' -option 'grp:alt_shift_toggle' &
-xfce4-clipman &
-pulseaudio --start &
-./.config/dwm/dwm-bar/dwm_bar.sh &      # For DWM status-bar
+#xfce4-clipman &
+#pulseaudio --start &
+#./.config/dwm/dwm-bar/dwm_bar.sh &      # For DWM status-bar
 
 #export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=/usr/bin/nvim

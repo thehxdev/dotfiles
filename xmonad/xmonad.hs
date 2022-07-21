@@ -256,6 +256,7 @@ myManageHook = composeAll
     , className =? "Yad"              --> doCenterFloat
     , className =? "mpv"              --> doCenterFloat
     , className =? "vlc"              --> doCenterFloat
+    , className =? "Xarchiver"        --> doCenterFloat
     , isFullscreen                    --> doFullFloat
     , className =? "rofi"             --> doIgnore >> doCenterFloat
     , className =? "GParted"          --> doIgnore >> doCenterFloat
@@ -321,7 +322,7 @@ myStartupHook = do
 myBar = "xmobar $HOME/.config/xmobar/xmobarrc"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#ffffff" "" . wrap "<" ">" }
+myPP = xmobarPP { ppCurrent = xmobarColor "#ffffff" "" . wrap "[" "]" }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
