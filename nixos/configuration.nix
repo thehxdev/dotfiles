@@ -48,25 +48,26 @@
 
   # Enable the Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+xmonad";
-  services.xserver.desktopManager.lxqt.enable = true;
+  services.xserver.displayManager.defaultSession = "xfce";
+  services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.desktopManager.xfce.enableXfwm = true;
 
-  services.xserver.windowManager = {
-    #dwm.enable = true;
-    bspwm = {
-      enable = true;
-      configFile = "/home/hx/.config/bspwm/bspwmrc";
-      sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
-    };
-    qtile.enable = true;
-    xmonad.enable = true;
-    xmonad.enableContribAndExtras = true;
-    xmonad.extraPackages = hpkgs: [
-      hpkgs.xmonad
-      hpkgs.xmonad-contrib
-      hpkgs.xmonad-extras
-    ];
-  };
+  #services.xserver.windowManager = {
+  #  #dwm.enable = true;
+  #  bspwm = {
+  #    enable = true;
+  #    configFile = "/home/hx/.config/bspwm/bspwmrc";
+  #    sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
+  #  };
+  #  qtile.enable = true;
+  #  xmonad.enable = true;
+  #  xmonad.enableContribAndExtras = true;
+  #  xmonad.extraPackages = hpkgs: [
+  #    hpkgs.xmonad
+  #    hpkgs.xmonad-contrib
+  #    hpkgs.xmonad-extras
+  #  ];
+  #};
 
   # dwm and dmenu config path
   #nixpkgs.overlays = [
@@ -85,23 +86,23 @@
   services.gvfs.enable = true;
 
   # picom
-  services.picom = {
-    enable = true;
-    fade = false;
-    shadow = true;
-    backend = "xrender";
-    vSync = false;
-    inactiveOpacity = 1.0;
-    #activeOpacity = 1.0;
-    #settings = {
-      #blur =
-      #{
-        #method = "guassian";
-        #size = 7;
-        #deviation = 7;
-      #};
-    #};
-  };
+  #services.picom = {
+  #  enable = true;
+  #  fade = false;
+  #  shadow = true;
+  #  backend = "xrender";
+  #  vSync = false;
+  #  inactiveOpacity = 1.0;
+  #  #activeOpacity = 1.0;
+  #  #settings = {
+  #    #blur =
+  #    #{
+  #      #method = "guassian";
+  #      #size = 7;
+  #      #deviation = 7;
+  #    #};
+  #  #};
+  #};
 
   # Configure keymap in X11
   services.xserver.layout = "us,ir";
@@ -126,28 +127,25 @@
     packages = with pkgs; [
       # Browsers
       firefox
-      brave
       bleachbit
 
       # GTK themes
       materia-theme
-      pop-gtk-theme
+      flat-remix-gtk
 
       # Icons
       pop-icon-theme
       papirus-icon-theme
+      flat-remix-icon-theme
 
       # Others
       nodejs
+      nodePackages.npm
       xarchiver
       cinnamon.xreader
       flameshot
       xdg-user-dirs
       xdg-utils
-      nodePackages.npm
-      trayer
-      polybar
-      haskellPackages.xmobar
     ];
   };
 
@@ -180,19 +178,23 @@
     fd
 
     # Tools
-    nitrogen
+    pcmanfm
+    xfce.mousepad
+    pavucontrol
+    pamixer
+    #nitrogen
     rofi
-    alacritty
+    #alacritty
     kitty
     dmenu
     arandr
-    vlc
+    #vlc
     mpv
 
     # Others
     git
-    aria2
     curl
+    aria2
     wget
     ffmpeg
     x264
@@ -200,10 +202,10 @@
     galculator
     brightnessctl
     xclip
-     #xfce.xfce4-xkb-plugin
+    xfce.xfce4-xkb-plugin
     python3Full
-    lxsession
-    lxappearance
+    #lxsession
+    #lxappearance
     pfetch
     neofetch
     yt-dlp
