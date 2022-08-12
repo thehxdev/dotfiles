@@ -3,26 +3,40 @@
 #+AUTHOR: Hossein Khosravi
 
 * TABLE OF CONTENTS :toc:
-- [[#install-deps][Install Deps]]
+- [[#install-dependencies][Install Dependencies]]
 - [[#install-yay][Install yay]]
 - [[#install-aur-pkgs][Install aur pkgs]]
 
-* Install Deps
+* Install Dependencies
 #+begin_src shell
+
 # Bases
 sudo pacman -Sy --needed --noconfirm --disable-download-timeout base-devel git xorg lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings intel-ucode xf86-video-intel
 
 # WMs & Needed Pkgs
-sudo pacman -S --needed --noconfirm --disable-download-timeout xmonad xmonad-contrib qtile firefox alacritty nitrogen picom pcmanfm lxappearance rofi kitty volumeicon network-manager-applet python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish python-psutil
+sudo pacman -S --needed --noconfirm --disable-download-timeout xmonad xmonad-contrib qtile nitrogen picom lxappearance rofi volumeicon  python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish python-psutil
+
+# Needed Pkgs
+sudo pacman -S --needed --noconfirm --disable-download-timeout firefox kitty alacritty pcmanfm neovim xdeg-user-dirs fish polkit-gnome network-manager-applet bleachbit gvfs ntfs-3g vi vim nano galculator brightnessctl font-manager sxiv  xorg-xclipboard xclip feh acpid curl wget go ripgrep fd uget
+
+sudo pamcan -S --needed --noconfirm --disable-download-timeout nodejs yarn aria2 yt-dlp pyright
 
 # Wallpapers & Themes
 sudo pacman -S --needed --noconfirm --disable-download-timeout materia-gtk-theme papirus-icon-theme archlinux-wallpaper arc-gtk-theme
 
+## If you installed yay already, install kali-themes pkg. It's a beautiful gtk theme.
+yay -S kali-themes
+
 # VPN & PDF & Compression pkgs
 sudo pacman -S --needed --noconfirm --disable-download-timeout alsa-utils pamixer unrar unzip p7zip xarchiver openvpn networkmanager-openvpn xreader
 
+## If you want 7zip archive manager, Install it with this command:
+yay -S p7zip-gui
+
 # Fonts
 sudo pacman -S --needed --noconfirm --disable-download-timeout ttf-roboto ttf-roboto-mono ttf-font-awesome ttf-ubuntu-font-family ttf-fira-code ttf-fira-mono adobe-source-code-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts
+
+## Noto fonts and emoji fonts
 sudo pacman -S --needed --noconfirm --disable-download-timeout noto-fonts-cjk noto-fonts-emoji
 
 # Other useful pkgs
@@ -37,9 +51,13 @@ chsh -s /usr/bin/fish
 * Install yay
 #+begin_src shell
 cd $HOME/
-sudo pacman -Sy --noconfirm --needed base-devel git
-sudo git clone https://aur.archlinux.org/yay.git
-sudo chown -R  hx:hx yay
+sudo pacman -Sy --noconfirm --needed --disable-download-timeout base-devel git
+git clone https://aur.archlinux.org/yay.git
+
+# If you got permission error run command below.
+sudo chown -R  $USER:$USER yay
+sudo chmod u:w,g:w yay
+
 cd yay
 makepkg -si
 #+end_src
