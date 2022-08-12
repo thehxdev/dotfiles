@@ -10,10 +10,10 @@
 * Install Dependencies
 #+begin_src shell
 
-# Bases
+# Bases (IMPORTANT)
 sudo pacman -Sy --needed --noconfirm --disable-download-timeout base-devel git xorg lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings intel-ucode xf86-video-intel
 
-# WMs & Needed Pkgs
+# WMs & Some Pkgs
 sudo pacman -S --needed --noconfirm --disable-download-timeout xmonad xmonad-contrib qtile nitrogen picom lxappearance rofi volumeicon  python-pip htop emacs neovim polkit lxsession xdg-user-dirs fish python-psutil
 
 # Needed Pkgs
@@ -55,7 +55,7 @@ sudo pacman -Sy --noconfirm --needed --disable-download-timeout base-devel git
 git clone https://aur.archlinux.org/yay.git
 
 # If you got permission error run command below.
-sudo chown -R  $USER:$USER yay
+sudo chown -R $USER:$USER yay
 sudo chmod u:w,g:w yay
 
 cd yay
