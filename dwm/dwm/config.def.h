@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	{ "Firefox",          NULL,       NULL,       1 << 8,       0,           -1 },
     { "TelegramDesktop",  NULL,       NULL,       0,            1,           -1 },
     { "Galculator",       NULL,       NULL,       0,            1,           -1 },
+    { "mpv",              NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -71,8 +72,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 //static const char *rofi_drun[] = {"rofi", "-show", "drun"};
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *FileManager[] = { "pcmanfm", NULL};
-static const char *Browser[] = { "brave", NULL};
-static const char *Emacs[] = { "emacsclient", "-c", "-a", "\'emacs\'", NULL};
+static const char *Browser[] = { "firefox", NULL};
+static const char *Sublime[] = { "sublime_text", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -80,7 +81,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = FileManager } },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = Browser } },
-	{ MODKEY,                       XK_e,      spawn,          {.v = Emacs } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = Sublime } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

@@ -15,6 +15,7 @@ ctrl = "control"
 terminal = "kitty"
 
 keys = [
+    # Basic key bindings
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -30,6 +31,7 @@ keys = [
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
+    # Toggle Floating
     Key([mod], "f", lazy.window.toggle_floating()),
     Key(
         [mod, "shift"],
@@ -37,6 +39,7 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
+
     # Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "a", lazy.spawn(terminal)),
     Key([mod], "d", lazy.spawn("thunar")),
@@ -112,7 +115,6 @@ widget_defaults = dict(
     background='#3b3b3b',
     foreground='#e6e6e6',
     font="Mononoki Nerd Font Bold",
-    #font='Ubuntu Mono',
     fontsize=13,
     padding=3,
     #icon_size=14,

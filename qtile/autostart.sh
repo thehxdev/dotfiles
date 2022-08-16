@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+
 nitrogen --restore &
 picom --experimental-backend &
 volumeicon &
