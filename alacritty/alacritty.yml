@@ -34,17 +34,17 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 6
-    y: 6
+    x: 0
+    y: 0
 
   # Spread additional padding evenly around the terminal content.
-  dynamic_padding: false
+  dynamic_padding: true
 
   # Background opacity
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.9
+  opacity: 1.0
   # opacity: 0.80
 
   # Window decorations
@@ -117,18 +117,18 @@ font:
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     # family: Source Code Pro
-    family: Cascadia Mono
+    # family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    # family: JetBrains Mono
+    family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
     # family: Mononoki Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    style: Medium
 
   # Bold font face
   bold:
@@ -137,11 +137,11 @@ font:
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Source Code Pro
-    family: Cascadia Mono
+    # family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    # family: JetBrains Mono
+    family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
@@ -157,11 +157,11 @@ font:
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Source Code Pro
-    family: Cascadia Mono
+    # family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    # family: JetBrains Mono
+    family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
@@ -177,11 +177,11 @@ font:
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Source Code Pro
-    family: Cascadia Mono
+    # family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    # family: JetBrains Mono
+    family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
@@ -191,7 +191,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 13.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -584,7 +584,7 @@ schemes:
 # *SolarizedDark
 # *TomorrowNight
 
-colors: *Dracula
+colors: *MonokaiPro
 
 #######################################
 ##       END OF COLOR SCHEMES        ##
