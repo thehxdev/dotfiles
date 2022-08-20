@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # A dwm_bar function to show the master volume of PulseAudio
 # Joe Standring <git@joestandring.com>
@@ -13,13 +13,13 @@ dwm_pulse () {
     printf "%s" "$SEP1"
     if [ "$IDENTIFIER" = "unicode" ]; then
         if [ "$STATE" = "true" ] || [ "$VOL" -eq 0 ]; then
-            printf "🔇"
+            printf "MUTE"
         elif [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
-            printf "🔈 %s%%" "$VOL"
+            printf "VOL %s%%" "$VOL"
         elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
-            printf "🔉 %s%%" "$VOL"
+            printf "VOL %s%%" "$VOL"
         else
-            printf "🔊 %s%%" "$VOL"
+            printf "VOL %s%%" "$VOL"
         fi
     else
         if [ "$STATE" = "true" ] || [ "$VOL" -eq 0 ]; then
