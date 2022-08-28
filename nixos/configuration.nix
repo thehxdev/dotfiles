@@ -125,12 +125,13 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hx = {
     isNormalUser = true;
-    home = "/home/hx/";
+    home = "/home/hx";
     extraGroups = [ "wheel" "networkmanager" "audio" "video" ];
     packages = with pkgs; [
       # Browsers
       #firefox
-      ungoogled-chromium
+      #ungoogled-chromium
+      brave
       bleachbit
 
       # GTK themes
@@ -161,7 +162,7 @@
   users.defaultUserShell = pkgs.fish;
   
   # QT Themes
-  programs.qt5ct.enable = true;
+  #programs.qt5ct.enable = true;
 
   # GPU acceleration
   hardware.opengl.extraPackages = [
@@ -181,6 +182,7 @@
 
     # Tools
     pcmanfm
+    #lxqt.pcmanfm-qt
     #xfce.mousepad
     pavucontrol
     pamixer
@@ -208,10 +210,11 @@
     python3Full
     #lxsession
     #lxappearance
-    pfetch
+    #pfetch
+    afetch
     neofetch
     yt-dlp
-    tdesktop
+    #tdesktop
     viewnior
     xorg.xkill
     killall
