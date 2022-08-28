@@ -1,18 +1,16 @@
-nitrogen --restore &
-picom --experimental-backend &
-lxsession &
-volumeicon &
-nm-applet &
-flameshot &
-/usr/bin/emacs --daemon &
-xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
-setxkbmap -layout 'us,ir' -option 'grp:alt_shift_toggle' &
+#nitrogen --restore &
+#picom --experimental-backend &
+#lxsession &
+#volumeicon &
+#nm-applet &
+#flameshot &
+#/usr/bin/emacs --daemon &
+#xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
+#setxkbmap -layout 'us,ir' -option 'grp:alt_shift_toggle' &
 #xfce4-clipman &
 #pulseaudio --start &
 #./.config/dwm/dwm-bar/dwm_bar.sh &      # For DWM status-bar
 
 #export QT_QPA_PLATFORMTHEME="qt5ct"
-export EDITOR=/usr/bin/nvim
-# fix "xdg-open fork-bomb" export your preferred browser from here
-export BROWSER=/usr/bin/firefox
-export PATH="$HOME/.anaconda3/bin:$PATH"
+#export EDITOR=/usr/bin/nvim
+#export BROWSER=/usr/bin/firefox
