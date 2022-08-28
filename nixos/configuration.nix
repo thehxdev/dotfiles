@@ -127,29 +127,8 @@
     isNormalUser = true;
     home = "/home/hx";
     extraGroups = [ "wheel" "networkmanager" "audio" "video" ];
-    packages = with pkgs; [
-      # Browsers
-      #firefox
-      #ungoogled-chromium
-      brave
-      bleachbit
-
-      # GTK themes
-      #materia-theme
-      #flat-remix-gtk
-
-      # Icons
-      #pop-icon-theme
-      papirus-icon-theme
-      #flat-remix-icon-theme
-
-      # Others
-      nodejs
-      nodePackages.npm
-      flameshot
-      xdg-user-dirs
-      xdg-utils
-    ];
+    #packages = with pkgs; [
+    #];
   };
 
   # VirtualBox
@@ -172,6 +151,21 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
+    # Browsers
+    #firefox
+    #ungoogled-chromium
+    brave
+    bleachbit
+
+    # GTK themes
+    #materia-theme
+    #flat-remix-gtk
+
+    # Icons
+    #pop-icon-theme
+    papirus-icon-theme
+    #flat-remix-icon-theme
 
     # Editors
     vim 
@@ -233,6 +227,13 @@
     xorg.xcbutilwm
     cmake
     gcc
+
+    # Others
+    nodejs
+    nodePackages.npm
+    flameshot
+    xdg-user-dirs
+    xdg-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
