@@ -47,10 +47,13 @@
   '';
 
   # Enable the Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "xfce";
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.desktopManager.xfce.enableXfwm = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+  #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.displayManager.defaultSession = "xfce";
+  #services.xserver.desktopManager.xfce.enable = true;
+  #services.xserver.desktopManager.xfce.enableXfwm = true;
 
   #services.xserver.windowManager = {
   #  #dwm.enable = true;
@@ -109,7 +112,7 @@
   services.xserver.xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  #services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
@@ -126,23 +129,22 @@
     extraGroups = [ "wheel" "networkmanager" "audio" "video" ];
     packages = with pkgs; [
       # Browsers
-      firefox
+      #firefox
+      ungoogled-chromium
       bleachbit
 
       # GTK themes
-      materia-theme
-      flat-remix-gtk
+      #materia-theme
+      #flat-remix-gtk
 
       # Icons
-      pop-icon-theme
+      #pop-icon-theme
       papirus-icon-theme
-      flat-remix-icon-theme
+      #flat-remix-icon-theme
 
       # Others
       nodejs
       nodePackages.npm
-      xarchiver
-      cinnamon.xreader
       flameshot
       xdg-user-dirs
       xdg-utils
@@ -173,20 +175,20 @@
     # Editors
     vim 
     neovim
-    emacs
-    ripgrep
-    fd
+    #emacs
+    #ripgrep
+    #fd
 
     # Tools
     pcmanfm
-    xfce.mousepad
+    #xfce.mousepad
     pavucontrol
     pamixer
     #nitrogen
     rofi
-    #alacritty
-    kitty
-    dmenu
+    alacritty
+    #kitty
+    #dmenu
     arandr
     #vlc
     mpv
@@ -199,10 +201,10 @@
     ffmpeg
     x264
     libvpx
-    galculator
+    #galculator
     brightnessctl
     xclip
-    xfce.xfce4-xkb-plugin
+    #xfce.xfce4-xkb-plugin
     python3Full
     #lxsession
     #lxappearance
