@@ -150,7 +150,7 @@
 
   # Fish shell
   programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.fish; # set fish to default shell
   
   # QT Themes
   #programs.qt5ct.enable = true;
@@ -171,8 +171,8 @@
     bleachbit
 
     # GTK themes
-    materia-theme
-    flat-remix-gtk
+    #materia-theme
+    #flat-remix-gtk
 
     # Icons
     #pop-icon-theme
