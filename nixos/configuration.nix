@@ -1,6 +1,8 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+#################################################
+# Author: HxDev                                 #
+# Name:   NixOS configuration file              #
+#################################################
+
 
 { config, pkgs, ... }:
 
@@ -47,14 +49,24 @@
   '';
 
   # Enable the Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.defaultSession = "plasma (X11)";
+
+  ### KDE
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.displayManager.defaultSession = "plasma (X11)";
+
+  ### XFCE
   #services.xserver.displayManager.lightdm.enable = true;
   #services.xserver.displayManager.defaultSession = "xfce";
   #services.xserver.desktopManager.xfce.enable = true;
   #services.xserver.desktopManager.xfce.enableXfwm = true;
 
+  ### Cinnamon
+  #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.desktopManager.cinnamon.enable = true;
+  #services.cinnamon.apps.enable = true;
+
+  ### Window Managers
   #services.xserver.windowManager = {
   #  #dwm.enable = true;
   #  bspwm = {
@@ -159,8 +171,8 @@
     bleachbit
 
     # GTK themes
-    #materia-theme
-    #flat-remix-gtk
+    materia-theme
+    flat-remix-gtk
 
     # Icons
     #pop-icon-theme
@@ -172,7 +184,7 @@
     neovim
     #emacs
     #ripgrep
-    #fd
+    fd
 
     # Tools
     pcmanfm
@@ -197,7 +209,7 @@
     ffmpeg
     x264
     libvpx
-    #galculator
+    galculator
     brightnessctl
     xclip
     #xfce.xfce4-xkb-plugin
@@ -206,7 +218,7 @@
     #lxappearance
     #pfetch
     afetch
-    neofetch
+    #neofetch
     yt-dlp
     #tdesktop
     viewnior
@@ -218,6 +230,15 @@
     p7zip
     font-manager
     acpid
+    cmake
+    gcc
+    nodejs
+    nodePackages.npm
+    flameshot
+    xdg-user-dirs
+    xdg-utils
+
+    # xorg
     xorg.libX11
     xorg.libXinerama
     xorg.libXft
@@ -225,15 +246,6 @@
     xorg.xcbutil
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
-    cmake
-    gcc
-
-    # Others
-    nodejs
-    nodePackages.npm
-    flameshot
-    xdg-user-dirs
-    xdg-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -267,6 +279,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }
 
