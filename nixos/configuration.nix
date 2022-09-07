@@ -6,8 +6,7 @@
 
 { config, pkgs, ... }:
 
-{
-  imports =
+{ imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
@@ -53,7 +52,7 @@
   ### KDE
   #services.xserver.displayManager.sddm.enable = true;
   #services.xserver.desktopManager.plasma5.enable = true;
-  #services.xserver.displayManager.defaultSession = "plasma (X11)";
+  #services.xserver.displayManager.defaultSession = "plasma";
 
   ### XFCE
   #services.xserver.displayManager.lightdm.enable = true;
