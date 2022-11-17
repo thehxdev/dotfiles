@@ -1,4 +1,4 @@
-syntax enable
+syntax on
 filetype on
 filetype plugin indent on
 set background=dark
@@ -6,15 +6,25 @@ colorscheme solarized
 
 set relativenumber
 set autoindent
+set expandtab
 set tabstop=4
 set shiftwidth=4
-set smarttab
 set softtabstop=4
+set nobackup
+set smarttab
+set scrolloff=4
+set nowrap
+set incsearch
 set mouse=a
+set ignorecase
 set termguicolors
+set showmatch
 set encoding=UTF-8
+set wildmenu
 set nocompatible
+set wildmode=list:longest
 set completeopt-=preview " For No Previews
+set cursorline
 let g:solarized_termcolors=256
 
 call plug#begin()
@@ -27,17 +37,44 @@ Plug 'https://github.com/neoclide/coc.nvim'  " Auto Completion
 Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
 Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
-noremap <C-f> :NERDTreeFocus<CR>
-noremap <C-n> :NERDTree<CR>
+let mapleader = " "
+"set timeoutlen 500
+
+"noremap <C-f> :NERDTreeFocus<CR>
+"noremap <C-n> :NERDTree<CR>
 noremap <C-e> :NERDTreeToggle<CR>
-noremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
+noremap <g-d> :call CocActionAsync('jumpDefinition')<CR>
+noremap <leader>e :NERDTreeToggle<CR>
+noremap <leader>f :Files<CR>
+noremap <leader>b :Buffers<CR>
+noremap <leader>c :Colors<CR>
+noremap <leader>h :History<CR>
 
 inoremap <expr> <Return> pumvisible() ? coc#_select_confirm() : "<Return>"
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-h>"
 
 " Python
 let g:python_highlight_all = 1
+let g:python_highlight_indent_errors = 1
 
+" Status
+" Clear status line when vimrc is reloaded.
+set statusline=
+
+" Status line left side.
+set statusline+=\ %F\ %M\ %Y\ %R
+
+" Use a divider to separate the left side from the right side.
+set statusline+=%=
+
+" Status line right side.
+"set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
+set statusline+=\ row:\ %l\ col:\ %c\ percent:\ %p%%
+
+" Show the status on the second to last line.
+set laststatus=2
