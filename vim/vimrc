@@ -49,6 +49,9 @@ let mapleader = " "
 "noremap <C-f> :NERDTreeFocus<CR>
 "noremap <C-n> :NERDTree<CR>
 noremap <C-e> :NERDTreeToggle<CR>
+noremap <S-m> :bdelete<CR>
+noremap <S-h> :bprevious<CR>
+noremap <S-l> :bnext<CR>
 noremap <g-d> :call CocActionAsync('jumpDefinition')<CR>
 noremap <leader>e :NERDTreeToggle<CR>
 noremap <leader>f :Files<CR>
@@ -79,3 +82,4 @@ set statusline+=\ row:\ %l\ col:\ %c\ percent:\ %p%%
 
 " Show the status on the second to last line.
 set laststatus=2
+
