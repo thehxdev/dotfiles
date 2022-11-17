@@ -13,7 +13,7 @@ set shiftwidth=4
 set softtabstop=4
 set nobackup
 set smarttab
-set scrolloff=4
+set scrolloff=18
 set nowrap
 set incsearch
 set mouse=a
