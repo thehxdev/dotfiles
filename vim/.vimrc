@@ -1,4 +1,4 @@
-syntax enable
+syntax on
 filetype on
 filetype plugin indent on
 set background=dark
@@ -15,6 +15,7 @@ set termguicolors
 set encoding=UTF-8
 set nocompatible
 set completeopt-=preview " For No Previews
+set cursorline
 let g:solarized_termcolors=256
 
 call plug#begin()
