@@ -41,6 +41,7 @@ Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -60,6 +61,7 @@ noremap <leader>f :Files<CR>
 noremap <leader>b :Buffers<CR>
 noremap <leader>c :Colors<CR>
 noremap <leader>h :History<CR>
+noremap <leader>t :terminal<CR>
 
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
