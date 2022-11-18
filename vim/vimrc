@@ -22,8 +22,8 @@ set termguicolors
 set showmatch
 set encoding=UTF-8
 set wildmenu
-set nocompatible
 set wildmode=list:longest
+set nocompatible
 set completeopt-=preview " For No Previews
 set cursorline
 let g:solarized_termcolors=256
@@ -52,6 +52,7 @@ noremap <C-e> :NERDTreeToggle<CR>
 noremap <S-m> :bdelete<CR>
 noremap <S-h> :bprevious<CR>
 noremap <S-l> :bnext<CR>
+noremap <S-j> :<CR>
 noremap <g-d> :call CocActionAsync('jumpDefinition')<CR>
 noremap <leader>e :NERDTreeToggle<CR>
 noremap <leader>f :Files<CR>
@@ -59,12 +60,11 @@ noremap <leader>b :Buffers<CR>
 noremap <leader>c :Colors<CR>
 noremap <leader>h :History<CR>
 
-inoremap <expr> <Return> pumvisible() ? coc#_select_confirm() : "<Return>"
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-h>"
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 " Python
-let g:python_highlight_all = 1
-let g:python_highlight_indent_errors = 1
+let python_highlight_all = 1
 
 " Status
 " Clear status line when vimrc is reloaded.
