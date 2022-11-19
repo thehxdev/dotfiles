@@ -1,3 +1,8 @@
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
 syntax on
 filetype on
 filetype plugin indent on
@@ -42,6 +47,7 @@ Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple c
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -86,6 +92,3 @@ set statusline+=\ row:\ %l\ col:\ %c\ percent:\ %p%%
 
 " Show the status on the second to last line.
 set laststatus=2
-
-map q: :q
-map :Wq :wq
