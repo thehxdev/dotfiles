@@ -7,7 +7,7 @@ syntax on
 filetype on
 filetype plugin indent on
 set background=dark
-colorscheme onedark
+colorscheme gruvbox
 let g:onedark_terminal_italics=1
 let g:onedark_termcolors=256
 "let ayucolor="migrate"
@@ -53,6 +53,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'ayu-theme/ayu-vim'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
