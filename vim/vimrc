@@ -7,9 +7,10 @@ syntax on
 filetype on
 filetype plugin indent on
 set background=dark
-colorscheme gruvbox
+colorscheme catppuccin_mocha
 let g:onedark_terminal_italics=1
 let g:onedark_termcolors=256
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 "let ayucolor="migrate"
 
 set number
@@ -21,7 +22,7 @@ set shiftwidth=4
 set softtabstop=4
 set nobackup
 set smarttab
-set scrolloff=18
+set scrolloff=4
 set nowrap
 set incsearch
 set mouse=a
@@ -54,20 +55,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'ayu-theme/ayu-vim'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
+Plug 'catppuccin/vim'
 
 call plug#end()
 
 let mapleader = " "
 "set timeoutlen 500
 
-"noremap <C-f> :NERDTreeFocus<CR>
-"noremap <C-n> :NERDTree<CR>
 noremap <C-e> :NERDTreeToggle<CR>
 noremap <S-m> :bdelete<CR>
 noremap <S-h> :bprevious<CR>
 noremap <S-l> :bnext<CR>
 noremap <S-j> :<CR>
-"noremap <g-d> :call CocActionAsync('jumpDefinition')<CR>
 noremap <leader>e :NERDTreeToggle<CR>
 noremap <leader>f :Files<CR>
 noremap <leader>b :Buffers<CR>
