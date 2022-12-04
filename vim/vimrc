@@ -13,6 +13,7 @@ let g:onedark_termcolors=256
 let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 "let ayucolor="migrate"
 
+set clipboard=unnamedplus
 set number
 set relativenumber
 set autoindent
@@ -62,6 +63,10 @@ call plug#end()
 let mapleader = " "
 "set timeoutlen 500
 
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 noremap <C-e> :NERDTreeToggle<CR>
 noremap <S-m> :bdelete<CR>
 noremap <S-h> :bprevious<CR>
