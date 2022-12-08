@@ -20,8 +20,14 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 
 * Install Needed PKGs
 #+begin_src shell
-sudo pacman -S nodejs npm typescript
+sudo pacman -S nodejs npm typescript lua5.1
 #+end_src
+
+or debian
+#+begin_src shell
+sudo apt install nodejs lua5.1
+#+end_src
+
 
 * Install dependencies for COC (after install coc.nvim)
 #+begin_src shell
