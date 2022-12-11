@@ -41,11 +41,13 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "intel" ];
-  services.xserver.deviceSection = ''
-    Option "DRI" "2"
-    Option "TearFree" "true"
-  '';
+  #services.xserver.videoDrivers = [ "intel" ];
+  #services.xserver.deviceSection = ''
+  #  Option "DRI" "2"
+  #  Option "TearFree" "true"
+  #'';
+  services.xserver.videoDrivers = [ "modesetting" ];
+  services.xserver.UseGlamor = true;
 
   # Enable the Desktop Environment.
 
@@ -55,10 +57,12 @@
   #services.xserver.displayManager.defaultSession = "plasma";
 
   ### XFCE
-  #services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.displayManager.defaultSession = "xfce";
-  #services.xserver.desktopManager.xfce.enable = true;
-  #services.xserver.desktopManager.xfce.enableXfwm = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.defaultSession = "xfce";
+  services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.desktopManager.xfce.enableXfwm = true;
+  programs.thunar.enable = true;
+  programs.thunar.plugins = [ thunar-archive-plugin thunar-volman ]
 
   ### Cinnamon
   #services.xserver.displayManager.lightdm.enable = true;
@@ -123,7 +127,7 @@
   services.xserver.xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
 
   # Enable CUPS to print documents.
-  #services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
@@ -152,7 +156,7 @@
   users.defaultUserShell = pkgs.fish; # set fish to default shell
   
   # QT Themes
-  #programs.qt5ct.enable = true;
+  programs.qt5ct.enable = true;
 
   # GPU acceleration
   hardware.opengl.extraPackages = [
@@ -161,12 +165,15 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  programs.firefox.enable = true;
+  programs.tmux.enable = true;
+  programs.git.enable = true;
   environment.systemPackages = with pkgs; [
 
     # Browsers
     #firefox
     #ungoogled-chromium
-    brave
+    #brave
     bleachbit
 
     # GTK themes
@@ -180,15 +187,16 @@
 
     # Editors
     vim 
-    neovim
+    #neovim
     #emacs
-    #ripgrep
+    ripgrep
     fd
 
     # Tools
-    pcmanfm
+    #pcmanfm
     #lxqt.pcmanfm-qt
-    #xfce.mousepad
+    libsForQt5.okular
+    xfce.mousepad
     pavucontrol
     pamixer
     #nitrogen
@@ -197,11 +205,11 @@
     #kitty
     #dmenu
     arandr
-    #vlc
+    vlc
     mpv
 
     # Others
-    git
+    #git
     curl
     aria2
     wget
@@ -211,13 +219,14 @@
     galculator
     brightnessctl
     xclip
-    #xfce.xfce4-xkb-plugin
+    xsel
+    xfce.xfce4-xkb-plugin
     python3Full
     #lxsession
     #lxappearance
     #pfetch
     afetch
-    #neofetch
+    neofetch
     yt-dlp
     #tdesktop
     viewnior
@@ -229,7 +238,7 @@
     p7zip
     font-manager
     acpid
-    cmake
+    #cmake
     gcc
     nodejs
     nodePackages.npm
@@ -277,6 +286,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 }
 
