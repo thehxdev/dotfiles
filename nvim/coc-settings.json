@@ -1,0 +1,42 @@
+{
+  "pyright.inlayHints.variableTypes": false,
+  "pyright.inlayHints.functionReturnTypes": false,
+  "languageserver": {
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"],
+      // Settings are optional, here are some example values
+      "settings": {
+        "haskell": {
+          "checkParents": "CheckOnSave",
+          "checkProject": true,
+          "maxCompletions": 40,
+          "formattingProvider": "ormolu",
+          "plugin": {
+            "stan": { "globalOn": true }
+          }
+        }
+      }
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "filetypes": ["go"]
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    }
+  }
+}
