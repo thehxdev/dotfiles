@@ -8,9 +8,6 @@ endif
 :filetype plugin indent on
 :set background=dark
 :colorscheme tokyonight-night
-":colorscheme tokyonight
-":colorscheme nightfox
-"let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 :set clipboard=unnamedplus
 :set number
@@ -35,7 +32,7 @@ endif
 :set wildmenu
 :set wildmode=list:full
 :set nocompatible
-:set completeopt-=preview
+:set completeopt-=preview " For No Previews
 :set cursorline
 
 lua require('plugins')
@@ -44,6 +41,7 @@ lua require('nvimtree')
 lua require('telescope')
 lua require('gitsigns')
 lua require('treesitter')
+lua require('indent')
 
 let mapleader = " "
 
