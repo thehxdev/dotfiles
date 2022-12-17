@@ -3,38 +3,9 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-:syntax on
-:filetype on
-:filetype plugin indent on
-:set background=dark
-:colorscheme tokyonight-night
-
-:set clipboard=unnamedplus
-:set number
-:set relativenumber
-:set autoindent
-:set smartindent
-:set expandtab
-:set tabstop=4
-:set shiftwidth=4
-:set softtabstop=4
-:set nobackup
-:set smarttab
-:set scrolloff=4
-:set nowrap
-:set incsearch
-:set mouse=a
-:set ignorecase
-:set termguicolors
-:set showmatch
-:set hlsearch
-:set encoding=UTF-8
-:set wildmenu
-:set wildmode=list:full
-:set nocompatible
-:set completeopt-=preview " For No Previews
-:set cursorline
-
+lua require('set')
+lua require('colorsettings')
+lua require('colors')
 lua require('plugins')
 lua require('whichkey')
 lua require('nvimtree')
@@ -42,6 +13,7 @@ lua require('telescope')
 lua require('gitsigns')
 lua require('treesitter')
 lua require('indent')
+"lua require('bufferline')
 
 let mapleader = " "
 
