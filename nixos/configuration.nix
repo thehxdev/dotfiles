@@ -186,7 +186,7 @@
 
     # Editors
     vim 
-    #neovim
+    neovim
     #emacs
     ripgrep
     fd
@@ -226,6 +226,7 @@
     #pfetch
     afetch
     neofetch
+    htop
     yt-dlp
     #tdesktop
     viewnior
