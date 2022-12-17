@@ -47,7 +47,7 @@
   #  Option "TearFree" "true"
   #'';
   services.xserver.videoDrivers = [ "modesetting" ];
-  services.xserver.UseGlamor = true;
+  #services.xserver.UseGlamor = true;
 
   # Enable the Desktop Environment.
 
@@ -62,7 +62,7 @@
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.desktopManager.xfce.enableXfwm = true;
   programs.thunar.enable = true;
-  programs.thunar.plugins = [ thunar-archive-plugin thunar-volman ]
+  programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
 
   ### Cinnamon
   #services.xserver.displayManager.lightdm.enable = true;
@@ -156,7 +156,7 @@
   users.defaultUserShell = pkgs.fish; # set fish to default shell
   
   # QT Themes
-  programs.qt5ct.enable = true;
+  qt5.platformTheme = "qt5ct";
 
   # GPU acceleration
   hardware.opengl.extraPackages = [
@@ -165,13 +165,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  programs.firefox.enable = true;
   programs.tmux.enable = true;
   programs.git.enable = true;
   environment.systemPackages = with pkgs; [
 
     # Browsers
-    #firefox
+    firefox
     #ungoogled-chromium
     #brave
     bleachbit
