@@ -3,8 +3,8 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-lua require('set')
 lua require('colorsettings')
+lua require('set')
 lua require('colors')
 lua require('plugins')
 lua require('whichkey')
@@ -12,7 +12,7 @@ lua require('nvimtree')
 lua require('telescope')
 lua require('gitsigns')
 lua require('treesitter')
-"lua require('indent')
+lua require('lsp')
 "lua require('bufferline')
 
 let mapleader = " "
@@ -25,6 +25,7 @@ noremap <S-m> :bdelete<CR>
 noremap <S-h> :bprevious<CR>
 noremap <S-l> :bnext<CR>
 noremap <S-j> :<CR>
+noremap <S-k> :<CR>
 noremap <leader>e :NvimTreeToggle<CR>
 noremap <leader>t :terminal<CR>
 
@@ -35,9 +36,9 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fc <cmd>Telescope colorscheme<cr>
 "nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
-inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
-inoremap <expr> <Return> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+"inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+"inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+"inoremap <expr> <Return> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 :set completeopt-=preview " For No Previews
 
@@ -61,4 +62,5 @@ set statusline+=\ row:\ %l\ col:\ %c\ percent:\ %p%%
 
 " Show the status on the second to last line.
 set laststatus=2
+
 
