@@ -22,7 +22,7 @@ return require('packer').startup(function(use)
     use 'ayu-theme/ayu-vim'
     use 'morhetz/gruvbox'
     use { "catppuccin/nvim", as = "catppuccin" }
-    use 'Yggdroot/indentLine'
+    --use 'Yggdroot/indentLine'
     use 'nvim-lua/plenary.nvim'
     use 'lewis6991/gitsigns.nvim'
     use 'folke/tokyonight.nvim'
@@ -34,6 +34,6 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    use "lukas-reineke/indent-blankline.nvim"
+    --use "lukas-reineke/indent-blankline.nvim"
     use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 end)

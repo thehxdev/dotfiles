@@ -12,7 +12,7 @@ lua require('nvimtree')
 lua require('telescope')
 lua require('gitsigns')
 lua require('treesitter')
-lua require('indent')
+"lua require('indent')
 "lua require('bufferline')
 
 let mapleader = " "
