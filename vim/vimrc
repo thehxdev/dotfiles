@@ -74,6 +74,7 @@ noremap <S-m> :bdelete<CR>
 noremap <S-h> :bprevious<CR>
 noremap <S-l> :bnext<CR>
 noremap <S-j> :<CR>
+noremap <S-k> :<CR>
 noremap <leader>e :NERDTreeToggle<CR>
 noremap <leader>f :Files<CR>
 noremap <leader>b :Buffers<CR>
