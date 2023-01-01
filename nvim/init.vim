@@ -3,8 +3,9 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
+" ============================================== "
+
 lua require('colorsettings')
-lua require('set')
 lua require('colors')
 lua require('plugins')
 lua require('whichkey')
@@ -13,7 +14,17 @@ lua require('telescope')
 lua require('gitsigns')
 lua require('treesitter')
 lua require('lsp')
+lua require('set')
 "lua require('bufferline')
+
+" enable these lines if you are a scala developer
+" and you want LSP support. Make sure that you installed nvim-metals already
+" with packer.
+"lua<<EOF
+"vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
+"EOF
+
+" ============================================== "
 
 let mapleader = " "
 

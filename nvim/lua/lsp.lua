@@ -16,7 +16,7 @@ lsp.ensure_installed({
 })
 
 lsp.set_preferences({
-  suggest_lsp_servers = false,
+  suggest_lsp_servers = true,
   setup_servers_on_start = true,
   set_lsp_keymaps = true,
   configure_diagnostics = true,
@@ -33,9 +33,9 @@ lsp.set_preferences({
 
 lsp.setup_nvim_cmp({
   sources = {
-    { name = 'path' },
     { name = 'nvim_lsp', keyword_length = 1 },
     { name = 'buffer', keyword_length = 1 },
+    { name = 'path' },
   },
 })
 
