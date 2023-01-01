@@ -3,15 +3,31 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-syntax on
-filetype on
-filetype plugin indent on
-set background=dark
-colorscheme catppuccin_mocha
-let g:onedark_terminal_italics=1
-let g:onedark_termcolors=256
-let g:lightline = {'colorscheme': 'catppuccin_mocha'}
-"let ayucolor="migrate"
+call plug#begin('~/.vim/plugged')
+
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-python/python-syntax'
+Plug 'preservim/nerdtree'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ryanoasis/vim-devicons'
+Plug 'tc50cal/vim-terminal'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
+Plug 'ayu-theme/ayu-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'catppuccin/vim'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'Rigellute/rigel'
+Plug 'lifepillar/vim-solarized8'
+Plug 'sainnhe/edge'
+
+call plug#end()
 
 set clipboard=unnamedplus
 set number
@@ -35,34 +51,19 @@ set encoding=UTF-8
 set wildmenu
 set wildmode=list:full
 set nocompatible
-set completeopt-=preview " For No Previews
+set completeopt-=preview
 set cursorline
 let g:solarized_termcolors=256
 
-call plug#begin()
-
-Plug 'ericbn/vim-solarized'
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-python/python-syntax'
-Plug 'https://github.com/preservim/nerdtree' " NerdTree
-Plug 'https://github.com/neoclide/coc.nvim'  " Auto Completion
-Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
-Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
-Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
-Plug 'ayu-theme/ayu-vim'
-Plug 'joshdick/onedark.vim'
-Plug 'morhetz/gruvbox'
-Plug 'catppuccin/vim'
-Plug 'Yggdroot/indentLine'
-
-call plug#end()
+syntax on
+filetype on
+filetype plugin indent on
+set background=dark
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
 
 let mapleader = " "
-"set timeoutlen 500
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -103,3 +104,4 @@ set statusline+=\ row:\ %l\ col:\ %c\ percent:\ %p%%
 
 " Show the status on the second to last line.
 set laststatus=2
+
