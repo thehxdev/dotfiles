@@ -11,20 +11,23 @@ lua require('plugins')
 lua require('whichkey')
 lua require('nvimtree')
 lua require('telescope')
-lua require('gitsigns')
 lua require('treesitter')
+lua require('masoncfg')
 lua require('lsp')
 lua require('set')
+lua require('cmplsp')
+lua require('gitsigns')
 "lua require('bufferline')
 
-" enable these lines if you are a scala developer
-" and you want LSP support. Make sure that you installed nvim-metals already
-" with packer.
+" Uncomment these lines if you want LSP support for Scala language.
+" Make sure that you installed nvim-metals already with packer.
+"""
 "lua<<EOF
 "vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
 "EOF
 
 " ============================================== "
+let g:pymode_indent = 1
 
 let mapleader = " "
 
@@ -47,6 +50,7 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fc <cmd>Telescope colorscheme<cr>
 "nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" COC.nvim Key bindings
 "inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 "inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 "inoremap <expr> <Return> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"

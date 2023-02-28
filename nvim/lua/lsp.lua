@@ -1,56 +1,72 @@
-require('mason.settings').set({
-  ui = {
-    border = 'rounded'
+local lspconfig = require('lspconfig')
+
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', 'gL', vim.diagnostic.setloclist, opts)
+
+local on_attach = function(client, bufnr)
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+end
+
+local lsp_flags = {
+    debounce_text_changes = 150,
+}
+
+-----
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-----
+
+-- python
+lspconfig.pyright.setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+
+-- bash
+lspconfig.bashls.setup{}
+
+-- lua
+lspconfig.lua_ls.setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+
+-- C / C++ / Obj-C
+lspconfig.ccls.setup {
+  init_options = {
+    cache = {
+      directory = ".ccls-cache";
+    };
   }
-})
+}
 
--- ################################# --
+-- json
+lspconfig.jsonls.setup{}
 
-local lsp = require('lsp-zero')
+-- haskell
+-- lspconfig.hls.setup{
+--     filetypes = { 'haskell', 'lhaskell', 'cabal' },
+-- }
 
-lsp.preset('recommended')
+-- zig
+-- require'lspconfig'.zls.setup{}
 
-lsp.ensure_installed({
-  'pyright',
-  'sumneko_lua',
-})
+-- javascript / typescript
+-- lspconfig.tsserver.setup {
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+-- }
 
-lsp.set_preferences({
-  suggest_lsp_servers = true,
-  setup_servers_on_start = true,
-  set_lsp_keymaps = true,
-  configure_diagnostics = true,
-  cmp_capabilities = true,
-  manage_nvim_cmp = true,
-  call_servers = 'local',
-  sign_icons = {
-    error = '✘',
-    warn = '▲',
-    hint = '⚑',
-    info = ''
-  }
-})
-
-lsp.setup_nvim_cmp({
-  sources = {
-    { name = 'nvim_lsp', keyword_length = 1 },
-    { name = 'buffer', keyword_length = 1 },
-    { name = 'path' },
-  },
-})
-
-lsp.setup()
-
--- ################################# --
-
-local cmp = require('cmp')
-
-local cmp_config = lsp.defaults.cmp_config({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  }
-})
-
-cmp.setup(cmp_config)
+-- rust
+-- lspconfig.rust_analyzer.setup {
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+--     settings = {
+--         ["rust-analyzer"] = {}
+--     }
+-- }
 
