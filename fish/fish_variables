@@ -40,4 +40,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dreverse
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/home/hx/\x2eanaconda3/bin\x1e/home/hx/\x2ecargo/bin\x1e/home/hx/anaconda3/bin\x1e/home/hx/\x2eemacs\x2ed/bin\x1e/home/hx/app/Telegram
+SETUVAR fish_user_paths:\x1d

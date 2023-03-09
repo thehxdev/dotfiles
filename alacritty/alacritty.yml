@@ -1,3 +1,10 @@
+#import:
+#  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
+#  - ~/.config/alacritty/tokyonight/tokyonight.yml
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
 # Any items in the `env` entry below will be added as
@@ -119,16 +126,23 @@ font:
     # family: Source Code Pro
     family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
-    # family: RobotoMono Nerd Font
+    # family: RobotoMono Nerd Font Mono
     # family: Hack
-    # family: JetBrains Mono
-    # family: UbuntuMono Nerd Font
+    # family: JetBrainsMono Nerd Font Mono
+    # family: Ubuntu Mono
+    # family: UbuntuMono Nerd Font Mono
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
-    # family: Mononoki Nerd Font
+    # family: Mononoki Nerd Font Mono
+    # family: FiraCode Nerd Font Mono
+    # family: Iosevka
+    # family: Operator Mono
+    # family: Input Mono
 
     # The `style` can be specified to pick a specific face.
-    style: Medium
+    # style: Medium
+    style: Regular
+    # style: Book
 
   # Bold font face
   bold:
@@ -139,13 +153,19 @@ font:
     # family: Source Code Pro
     family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
-    # family: RobotoMono Nerd Font
+    # family: RobotoMono Nerd Font Mono
     # family: Hack
     # family: JetBrains Mono
-    # family: UbuntuMono Nerd Font
+    # family: JetBrainsMono Nerd Font Mono
+    # family: Ubuntu Mono
+    # family: UbuntuMono Nerd Font Mono
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
-    # family: Mononoki Nerd Font
+    # family: Mononoki Nerd Font Mono
+    # family: FiraCode Nerd Font Mono
+    # family: Iosevka
+    # family: Operator Mono
+    # family: Input Mono
 
     # The `style` can be specified to pick a specific face.
     style: Bold
@@ -159,13 +179,19 @@ font:
     # family: Source Code Pro
     family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
-    # family: RobotoMono Nerd Font
+    # family: RobotoMono Nerd Font Mono
     # family: Hack
+    # family: Ubuntu Mono
+    # family: UbuntuMono Nerd Font Mono
     # family: JetBrains Mono
-    # family: UbuntuMono Nerd Font
+    # family: JetBrainsMono Nerd Font Mono
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
-    # family: Mononoki Nerd Font
+    # family: Mononoki Nerd Font Mono
+    # family: FiraCode Nerd Font Mono
+    # family: Iosevka
+    # family: Operator Mono
+    # family: Input Mono
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -179,19 +205,25 @@ font:
     # family: Source Code Pro
     family: Cascadia Mono
     # family: CodeNewRoman Nerd Font
-    # family: RobotoMono Nerd Font
+    # family: RobotoMono Nerd Font Mono
     # family: Hack
+    # family: Ubuntu Mono
+    # family: UbuntuMono Nerd Font Mono
     # family: JetBrains Mono
-    # family: UbuntuMono Nerd Font
+    # family: JetBrainsMono Nerd Font Mono
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
-    # family: Mononoki Nerd Font
+    # family: Mononoki Nerd Font Mono
+    # family: FiraCode Nerd Font Mono
+    # family: Iosevka
+    # family: Operator Mono
+    # family: Input Mono
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
 
   # Point size
-  size: 12.0
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -229,6 +261,62 @@ draw_bold_text_with_bright_colors: true
 ##      START OF COLOR SCHEMES       ##
 #######################################
 schemes:
+
+  tokyo-night: &tokyo-night
+    # Default colors
+    primary:
+      background: '0x1a1b26'
+      foreground: '0xa9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '0x32344a'
+      red:     '0xf7768e'
+      green:   '0x9ece6a'
+      yellow:  '0xe0af68'
+      blue:    '0x7aa2f7'
+      magenta: '0xad8ee6'
+      cyan:    '0x449dab'
+      white:   '0x787c99'
+
+    # Bright colors
+    bright:
+      black:   '0x444b6a'
+      red:     '0xff7a93'
+      green:   '0xb9f27c'
+      yellow:  '0xff9e64'
+      blue:    '0x7da6ff'
+      magenta: '0xbb9af7'
+      cyan:    '0x0db9d7'
+      white:   '0xacb0d0'
+
+  tokyo-night-storm: &tokyo-night-storm
+    # Default colors
+    primary:
+      background: '0x24283b'
+      foreground: '0xa9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '0x32344a'
+      red:     '0xf7768e'
+      green:   '0x9ece6a'
+      yellow:  '0xe0af68'
+      blue:    '0x7aa2f7'
+      magenta: '0xad8ee6'
+      cyan:    '0x449dab'
+      white:   '0x9699a8'
+
+    # Bright colors
+    bright:
+      black:   '0x444b6a'
+      red:     '0xff7a93'
+      green:   '0xb9f27c'
+      yellow:  '0xff9e64'
+      blue:    '0x7da6ff'
+      magenta: '0xbb9af7'
+      cyan:    '0x0db9d7'
+      white:   '0xacb0d0'
 
   ### Doom One ###
   DoomOne: &DoomOne
@@ -278,7 +366,7 @@ schemes:
       focused_match:
         foreground: '#44475a'
         background: '#ffb86c'
-      bar:
+      colors.footer_bar:
         background: '#282a36'
         foreground: '#f8f8f2'
     line_indicator:
@@ -584,7 +672,10 @@ schemes:
 # *SolarizedDark
 # *TomorrowNight
 
-colors: *MonokaiPro
+# colors: *MonokaiPro
+# colors: *Dracula
+colors: *tokyo-night
+# colors: *GruvboxDark
 
 #######################################
 ##       END OF COLOR SCHEMES        ##
@@ -650,8 +741,9 @@ colors: *MonokaiPro
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
+shell:
+  #program: fish
+  program: /bin/fish
 #  args:
 #    - --login
 
@@ -868,8 +960,8 @@ key_bindings:
   - { key: Copy,      mods: None,          action: Copy                        }
   - { key: L,         mods: Control,       action: ClearLogNotice              }
   - { key: L,         mods: Control,       chars: "\x0c"                       }
-  - { key: PageUp,    mods: None,          action: ScrollPageUp,   mode: ~Alt  }
-  - { key: PageDown,  mods: None,          action: ScrollPageDown, mode: ~Alt  }
-  - { key: Home,      mods: Shift,         action: ScrollToTop,    mode: ~Alt  }
-  - { key: End,       mods: Shift,         action: ScrollToBottom, mode: ~Alt  }
+    #- { key: PageUp,    mods: None,          action: ScrollPageUp,   mode: ~Alt  }
+    #- { key: PageDown,  mods: None,          action: ScrollPageDown, mode: ~Alt  }
+    #- { key: Home,      mods: Shift,         action: ScrollToTop,    mode: ~Alt  }
+    #- { key: End,       mods: Shift,         action: ScrollToBottom, mode: ~Alt  }
 
