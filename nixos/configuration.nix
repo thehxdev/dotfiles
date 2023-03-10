@@ -204,8 +204,10 @@
 
   programs.git = {
     enable = true;
-    init = {
-        defaultBranch = "main";
+    config = {
+      init = {
+          defaultBranch = "main";
+      };
     };
   };
 
