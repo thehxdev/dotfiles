@@ -200,10 +200,10 @@
   # $ nix search wget
   #programs.tmux = {
   #    enable = true;
-  #    terminal = "xterm-256color";
+  #    terminal = "tmux-256color";
   #    extraConfig = ''
-  #      set -s escape-time 0
-  #      set -ag terminal-overrides ",*:RGB"
+  #    set -s escape-time 0
+  #    set -ag terminal-overrides ",*:RGB"
   #    '';
   #};
 
