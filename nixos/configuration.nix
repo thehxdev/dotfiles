@@ -12,17 +12,23 @@
     ];
 
   # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda"; 
-  boot.loader.timeout = 5;
+  boot.loader = {
+    grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/sda"; 
+    };
+    timeout = 10;
+  };
 
   # Network Manager
   networking.hostName = "nixos"; 
   networking.networkmanager.enable = true;
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Tehran";
@@ -59,8 +65,10 @@
   ### XFCE
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.defaultSession = "xfce";
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.desktopManager.xfce.enableXfwm = true;
+  services.xserver.desktopManager = {
+      xfce.enable = true;
+      xfce.enableXfwm = true;
+  };
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
 
@@ -152,10 +160,34 @@
   #users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   # Fish shell
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish; # set fish to default shell
+  #programs.fish.enable = true;
+  #users.defaultUserShell = pkgs.fish; # set fish to default shell
+
+  # ZSH shell
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
+    ohMyZsh.enable = true;
+    ohMyZsh.theme = "robbyrussell";
+  };
+  users.defaultUserShell = pkgs.zsh; # set fish to default shell
+
+  # Aliases
+  environment.shellAliases = {
+    l  = "exa -lha";
+    ll = "exa -lh";
+    nv = "nvim";
+    tm = "tmux";
+  };
+
+  environment.variables = {
+    EDITOR = "nvim";
+  };
   
   # QT Themes
+  qt5.enable = true;
   qt5.platformTheme = "qt5ct";
 
   # GPU acceleration
@@ -165,24 +197,38 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  programs.tmux.enable = true;
-  programs.git.enable = true;
+  programs.tmux = {
+      enable = true;
+      terminal = "xterm-256color";
+  };
+
+  programs.git = {
+    enable = true;
+    init = {
+        defaultBranch = "main";
+    };
+  };
+
+  programs.proxychains = {
+      enable = true;
+      proxies = {
+          nekoray = {
+              type = "socks5";
+              host = "127.0.0.1";
+              port = "2080";
+          };
+      };
+  };
+
   environment.systemPackages = with pkgs; [
 
     # Browsers
     firefox
     #ungoogled-chromium
     #brave
-    bleachbit
-
-    # GTK themes
-    #materia-theme
-    #flat-remix-gtk
 
     # Icons
-    #pop-icon-theme
     papirus-icon-theme
-    #flat-remix-icon-theme
 
     # Editors
     vim 
@@ -192,10 +238,13 @@
     fd
 
     # Tools
+    bleachbit
+    exa
     #pcmanfm
     #lxqt.pcmanfm-qt
     libsForQt5.okular
     xfce.mousepad
+    xfce.xfce4-terminal
     pavucontrol
     pamixer
     #nitrogen
