@@ -1,5 +1,5 @@
 #################################################
-# Author: HxDev                                 #
+# Author: TheHxDev                              #
 # Name:   NixOS configuration file              #
 #################################################
 
@@ -139,7 +139,27 @@
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+    extraModules = [ pkgs.pulseaudio-modules-bt ];
+    extraConfig = "load-module module-switch-on-connect";
+  };
+
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+          Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+
+  services.blueman = {
+    enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
