@@ -198,14 +198,14 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  programs.tmux = {
-      enable = true;
-      terminal = "xterm-256color";
-      extraConfig = ''
-        set -s escape-time 0
-        set -ag terminal-overrides ",*:RGB"
-      '';
-  };
+  #programs.tmux = {
+  #    enable = true;
+  #    terminal = "xterm-256color";
+  #    extraConfig = ''
+  #      set -s escape-time 0
+  #      set -ag terminal-overrides ",*:RGB"
+  #    '';
+  #};
 
   programs.git = {
     enable = true;
@@ -263,6 +263,7 @@
     arandr
     vlc
     mpv
+    tmux
 
     # Others
     #git
