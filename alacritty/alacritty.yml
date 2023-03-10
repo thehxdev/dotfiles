@@ -716,14 +716,14 @@ colors: *tokyo-night
 # Allow terminal applications to change Alacritty's window title.
 #dynamic_title: true
 
-#cursor:
+cursor:
   # Cursor style
   #
   # Values for `style`:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
-  #style: Block
+  style: Block
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
@@ -742,8 +742,7 @@ colors: *tokyo-night
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  #program: fish
-  program: /bin/fish
+  program: /bin/bash
 #  args:
 #    - --login
 

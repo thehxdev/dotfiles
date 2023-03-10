@@ -160,7 +160,7 @@
   #users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   # Fish shell
-  #programs.fish.enable = true;
+  programs.fish.enable = true;
   #users.defaultUserShell = pkgs.fish; # set fish to default shell
 
   # ZSH shell
@@ -172,7 +172,8 @@
     ohMyZsh.enable = true;
     ohMyZsh.theme = "robbyrussell";
   };
-  users.defaultUserShell = pkgs.zsh; # set fish to default shell
+
+  users.defaultUserShell = pkgs.fish;
 
   # Aliases
   environment.shellAliases = {
