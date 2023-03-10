@@ -160,7 +160,7 @@
   #users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   # Fish shell
-  programs.fish.enable = true;
+  #programs.fish.enable = true;
   #users.defaultUserShell = pkgs.fish; # set fish to default shell
 
   # ZSH shell
@@ -173,7 +173,7 @@
     ohMyZsh.theme = "robbyrussell";
   };
 
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.zsh;
 
   # Aliases
   environment.shellAliases = {
@@ -201,6 +201,10 @@
   programs.tmux = {
       enable = true;
       terminal = "xterm-256color";
+      extraConfig = ''
+        set -s escape-time 0
+        set -ag terminal-overrides ",*:RGB"
+      '';
   };
 
   programs.git = {
