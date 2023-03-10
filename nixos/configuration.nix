@@ -241,6 +241,7 @@
 
     # Tools
     bleachbit
+    xarchiver
     exa
     #pcmanfm
     #lxqt.pcmanfm-qt
