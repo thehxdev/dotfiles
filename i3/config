@@ -40,7 +40,7 @@ exec --no-startup-id "xrdb /home/hx/.Xresources"
 exec --no-startup-id "nitrogen --restore"
 exec --no-startup-id "picom --backend glx"
 exec --no-startup-id "setxkbmap -layout 'us,ir' -option 'caps:escape,grp:alt_shift_toggle'"
-exec --no-startup-id "blueman-applet"
+#exec --no-startup-id "blueman-applet"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
