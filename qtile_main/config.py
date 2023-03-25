@@ -67,6 +67,12 @@ keys = [
     Key([mod], "d", lazy.spawn(file_manager), desc="Launch file manager"),
     Key([mod], "s", lazy.spawn(rofi_drun), desc="Launch rofi"),
     Key([mod, "shift"], "f", lazy.spawn(browser), desc="Launch internet browser"),
+    Key([], "Print", lazy.spawn("flameshot gui")),
+
+    # volume
+    Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 5- unmute")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 5+ unmute"))
 ]
 
 
