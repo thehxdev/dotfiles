@@ -1,13 +1,32 @@
 import os
 import subprocess
+from pathlib import Path
 from libqtile.lazy import lazy
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
-#from libqtile.utils import guess_terminal
+from libqtile.utils import guess_terminal
+
+
+# a function to find a terminal in PATH and set it
+# as default terminal.
+# NOTE: This function does not work on NixOS and you MUST
+#       set the terminal manually.
+def set_terminal():
+    # the order matters!
+    terminals = [ "alacritty", "kitty", "urxvt", "xterm" ]
+    for terminal in terminals:
+        term_path = os.path.join("/usr/bin", terminal)
+        p = Path(term_path)
+        if p.exists():
+            return terminal
+    else:
+        return guess_terminal()
+
 
 mod = "mod4"
-#terminal = guess_terminal()
-terminal     = "alacritty"
+
+#terminal = "alacritty"
+terminal     = set_terminal()
 browser      = "firefox"
 rofi_drun    = "rofi -show drun"
 file_manager = "thunar"
