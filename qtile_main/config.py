@@ -128,6 +128,21 @@ for k, group in zip(["1", "2", "3", "4", "5"], groups):
 
 # Layouts
 layouts = [
+
+    layout.MonadTall(
+        align = 0,
+        new_client_position = "before_current",
+        single_border_width = 2,
+        border_width  = 2,
+        border_focus  = "#AAC4FF",
+        border_normal = "#3F4E4F",
+        margin = 4,
+        ratio = 0.6,
+        change_size = 10,
+        ),
+
+    layout.Max(),
+
     #layout.Columns(
     #    border_focus_stack=[
     #        "#d75f5f",
@@ -135,16 +150,6 @@ layouts = [
     #        ],
     #    border_width=4
     #    ),
-
-    layout.MonadTall(
-        single_border_width = 2,
-        border_width  = 2,
-        border_focus  = "#AAC4FF",
-        border_normal = "#3F4E4F",
-        margin = 4,
-        ),
-
-    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
