@@ -108,7 +108,7 @@ groups = [
     Group("",
           layout="monadtall"),
 
-    Group("",
+    Group("",
           layout="monadtall"),
 
     Group("",
@@ -128,8 +128,8 @@ groups = [
 ]
 
 for k, group in zip(["1", "2", "3", "4", "5"], groups):
-  keys.append(Key([mod], (k), lazy.group[group.name].toscreen()))
-  keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
+    keys.append(Key([mod], (k), lazy.group[group.name].toscreen()))
+    keys.append(Key([mod, "shift"], (k), lazy.window.togroup(group.name)))
 
 # Layouts
 layouts = [
@@ -215,22 +215,27 @@ screens = [
                 ),
 
                 #widget.Prompt(),
+
+                widget.WindowCount(
+                    fmt = "[{}]"
+                    ),
+
                 widget.WindowName(
                     max_chars=40,
                     ),
 
-                #widget.Chord(
-                #    chords_colors={
-                #        "launch": ("#ff0000", "#ffffff"),
-                #    },
-                #    name_transform=lambda name: name.upper(),
+                #widget.Net(
+
+                #    ),
+
+                #widget.Sep(
+                #    foreground="#535965",
+                #    linewidth=1,
+                #    padding=10
                 #),
 
-                #widget.TextBox("default config", name="default"),
-                #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-
                 widget.Volume(
-                    fmt = ": {}"
+                    fmt = " {}"
                     ),
 
                 widget.Sep(
