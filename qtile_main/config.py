@@ -88,10 +88,15 @@ keys = [
     Key([mod, "shift"], "f", lazy.spawn(browser), desc="Launch internet browser"),
     Key([], "Print", lazy.spawn("flameshot gui")),
 
-    # volume
-    Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 5- unmute")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 5+ unmute"))
+    # volume settings with pactl
+    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute 0 toggle")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -5%")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +5%")),
+
+    # volume settings with amixer
+    #Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
+    #Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute")),
+    #Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"))
 ]
 
 
@@ -223,6 +228,16 @@ screens = [
 
                 #widget.TextBox("default config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+
+                widget.Volume(
+                    fmt = ": {}"
+                    ),
+
+                widget.Sep(
+                    foreground="#535965",
+                    linewidth=1,
+                    padding=10
+                ),
 
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
 
