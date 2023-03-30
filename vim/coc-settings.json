@@ -1,27 +1,49 @@
 {
-  "languageserver": {
-    "haskell": {
-      "command": "$HOME/.ghcup/bin/haskell-language-server-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
-      "filetypes": ["haskell", "lhaskell"],
-      // Settings are optional, here are some example values
-      "settings": {
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "rootPatterns": [".ccls-root", "compile_commands.json"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                },
+                "client": {
+                    "snippetSupport": true
+                }
+            }
+        },
+        "zig": {
+            "enabled": true,
+            "startUpMessage": true,
+            "path": "/usr/local/bin/zls",
+            "debugLog": false
+        },
+        "pyright":{
+            "inlayHints.variableTypes": false,
+            "inlayHints.functionReturnTypes": false
+        },
         "haskell": {
-          "checkParents": "CheckOnSave",
-          "checkProject": true,
-          "maxCompletions": 40,
-          "formattingProvider": "ormolu",
-          "plugin": {
-            "stan": { "globalOn": true }
-          }
+            "command": "$HOME/.ghcup/bin/haskell-language-server-wrapper",
+            "args": ["--lsp"],
+            "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+            "filetypes": ["haskell", "lhaskell"],
+            "settings": {
+                "haskell": {
+                    "checkParents": "CheckOnSave",
+                    "checkProject": true,
+                    "maxCompletions": 40,
+                    "formattingProvider": "ormolu",
+                    "plugin": {
+                        "stan": { "globalOn": true }
+                    }
+                }
+            }
+        },
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": ["go.mod"],
+            "filetypes": ["go"]
         }
-      }
-    },
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod"],
-      "filetypes": ["go"]
     }
-  }
 }

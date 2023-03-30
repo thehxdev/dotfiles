@@ -10,22 +10,12 @@ Plug 'vim-python/python-syntax'
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
-Plug 'tc50cal/vim-terminal'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
-Plug 'Yggdroot/indentLine'
-Plug 'ayu-theme/ayu-vim'
-Plug 'joshdick/onedark.vim'
-Plug 'morhetz/gruvbox'
-Plug 'catppuccin/vim'
 Plug 'ghifarit53/tokyonight-vim'
-Plug 'cocopon/iceberg.vim'
-Plug 'Rigellute/rigel'
-Plug 'lifepillar/vim-solarized8'
-Plug 'sainnhe/edge'
 
 call plug#end()
 
