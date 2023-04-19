@@ -6,10 +6,11 @@
 
 { config, pkgs, ... }:
 
-{ imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+{ 
+  imports = [ 
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader = {
@@ -66,8 +67,8 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.defaultSession = "xfce";
   services.xserver.desktopManager = {
-      xfce.enable = true;
-      xfce.enableXfwm = true;
+    xfce.enable = true;
+    xfce.enableXfwm = true;
   };
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
@@ -95,7 +96,7 @@
   #  ];
   #};
 
-  # dwm and dmenu config path
+  ### dwm and dmenu config path
   #nixpkgs.overlays = [
   # (final: prev: {
   #   dwm = prev.dwm.overrideAttrs (old: { src = /home/hx/.dwm/dwm ;});
@@ -103,7 +104,7 @@
   # })
   #];
 
-  # Fonts
+  ### Fonts
   fonts = {
     enableDefaultFonts = true;
   };
@@ -152,7 +153,7 @@
     powerOnBoot = true;
     settings = {
       General = {
-          Enable = "Source,Sink,Media,Socket";
+        Enable = "Source,Sink,Media,Socket";
       };
     };
   };
@@ -206,7 +207,7 @@
   environment.variables = {
     EDITOR = "nvim";
   };
-  
+
   # QT Themes
   qt5.enable = true;
   qt5.platformTheme = "qt5ct";
@@ -233,20 +234,20 @@
     enable = true;
     config = {
       init = {
-          defaultBranch = "main";
+        defaultBranch = "main";
       };
     };
   };
 
   programs.proxychains = {
-      enable = true;
-      proxies = {
-          nekoray = {
-              type = "socks5";
-              host = "127.0.0.1";
-              port = "2080";
-          };
+    enable = true;
+    proxies = {
+      nekoray = {
+        type = "socks5";
+        host = "127.0.0.1";
+        port = "2080";
       };
+    };
   };
 
   environment.systemPackages = with pkgs; [
