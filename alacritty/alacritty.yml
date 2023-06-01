@@ -1,10 +1,3 @@
-#import:
-#  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
-#  - ~/.config/alacritty/tokyonight/tokyonight.yml
-
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
 # Any items in the `env` entry below will be added as
@@ -123,6 +116,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
+    # family: Comic Mono
     # family: Source Code Pro
     # family: Cascadia Mono
     family: CaskaydiaCove Nerd Font
@@ -135,14 +129,14 @@ font:
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
     # family: Mononoki Nerd Font Mono
-    # family: FiraCode Nerd Font Mono
+    # family: FiraCode Nerd Font
     # family: Iosevka
     # family: Operator Mono
     # family: Input Mono
 
     # The `style` can be specified to pick a specific face.
-    style: Medium
-    # style: Regular
+    # style: Medium
+    style: Regular
     # style: Book
 
   # Bold font face
@@ -164,7 +158,7 @@ font:
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
     # family: Mononoki Nerd Font Mono
-    # family: FiraCode Nerd Font Mono
+    # family: FiraCode Nerd Font
     # family: Iosevka
     # family: Operator Mono
     # family: Input Mono
@@ -191,7 +185,7 @@ font:
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
     # family: Mononoki Nerd Font Mono
-    # family: FiraCode Nerd Font Mono
+    # family: FiraCode Nerd Font
     # family: Iosevka
     # family: Operator Mono
     # family: Input Mono
@@ -206,8 +200,8 @@ font:
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Source Code Pro
-    family: CaskaydiaCove Nerd Font
     # family: Cascadia Mono
+    family: CaskaydiaCove Nerd Font
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font Mono
     # family: Hack
@@ -218,7 +212,7 @@ font:
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
     # family: Mononoki Nerd Font Mono
-    # family: FiraCode Nerd Font Mono
+    # family: FiraCode Nerd Font
     # family: Iosevka
     # family: Operator Mono
     # family: Input Mono
@@ -227,7 +221,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 11
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -265,6 +259,61 @@ draw_bold_text_with_bright_colors: true
 ##      START OF COLOR SCHEMES       ##
 #######################################
 schemes:
+
+  OneDark: &OneDark
+    primary:
+      #background: '0x1e2127'
+      background: '0x1E1E1E'
+      foreground: '0xabb2bf'
+
+    # Normal colors
+    normal:
+      black:   '0x1e2127'
+      red:     '0xe06c75'
+      green:   '0x98c379'
+      yellow:  '0xd19a66'
+      blue:    '0x61afef'
+      magenta: '0xc678dd'
+      cyan:    '0x56b6c2'
+      white:   '0xabb2bf'
+
+    # Bright colors
+    bright:
+      black:   '0x5c6370'
+      red:     '0xe06c75'
+      green:   '0x98c379'
+      yellow:  '0xd19a66'
+      blue:    '0x61afef'
+      magenta: '0xc678dd'
+      cyan:    '0x56b6c2'
+      white:   '0xffffff'
+
+  VsCode: &VsCode
+    primary:
+      background: "#1E1E1E"
+      foreground: "#D4D4D4"
+    cursor:
+      text: "#1d1f21"
+      cursor: "#cccccc"
+    normal:
+      black: "#000000"
+      red: "#cd3131"
+      green: "#0dbc79"
+      yellow: "#e5e510"
+      blue: "#2472c8"
+      magenta: "#bc3fbc"
+      cyan: "#11a8cd"
+      white: "#e5e5e5"
+    bright:
+      black: "#666666"
+      red: "#f14c4c"
+      green: "#23d18b"
+      yellow: "#f5f543"
+      blue: "#3b8eea"
+      magenta: "#d670d6"
+      cyan: "#29b8db"
+      white: "#e5e5e5"
+
 
   tokyo-night: &tokyo-night
     # Default colors
@@ -665,6 +714,7 @@ schemes:
 ## SET THEME: Choose ONE color scheme from those in the above list. ##
 ## ###################################################################
 # Available themes are:
+# *OneDark
 # *DoomOne
 # *Dracula
 # *GruvboxDark
@@ -675,11 +725,11 @@ schemes:
 # *SolarizedLight
 # *SolarizedDark
 # *TomorrowNight
+# *tokyo-night
+# *tokyo-night-storm
 
-# colors: *MonokaiPro
-# colors: *Dracula
-colors: *tokyo-night
-# colors: *GruvboxDark
+colors: *OneDark
+#colors: *tokyo-night
 
 #######################################
 ##       END OF COLOR SCHEMES        ##
