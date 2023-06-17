@@ -46,55 +46,73 @@
     useXkbConfig = true; # use xkbOptions in tty.
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  #services.xserver.videoDrivers = [ "intel" ];
-  #services.xserver.deviceSection = ''
-  #  Option "DRI" "2"
-  #  Option "TearFree" "true"
-  #'';
-  services.xserver.videoDrivers = [ "modesetting" ];
-  #services.xserver.UseGlamor = true;
+  # X11 and Xserver settings
+  services.xserver = {
+    enable = true;
+    #videoDrivers = [ "modesetting" ];
+    videoDrivers = [ "intel" ];
+    deviceSection = ''
+      Option "DRI" "2"
+      Option "TearFree" "true"
+    '';
+    #UseGlamor = true;
 
-  # Enable the Desktop Environment.
 
-  ### KDE
-  #services.xserver.displayManager.sddm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
-  #services.xserver.displayManager.defaultSession = "plasma";
+    displayManager = {
+      # KDE
+      #sddm.enable = true;
+      #defaultSession = "plasma";
 
-  ### XFCE
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "xfce";
-  services.xserver.desktopManager = {
-    xfce.enable = true;
-    xfce.enableXfwm = true;
-  };
+      # lightdm
+      lightdm.enable = true;
+
+      # XFCE
+      defaultSession = "xfce";
+    };
+
+    desktopManager = {
+      # XFCE
+      xfce.enable = true;
+      xfce.enableXfwm = true;
+
+      # Cinnamon
+      #cinnamon.enable = true;
+
+      # KDE plasma
+      #plasma5.enable = true;
+    };
+
+    windowManager = {
+      #dwm.enable = true;
+
+      #bspwm = {
+      #  enable = true;
+      #  configFile = "/home/hx/.config/bspwm/bspwmrc";
+      #  sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
+      #};
+
+      qtile.enable = true;
+      qtile.configFile = "/home/hx/.config/qtile/config.py"
+      qtile.extraPackages = python3Packages: with python3Packages; [
+        qtile-extras
+      ];
+
+      #xmonad.enable = true;
+      #xmonad.enableContribAndExtras = true;
+      #xmonad.extraPackages = hpkgs: [
+      #  hpkgs.xmonad
+      #  hpkgs.xmonad-contrib
+      #  hpkgs.xmonad-extras
+      #];
+    };
+  }
+
+  # XFCE Opts
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
 
-  ### Cinnamon
-  #services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.desktopManager.cinnamon.enable = true;
+  # Cinnamon Opts
   #services.cinnamon.apps.enable = true;
-
-  ### Window Managers
-  #services.xserver.windowManager = {
-  #  #dwm.enable = true;
-  #  bspwm = {
-  #    enable = true;
-  #    configFile = "/home/hx/.config/bspwm/bspwmrc";
-  #    sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
-  #  };
-  #  qtile.enable = true;
-  #  xmonad.enable = true;
-  #  xmonad.enableContribAndExtras = true;
-  #  xmonad.extraPackages = hpkgs: [
-  #    hpkgs.xmonad
-  #    hpkgs.xmonad-contrib
-  #    hpkgs.xmonad-extras
-  #  ];
-  #};
 
   ### dwm and dmenu config path
   #nixpkgs.overlays = [
@@ -104,36 +122,69 @@
   # })
   #];
 
-  ### Fonts
+  # GPU acceleration
+  hardware.opengl.extraPackages = [
+    pkgs.intel-compute-runtime
+  ];
+
+
+  # Fonts
   fonts = {
     enableDefaultFonts = true;
+    fonts = with pkgs; [ 
+      vazir-fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      font-awesome
+      (nerdfonts.override { fonts = [
+        "FiraMono"
+        "Mononoki"
+        "UbuntuMono"
+        "RobotoMono"
+        "JetbrainsMono"
+        "CascadiaCode"
+        ]; })
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Vazirmatn" "Ubuntu" ];
+        sansSerif = [ "Vazirmatn" "Ubuntu" ];
+        monospace = [ "CaskaydiaCove Nerd Font" ];
+      };
+    };
   };
 
   # gvfs
   services.gvfs.enable = true;
 
   # picom
-  #services.picom = {
-  #  enable = true;
-  #  fade = false;
-  #  shadow = true;
-  #  backend = "xrender";
-  #  vSync = false;
-  #  inactiveOpacity = 1.0;
-  #  #activeOpacity = 1.0;
-  #  #settings = {
-  #    #blur =
-  #    #{
-  #      #method = "guassian";
-  #      #size = 7;
-  #      #deviation = 7;
-  #    #};
-  #  #};
-  #};
+  services.picom = {
+    enable = true;
+    fade = false;
+    shadow = true;
+    backend = "glx";
+    vSync = false;
+    inactiveOpacity = 1.0;
+    activeOpacity = 1.0;
+    #settings = {
+      #blur =
+      #{
+        #method = "guassian";
+        #size = 7;
+        #deviation = 7;
+      #};
+    #};
+  };
 
-  # Configure keymap in X11
-  services.xserver.layout = "us,ir";
-  services.xserver.xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+  # Configure keymap and touchpad in X11
+  services.xserver = {
+    libinput.enable = true;
+    libinput.touchpad.tapping = true;
+
+    layout = "us,ir";
+    xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+  }
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -163,8 +214,8 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.tapping = true;
+  services.xserver.
+  services.xserver.
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hx = {
@@ -190,16 +241,19 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
-    ohMyZsh.enable = true;
-    ohMyZsh.theme = "robbyrussell";
+    ohMyZsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "man" ];
+    }
   };
 
   users.defaultUserShell = pkgs.zsh;
 
   # Aliases
   environment.shellAliases = {
-    l  = "exa -lha";
-    ll = "exa -lh";
+    l  = "exa -lha --group-directories-first";
+    ll = "exa -lh --group-directories-first";
     nv = "nvim";
     tm = "tmux";
   };
@@ -208,14 +262,13 @@
     EDITOR = "nvim";
   };
 
+  # flatpak
+  services.flatpak.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
   # QT Themes
   qt5.enable = true;
   qt5.platformTheme = "qt5ct";
-
-  # GPU acceleration
-  hardware.opengl.extraPackages = [
-    pkgs.intel-compute-runtime
-  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -230,6 +283,7 @@
   #    '';
   #};
 
+  # git
   programs.git = {
     enable = true;
     config = {
@@ -239,16 +293,16 @@
     };
   };
 
-  programs.proxychains = {
-    enable = true;
-    proxies = {
-      nekoray = {
-        type = "socks5";
-        host = "127.0.0.1";
-        port = "2080";
-      };
-    };
-  };
+  #programs.proxychains = {
+  #  enable = true;
+  #  proxies = {
+  #    nekoray = {
+  #      type = "socks5";
+  #      host = "127.0.0.1";
+  #      port = "2080";
+  #    };
+  #  };
+  #};
 
   environment.systemPackages = with pkgs; [
 
@@ -264,10 +318,10 @@
     vim 
     neovim
     #emacs
-    ripgrep
-    fd
 
     # Tools
+    ripgrep
+    fd
     bleachbit
     xarchiver
     exa
@@ -278,7 +332,7 @@
     xfce.xfce4-terminal
     pavucontrol
     pamixer
-    #nitrogen
+    nitrogen
     rofi
     alacritty
     #kitty
@@ -312,14 +366,14 @@
     #tdesktop
     viewnior
     xorg.xkill
-    killall
+    #killall
     unrar
     unzip
     gzip
     p7zip
     font-manager
     acpid
-    #cmake
+    cmake
     gcc
     nodejs
     nodePackages.npm
@@ -367,6 +421,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 }
 
