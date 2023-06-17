@@ -16,7 +16,6 @@
   boot.loader = {
     grub = {
       enable = true;
-      version = 2;
       device = "/dev/sda"; 
     };
     timeout = 10;
@@ -48,6 +47,12 @@
 
   # X11 and Xserver settings
   services.xserver = {
+    libinput.enable = true;
+    libinput.touchpad.tapping = true;
+
+    layout = "us,ir";
+    xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+
     enable = true;
     #videoDrivers = [ "modesetting" ];
     videoDrivers = [ "intel" ];
@@ -92,7 +97,7 @@
       #};
 
       qtile.enable = true;
-      qtile.configFile = "/home/hx/.config/qtile/config.py"
+      qtile.configFile = "/home/hx/.config/qtile/config.py";
       qtile.extraPackages = python3Packages: with python3Packages; [
         qtile-extras
       ];
@@ -105,7 +110,7 @@
       #  hpkgs.xmonad-extras
       #];
     };
-  }
+  };
 
   # XFCE Opts
   programs.thunar.enable = true;
@@ -142,7 +147,7 @@
         "Mononoki"
         "UbuntuMono"
         "RobotoMono"
-        "JetbrainsMono"
+        "JetBrainsMono"
         "CascadiaCode"
         ]; })
     ];
@@ -177,15 +182,6 @@
     #};
   };
 
-  # Configure keymap and touchpad in X11
-  services.xserver = {
-    libinput.enable = true;
-    libinput.touchpad.tapping = true;
-
-    layout = "us,ir";
-    xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
-  }
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -194,7 +190,7 @@
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
+    #extraModules = [ pkgs.pulseaudio-modules-bt ];
     extraConfig = "load-module module-switch-on-connect";
   };
 
@@ -212,10 +208,6 @@
   services.blueman = {
     enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.
-  services.xserver.
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hx = {
@@ -245,7 +237,7 @@
       enable = true;
       theme = "robbyrussell";
       plugins = [ "git" "man" ];
-    }
+    };
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -264,11 +256,14 @@
 
   # flatpak
   services.flatpak.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  }
 
   # QT Themes
-  qt5.enable = true;
-  qt5.platformTheme = "qt5ct";
+  qt.enable = true;
+  qt.platformTheme = "qt5ct";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
