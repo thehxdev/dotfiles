@@ -74,7 +74,7 @@
       # lightdm
       lightdm.enable = true;
 
-      # XFCE
+      # lightdm default session
       defaultSession = "xfce";
     };
 
@@ -146,6 +146,7 @@
       noto-fonts-emoji
       font-awesome
       (nerdfonts.override { fonts = [
+        "Ubuntu"
         "FiraMono"
         "Mononoki"
         "UbuntuMono"
