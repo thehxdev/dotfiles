@@ -259,7 +259,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  }
+  };
 
   # QT Themes
   qt.enable = true;
