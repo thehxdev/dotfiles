@@ -22,8 +22,10 @@
   };
 
   # Network Manager
-  networking.hostName = "nixos"; 
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixos"; 
+    networkmanager.enable = true;
+  }
 
   # Allow unfree packages
   nixpkgs.config = {
@@ -47,19 +49,20 @@
 
   # X11 and Xserver settings
   services.xserver = {
+    enable = true;
+
     libinput.enable = true;
     libinput.touchpad.tapping = true;
 
     layout = "us,ir";
     xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
 
-    enable = true;
-    #videoDrivers = [ "modesetting" ];
-    videoDrivers = [ "intel" ];
-    deviceSection = ''
-      Option "DRI" "2"
-      Option "TearFree" "true"
-    '';
+    videoDrivers = [ "modesetting" ];
+    #videoDrivers = [ "intel" ];
+    #deviceSection = ''
+    #  Option "DRI" "2"
+    #  Option "TearFree" "true"
+    #'';
     #UseGlamor = true;
 
 
@@ -173,12 +176,12 @@
     inactiveOpacity = 1.0;
     activeOpacity = 1.0;
     #settings = {
-      #blur =
-      #{
-        #method = "guassian";
-        #size = 7;
-        #deviation = 7;
-      #};
+    #  blur =
+    #  {
+    #    method = "guassian";
+    #    size = 7;
+    #    deviation = 7;
+    #  };
     #};
   };
 
