@@ -97,7 +97,7 @@
       #};
 
       qtile.enable = true;
-      qtile.configFile = "/home/hx/.config/qtile/config.py";
+      #qtile.configFile = "/home/hx/.config/qtile/config.py";
       qtile.extraPackages = python3Packages: with python3Packages; [
         qtile-extras
       ];
