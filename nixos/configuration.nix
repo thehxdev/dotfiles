@@ -325,6 +325,7 @@
     libsForQt5.okular
     xfce.mousepad
     xfce.xfce4-terminal
+    xfce.xfce4-xkb-plugin
     pavucontrol
     pamixer
     nitrogen
@@ -349,7 +350,6 @@
     brightnessctl
     xclip
     xsel
-    xfce.xfce4-xkb-plugin
     python3Full
     #lxsession
     #lxappearance
@@ -360,7 +360,6 @@
     yt-dlp
     #tdesktop
     viewnior
-    xorg.xkill
     #killall
     unrar
     unzip
@@ -384,6 +383,7 @@
     xorg.xcbutil
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
+    xorg.xkill
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
