@@ -63,7 +63,6 @@
     #  Option "DRI" "2"
     #  Option "TearFree" "true"
     #'';
-    #UseGlamor = true;
 
 
     displayManager = {
@@ -107,10 +106,10 @@
 
       #xmonad.enable = true;
       #xmonad.enableContribAndExtras = true;
-      #xmonad.extraPackages = hpkgs: [
-      #  hpkgs.xmonad
-      #  hpkgs.xmonad-contrib
-      #  hpkgs.xmonad-extras
+      #xmonad.extraPackages = hpkgs: with hpkgs; [
+      #  xmonad
+      #  xmonad-contrib
+      #  xmonad-extras
       #];
     };
   };
@@ -157,8 +156,8 @@
     ];
     fontconfig = {
       defaultFonts = {
-        serif = [ "Vazirmatn" "Ubuntu" ];
-        sansSerif = [ "Vazirmatn" "Ubuntu" ];
+        serif = [ "Vazirmatn" "Ubuntu Nerd Font" ];
+        sansSerif = [ "Vazirmatn" "Ubuntu Nerd Font" ];
         monospace = [ "CaskaydiaCove Nerd Font" ];
       };
     };
@@ -236,11 +235,11 @@
     enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    autosuggestions.enable = true;
+    #autosuggestions.enable = true;
     ohMyZsh = {
       enable = true;
       theme = "robbyrussell";
-      plugins = [ "git" "man" ];
+      plugins = [ "git" ];
     };
   };
 
@@ -268,9 +267,6 @@
   # QT Themes
   qt.enable = true;
   qt.platformTheme = "qt5ct";
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
 
   # tmux
   #programs.tmux = {
@@ -303,6 +299,10 @@
   #  };
   #};
 
+  # Xray
+  services.xray.enable = true;
+  services.xray.settingsFile = "/etc/xray/config.json";
+
   environment.systemPackages = with pkgs; [
 
     # Browsers
@@ -318,66 +318,48 @@
     neovim
     #emacs
 
-    # Tools
+    # Terminals and Command-line tools
+    alacritty
     ripgrep
     fd
-    bleachbit
-    xarchiver
     exa
-    #pcmanfm
-    #lxqt.pcmanfm-qt
-    libsForQt5.okular
-    xfce.mousepad
-    xfce.xfce4-terminal
-    xfce.xfce4-xkb-plugin
-    pavucontrol
-    pamixer
-    nitrogen
-    rofi
-    alacritty
-    #kitty
-    #dmenu
-    arandr
-    vlc
-    mpv
     tmux
-
-    # Others
-    #git
     curl
     aria2
     wget
+    htop
+    neofetch
+    yt-dlp
+    #kitty
+
+    # Multi media
+    pavucontrol
+    pamixer
+    arandr
+    vlc
+    mpv
     ffmpeg
     x264
     libvpx
-    galculator
-    brightnessctl
-    xclip
-    xsel
-    python3Full
-    #lxsession
-    #lxappearance
-    #pfetch
-    afetch
-    neofetch
-    htop
-    yt-dlp
-    #tdesktop
-    viewnior
-    #killall
+
+    # XFCE
+    xfce.mousepad
+    xfce.xfce4-terminal
+    xfce.xfce4-xkb-plugin
+
+    # Archive
     unrar
     unzip
     gzip
     p7zip
-    font-manager
-    acpid
+    xarchiver
+
+    # Dev
+    python311Full
     cmake
     gcc
     nodejs
     nodePackages.npm
-    flameshot
-    xdg-user-dirs
-    xdg-utils
 
     # xorg
     xorg.libX11
@@ -388,15 +370,37 @@
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
     xorg.xkill
+    xclip
+    xsel
+
+    # Tools
+    bleachbit
+    libsForQt5.okular
+    nitrogen
+    rofi
+    galculator
+    brightnessctl
+    lxsession
+    lxappearance
+    viewnior
+    font-manager
+    acpid
+    flameshot
+    xdg-user-dirs
+    xdg-utils
+    #pcmanfm
+    #lxqt.pcmanfm-qt
+    #dmenu
+    #killall
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  #programs.mtr.enable = true;
+  #programs.gnupg.agent = {
+  #  enable = true;
+  #  enableSSHSupport = true;
+  #};
 
   # List services that you want to enable:
 
