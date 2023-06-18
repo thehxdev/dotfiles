@@ -25,11 +25,13 @@ def set_terminal():
 
 mod = "mod4"
 
-#terminal = "alacritty"
-terminal     = set_terminal()
+terminal     = "alacritty"
+#terminal     = set_terminal()
 browser      = "firefox"
+#browser      = "brave-browser"
 rofi_drun    = "rofi -show drun"
 file_manager = "thunar"
+#fix_keyboard_layout = "setxkbmap -layout 'us,ir' -option 'caps:escape,grp:alt_shift_toggle'"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -62,7 +64,7 @@ keys = [
     Key([mod], "m", lazy.layout.shrink(), desc="Shrink window in monadTall"),
     Key([mod, "shift"], "space", lazy.layout.flip(), desc="Flip windows in monadTall"),
     Key([mod], "o", lazy.layout.maximize(), desc="Maximize window size in monadTall"),
-    Key([mod], "g", lazy.hide_show_bar("bottom"), desc="hide bottom bar"),
+    Key([mod], "g", lazy.hide_show_bar("top"), desc="hide bottom bar"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -87,6 +89,7 @@ keys = [
     Key([mod], "s", lazy.spawn(rofi_drun), desc="Launch rofi"),
     Key([mod, "shift"], "f", lazy.spawn(browser), desc="Launch internet browser"),
     Key([], "Print", lazy.spawn("flameshot gui")),
+    #Key([mod, "shift"], "k", lazy.spawn(fix_keyboard_layout)),
 
     # volume settings with pactl
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute 0 toggle")),
@@ -172,7 +175,7 @@ widget_defaults = dict(
     #background = "#3b3b3b",
     background = "#191825",
     foreground = "#e6e6e6",
-    font       = "monospace",
+    font       = "FiraMono Nerd Font",
     fontsize   = 13,
     padding    = 3,
 )
@@ -181,7 +184,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
                 #widget.GroupBox(),
                 widget.GroupBox(
@@ -222,6 +225,7 @@ screens = [
 
                 widget.WindowName(
                     max_chars=40,
+                    font = "Vazirmatn"
                     ),
 
                 #widget.Net(
@@ -256,11 +260,11 @@ screens = [
                 # widget.StatusNotifier(),
                 widget.Systray(),
 
-                widget.Sep(
-                    foreground="#535965",
-                    linewidth=1,
-                    padding=20
-                ),
+                #widget.Sep(
+                #    foreground="#535965",
+                #    linewidth=1,
+                #    padding=20
+                #),
                 #widget.QuickExit(),
             ],
             24,
@@ -324,6 +328,7 @@ floating_layout = layout.Floating(
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
+#bring_front_click = False
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
