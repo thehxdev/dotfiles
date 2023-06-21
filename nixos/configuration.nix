@@ -170,7 +170,7 @@
   services.picom = {
     enable = true;
     fade = false;
-    shadow = true;
+    shadow = false;
     backend = "glx";
     vSync = false;
     inactiveOpacity = 1.0;
@@ -312,6 +312,7 @@
 
     # Icons
     papirus-icon-theme
+    libsForQt5.qtstyleplugin-kvantum
 
     # Editors
     vim 
@@ -346,6 +347,7 @@
     xfce.mousepad
     xfce.xfce4-terminal
     xfce.xfce4-xkb-plugin
+    xfce.xfce4-clipman-plugin
 
     # Archive
     unrar
@@ -358,10 +360,12 @@
     python311Full
     cmake
     gcc
+    glibc
+    gnumake
     nodejs
     nodePackages.npm
 
-    # xorg
+    # Xorg
     xorg.libX11
     xorg.libXinerama
     xorg.libXft
@@ -372,6 +376,10 @@
     xorg.xkill
     xclip
     xsel
+
+    # OpenSSL
+    openssl
+    libressl
 
     # Tools
     bleachbit
@@ -388,6 +396,8 @@
     flameshot
     xdg-user-dirs
     xdg-utils
+    dig
+    tun2socks
     #pcmanfm
     #lxqt.pcmanfm-qt
     #dmenu

@@ -28,20 +28,18 @@ import XMonad.Hooks.DynamicLog
 -- Whatever
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
 
 
 ---------------------------------------------
 -- Variables
 ---------------------------------------------
-myTerminal      = "kitty"
-myEmacs         = "emacsclient -c -a 'emacs' "
-myBrowser       = "brave"
-myFileManager   = "pcmanfm"
-myEditor        = myTerminal ++  " -e nvim"
---rofiDrun        = "rofi -show drun"
-dmenuRun        = "dmenu_run"
+myTerminal    = "alacritty"
+myBrowser     = "firefox"
+myFileManager = "thunar"
+rofiDrun      = "rofi -show drun"
+--myEmacs     = "emacsclient -c -a 'emacs'"
+--myEditor    = myTerminal ++  " -e nvim"
+--dmenuRun    = "dmenu_run"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -92,7 +90,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
     -- launch dmenu
-    , ((modm,               xK_s     ), spawn $ dmenuRun)
+    , ((modm,               xK_s     ), spawn $ rofiDrun)
 
     -- launch pcmanfm
     , ((modm,               xK_d     ), spawn $ myFileManager)
@@ -101,10 +99,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_f     ), spawn $ myBrowser)
 
     -- launch emacs
-    , ((modm,               xK_e     ), spawn $ myEmacs)
+    --, ((modm,               xK_e     ), spawn $ myEmacs)
 
     -- launch nvim
-    , ((modm .|. shiftMask, xK_e     ), spawn $ myEditor)
+    --, ((modm .|. shiftMask, xK_e     ), spawn $ myEditor)
 
     -- launch flameshot gui
     , ((0,                  xK_Print ), spawn "flameshot gui")
@@ -167,7 +165,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,  xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm .|. shiftMask,    xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm .|. shiftMask,    xK_r     ), spawn "xmonad --recompile && xmonad --restart")
     ]
     ++
 
