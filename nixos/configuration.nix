@@ -74,7 +74,7 @@
             # lightdm
             lightdm.enable = true;
 
-            # lightdm default session
+            # default session
             defaultSession = "xfce";
         };
 
