@@ -181,17 +181,22 @@
     #    inactiveOpacity = 1.0;
     #    activeOpacity = 1.0;
     #    #settings = {
-    #    #    blur =
-    #    #    {
-    #    #      method = "guassian";
-    #    #      size = 7;
-    #    #      deviation = 7;
+    #    #    blur = {
+    #    #        method = "guassian";
+    #    #        size = 7;
+    #    #        deviation = 7;
     #    #    };
     #    #};
     #};
 
     # Enable CUPS to print documents.
-    services.printing.enable = true;
+    services.printing = {
+        enable = true;
+    };
+    services.avahi = {
+        enable = true;
+        nssmdns = true;
+    };
 
     # Enable sound.
     sound.enable = true;
@@ -297,14 +302,14 @@
     };
 
     #programs.proxychains = {
-    #  enable = true;
-    #  proxies = {
-    #    nekoray = {
-    #      type = "socks5";
-    #      host = "127.0.0.1";
-    #      port = "2080";
+    #    enable = true;
+    #    proxies = {
+    #        nekoray = {
+    #            type = "socks5";
+    #            host = "127.0.0.1";
+    #            port = "2080";
+    #        };
     #    };
-    #  };
     #};
 
     # Xray
@@ -318,6 +323,11 @@
     #};
     #programs.dconf.enable = true;
     #virtualisation.spiceUSBRedirection.enable = true;
+
+
+    # Security
+    security.polkit.enable = true;
+    services.gnome.gnome-keyring.enable = true;
 
 
     # system packages
