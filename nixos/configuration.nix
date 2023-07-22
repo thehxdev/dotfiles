@@ -49,6 +49,35 @@
         useXkbConfig = true; # use xkbOptions in tty.
     };
 
+
+    # opengl
+    #hardware.opengl = {
+    #    enable = true;
+    #    driSupport = true;
+    #    driSupport32Bit = true;
+    #};
+
+    # GPU acceleration
+    hardware.opengl.extraPackages = [
+        pkgs.intel-compute-runtime
+    ];
+
+    # nvidie prime
+    #hardware.nvidia = {
+    #    package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+    #    modesetting.enable = true;
+    #    prime = {
+    #        offload = {
+    #            enable = true;
+    #            enableOffloadCmd = true;
+    #        };
+    #        intelBusId = "PCI:0:2:0";
+    #        nvidiaBusId = "PCI:1:0:0";
+    #    };
+    #    nvidiaSettings = true;
+    #};
+
+
     # X11 and Xserver settings
     services.xserver = {
         enable = true;
@@ -59,8 +88,11 @@
         layout = "us,ir";
         xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
 
-        videoDrivers = [ "modesetting" ];
-        #videoDrivers = [ "intel" ];
+        #videoDrivers = [
+        #    #"intel"
+        #    "modesetting"
+        #];
+
         #deviceSection = ''
         #    Option "DRI" "2"
         #    Option "TearFree" "true"
@@ -80,8 +112,10 @@
 
         desktopManager = {
             # XFCE
-            xfce.enable = true;
-            xfce.enableXfwm = true;
+            xfce = {
+                enable = true;
+                enableXfwm = true;
+            };
 
             # Cinnamon
             #cinnamon.enable = true;
@@ -102,26 +136,38 @@
             #};
             
             # Qtile
-            #qtile.enable = true;
-            #qtile.configFile = "/home/hx/.config/qtile/config.py";
-            #qtile.extraPackages = python3Packages: with python3Packages; [
-            #    qtile-extras
-            #];
+            #qtile = {
+            #    enable = true;
+            #    configFile = "/home/hx/.config/qtile/config.py";
+            #    extraPackages = python3Packages: with python3Packages; [
+            #        qtile-extras
+            #    ];
+            #};
             
             # Xmonad
-            #xmonad.enable = true;
-            #xmonad.enableContribAndExtras = true;
-            #xmonad.extraPackages = hpkgs: with hpkgs; [
-            #    xmonad
-            #    xmonad-contrib
-            #    xmonad-extras
-            #];
+            #xmonad = {
+            #    enable = true;
+            #    enableContribAndExtras = true;
+            #    extraPackages = hpkgs: with hpkgs; [
+            #        xmonad
+            #        xmonad-contrib
+            #        xmonad-extras
+            #    ];
+            #};
         };
     };
 
-    # XFCE Opts
-    programs.thunar.enable = true;
-    programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
+    # Thunar Options
+    programs.thunar = {
+        enable = true;
+        plugins = with pkgs.xfce; [
+            thunar-archive-plugin
+            thunar-volman
+        ];
+    };
+
+    # gvfs
+    services.gvfs.enable = true;
 
     # Cinnamon Opts
     #services.cinnamon.apps.enable = true;
@@ -134,11 +180,6 @@
     #    })
     #];
     
-    # GPU acceleration
-    hardware.opengl.extraPackages = [
-        pkgs.intel-compute-runtime
-    ];
-
 
     # Fonts
     fonts = {
@@ -168,8 +209,6 @@
         };
     };
 
-    # gvfs
-    services.gvfs.enable = true;
 
     # picom
     #services.picom = {
@@ -182,12 +221,13 @@
     #    activeOpacity = 1.0;
     #    #settings = {
     #    #    blur = {
-    #    #        method = "guassian";
-    #    #        size = 7;
-    #    #        deviation = 7;
+    #    #        method = "gaussian";
+    #    #        size = 15;
+    #    #        deviation = 15;
     #    #    };
     #    #};
     #};
+
 
     # Enable CUPS to print documents.
     services.printing = {
@@ -198,14 +238,29 @@
         nssmdns = true;
     };
 
+
     # Enable sound.
     sound.enable = true;
-    hardware.pulseaudio = {
+
+    # pipewire
+    security.rtkit.enable = true;
+    services.pipewire = {
         enable = true;
-        package = pkgs.pulseaudioFull;
-        #extraModules = [ pkgs.pulseaudio-modules-bt ];
-        extraConfig = "load-module module-switch-on-connect";
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+        # If you want to use JACK applications, uncomment this
+        #jack.enable = true;
     };
+
+    # pulseaudio
+    #hardware.pulseaudio = {
+    #    enable = true;
+    #    package = pkgs.pulseaudioFull;
+    #    #extraModules = [ pkgs.pulseaudio-modules-bt ];
+    #    extraConfig = "load-module module-switch-on-connect";
+    #};
+
 
     # Bluetooth
     hardware.bluetooth = {
@@ -218,31 +273,35 @@
         };
     };
 
-    services.blueman = {
-        enable = true;
-    };
+
+    #services.blueman = {
+    #    enable = true;
+    #};
+
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.hx = {
         isNormalUser = true;
         home = "/home/hx";
-        extraGroups = [ "wheel" "networkmanager" "audio" "video" ];
-
-        # If qemu and libvirtd installed:
-        #extraGroups = [ "wheel" "networkmanager" "audio" "video" "libvirtd" ];
+        extraGroups = [
+        "wheel"
+        "networkmanager"
+        "audio"
+        "video"
+        #"libvirtd"
+        #"docker"
+        #"vboxusers"
+        ];
 
         #packages = with pkgs; [
         #];
     };
 
-    # VirtualBox
-    #virtualisation.virtualbox.host.enable = true;
-    #virtualisation.virtualbox.host.enableExtensionPack = true;
-    #users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
     # Fish shell
     #programs.fish.enable = true;
     #users.defaultUserShell = pkgs.fish;
+
 
     # ZSH shell
     programs.zsh = {
@@ -260,15 +319,18 @@
 
     # Aliases
     environment.shellAliases = {
-        l  = "exa -lha --group-directories-first";
-        ll = "exa -lh --group-directories-first";
-        nv = "nvim";
-        tm = "tmux";
+        l    = "exa -lha --group-directories-first";
+        ll   = "exa -lh --group-directories-first";
+        nv   = "nvim";
+        tm   = "tmux";
+        #cdp  = "cd ~/projects";
     };
 
+    # ENV variables
     environment.variables = {
         EDITOR = "nvim";
     };
+
 
     # flatpak
     services.flatpak.enable = true;
@@ -277,9 +339,11 @@
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
+
     # QT Themes
     qt.enable = true;
     qt.platformTheme = "qt5ct";
+
 
     # tmux
     #programs.tmux = {
@@ -291,6 +355,7 @@
     #    '';
     #};
 
+
     # git
     programs.git = {
         enable = true;
@@ -301,20 +366,18 @@
         };
     };
 
+
+    # proxychains
     #programs.proxychains = {
     #    enable = true;
     #    proxies = {
     #        nekoray = {
     #            type = "socks5";
     #            host = "127.0.0.1";
-    #            port = "2080";
+    #            port = "10808";
     #        };
     #    };
     #};
-
-    # Xray
-    services.xray.enable = true;
-    services.xray.settingsFile = "/etc/xray/config.json";
 
 
     # Qemu / Virtualization
@@ -325,19 +388,47 @@
     #virtualisation.spiceUSBRedirection.enable = true;
 
 
+    # VirtualBox
+    #virtualisation.virtualbox.host = {
+    #    enable = true;
+    #    enableExtensionPack = true;
+    #};
+    #users.extraGroups.vboxusers.members = [ "hx" ];
+
+
     # Security
     security.polkit.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
 
+    # Xray
+    #services.xray = {
+    #    enable = true;
+    #    settingsFile = "/usr/xray/config.json";
+    #};
+
+
+    # docker
+    #virtualization.docker.enable = true;
+
+
     # system packages
     environment.systemPackages = with pkgs; [
+
+        # bluetooth manager
+        blueberry
+
+        # office
+        #libreoffice-fresh
+        #xournalpp
+
         # virtualization
         #virt-manager
         #spice-gtk
 
         # Browsers
         firefox
+        #chromium
         #ungoogled-chromium
         #brave
 
@@ -372,6 +463,7 @@
         mpv
         ffmpeg
         x264
+        x265
         libvpx
 
         # XFCE
@@ -389,8 +481,8 @@
 
         # Dev
         python311Full
+        gcc
         #cmake
-        #gcc
         #nodejs
         #nodePackages.npm
 
@@ -421,8 +513,8 @@
         flameshot
         xdg-user-dirs
         xdg-utils
-        tun2socks
         dig
+        #tun2socks
         #pcmanfm
         #lxqt.pcmanfm-qt
         #dmenu
