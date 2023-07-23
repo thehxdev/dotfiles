@@ -31,7 +31,15 @@
     # Network Manager
     networking = {
         hostName = "nixos"; 
-        networkmanager.enable = true;
+
+        networkmanager = {
+            enable = true;
+            dns = "default";
+        };
+
+        resolvconf = {
+            enable = false;
+        };
     };
 
     # Set your time zone.
@@ -336,7 +344,9 @@
     services.flatpak.enable = true;
     xdg.portal = {
         enable = true;
-        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+        extraPortals = with pkgs; [
+            pkgs.xdg-desktop-portal-gtk
+        ];
     };
 
 
@@ -410,6 +420,14 @@
 
     # docker
     #virtualization.docker.enable = true;
+    #users.extraGroups.docker.members = [ "hx" ];
+
+    # dnscrypt-proxy
+    #services.dnscrypt-proxy2 = {
+    #    enable = true;
+    #    upstreamDefaults = false;
+    #    configFile = "/etc/dnscrypt-proxy/dnscrypt-proxy.toml";
+    #};
 
 
     # system packages
@@ -428,6 +446,7 @@
 
         # Browsers
         firefox
+        #librewolf
         #chromium
         #ungoogled-chromium
         #brave
