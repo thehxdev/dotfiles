@@ -8,6 +8,6 @@
         ccls
         gdb
         valgrind
-        radare2
+        #radare2
     ];
 }

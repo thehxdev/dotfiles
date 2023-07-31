@@ -345,7 +345,7 @@
     xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-            pkgs.xdg-desktop-portal-gtk
+            xdg-desktop-portal-gtk
         ];
     };
 
@@ -433,9 +433,6 @@
     # system packages
     environment.systemPackages = with pkgs; [
 
-        # bluetooth manager
-        blueberry
-
         # office
         #libreoffice-fresh
         #xournalpp
@@ -501,6 +498,7 @@
         # Dev
         python311Full
         gcc
+        #gnumake
         #cmake
         #nodejs
         #nodePackages.npm

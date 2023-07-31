@@ -4,5 +4,10 @@
     nativeBuildInputs = with pkgs.buildPackages; [
         go
         gopls
+        gdb # for debugging
     ];
+
+    #shellHook = ''
+    #  export CGO_ENABLED=1
+    #'';
 }
