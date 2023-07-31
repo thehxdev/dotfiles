@@ -1,7 +1,7 @@
 {--
 
 Simple Xmonad WM configuration.
-Learn More: https://github.com/hxdevlover
+https://github.com/thehxdev
 
 --}
 

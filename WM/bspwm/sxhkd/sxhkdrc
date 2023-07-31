@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + a
-	kitty
+	alacritty
 
 # rofi
 super + s
@@ -12,15 +12,15 @@ super + s
 
 # file manager 
 super + d
-	pcmanfm
+	thunar
 
 # emacs
-super + e
-	emacsclient -c -a 'emacs'
+#super + e
+#	emacsclient -c -a 'emacs'
 
-# brave
+# browser
 super + shift + f
-        brave
+    chromium
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -31,15 +31,15 @@ super + Escape
 #
 
 # quit/restart bspwm
-super + alt + {q,r}
+super + ctrl + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
-super + {_,shift + }q
+super + shift + q
 	bspc node -c
 
 # alternate between the tiled and monocle layout
-super + m
+super + Tab
 	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
@@ -66,7 +66,7 @@ super + ctrl + {m,x,y,z}
 # focus/swap
 #
 
-# focus the node in the given direction
+# focus/swap the node in the given direction
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
