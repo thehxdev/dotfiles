@@ -19,7 +19,6 @@
 (straight-use-package 'goto-chg)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
-;(straight-use-package 'flycheck)
 (straight-use-package 'company-mode)
 (straight-use-package 'tree-sitter)
 (straight-use-package 'tree-sitter-langs)
