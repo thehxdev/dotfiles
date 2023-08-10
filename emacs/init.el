@@ -11,16 +11,15 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(setq warning-minimum-level :emergency)
 
 (straight-use-package 'use-package)
-(straight-use-package 'evil)
 (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
 (straight-use-package 'goto-chg)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
-(straight-use-package 'flycheck)
-(straight-use-package 'flycheck)
+;(straight-use-package 'flycheck)
 (straight-use-package 'company-mode)
 (straight-use-package 'tree-sitter)
 (straight-use-package 'tree-sitter-langs)
@@ -28,29 +27,92 @@
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'helm-lsp)
 (straight-use-package 'dap-mode)
-(straight-use-package 'all-the-icons)
+(straight-use-package 'sly)
+(straight-use-package 'magit)
 
 ;; The path to lsp-mode needs to be added to load-path as well as the
 ;; path to the `clients' subdirectory.
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
-(add-hook 'prog-mode-hook 'lsp-deferred)
+;(add-hook 'prog-mode-hook 'lsp-deferred)
+;(require 'lsp-mode)
 
 (require 'tree-sitter)
 (require 'tree-sitter-langs)
+
+(use-package evil
+  :straight t
+  :init ;; tweak evil's configuration before loading it
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (evil-mode))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
+
+(use-package evil-tutor
+  :straight t)
+
+(use-package all-the-icons
+  :straight t
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :straight t
+  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+
 
 (setq make-backup-files nil)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(electric-pair-mode)
+
+(use-package diminish
+  :straight t)
+
+(use-package flycheck
+  :straight t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode))
+
+
+(use-package electric
+  :init
+  (electric-pair-mode 1)
+  (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+
+(use-package company
+  :straight t
+  :defer 2
+  :diminish
+  :custom
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .1)
+  (company-minimum-prefix-length 2)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t))
+
+(use-package company-box
+  :straight t
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+
+
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
-
+ 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
-;; (defvaralias 'c-basic-offset 'tab-width)
 
 (setq redisplay-dont-pause t
   scroll-margin 4
@@ -60,9 +122,6 @@
 
 (global-display-line-numbers-mode 1)
 (global-visual-line-mode t)
-
-(require 'evil)
-(evil-mode 1)
 
 
 (defun nuke-all-buffers ()
@@ -90,12 +149,14 @@
   "b p" '(previous-buffer :wk "Previous buffer")
   "b r" '(revert-buffer :wk "Reload buffer")
   "s h" '(async-shell-command :wk "Execute a shell command")
+  "s c" '(sly-compile-and-load-file :wk "Compile and load .lisp files in sly")
   "."   '(find-file :wk "Find file")
-  "f r" '(recentf-open-files :wk "Find file")
+  "f r" '(counsel-recentf :wk "Find file")
+  "c l" '(comment-line :wk "Comment lines")
   )
 
 (dt/leader-keys
-  "e" '(:ignore t :wk "Eshell/Evaluate")    
+  "e" '(:ignore t :wk "Eshell/Evaluate")
   "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
   "e d" '(eval-defun :wk "Evaluate defun containing or after point")
   "e e" '(eval-expression :wk "Evaluate and elisp expression")
@@ -140,60 +201,87 @@
   "w L" '(buf-move-right :wk "Buffer move right")
   )
 
-;;(set-face-attribute 'default nil
-;;  :font "JetBrains Mono"
-;;  :height 110
-;;  :weight 'medium)
-;;(set-face-attribute 'variable-pitch nil
-;;  :font "Ubuntu"
-;;  :height 120
-;;  :weight 'medium)
-;;(set-face-attribute 'fixed-pitch nil
-;;  :font "JetBrains Mono"
-;;  :height 110
-;;  :weight 'medium)
-
-;; Makes commented text and keywords italics.
-;; This is working in emacsclient but not emacs.
-;; Your font must have an italic face available.
-;;(set-face-attribute 'font-lock-comment-face nil
-;;  :slant 'italic)
-;;(set-face-attribute 'font-lock-keyword-face nil
-;;  :slant 'italic)
-
-;; This sets the default font on all graphical frames created after restarting Emacs.
-;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-;; are not right unless I also add this method of setting the default font.
-;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
-
-;; Uncomment the following line if line spacing needs adjusting.
-;;(setq-default line-spacing 0.12)
-
-
-;;(use-package toc-org
-;;    :commands toc-org-enable
-;;    :init (add-hook 'org-mode-hook 'toc-org-enable))
-
-;;(add-hook 'org-mode-hook 'org-indent-mode)
-;;(use-package org-bullets)
-;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; Emacs Dashboard
+(use-package dashboard
+  :straight t
+  :init
+  (setq initial-buffer-choice 'dashboard-open)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  ;(setq dashboard-startup-banner "/home/dt/.config/emacs/images/dtmacs-logo.png")  ;; use custom image as banner
+  (setq dashboard-center-content t) ;; set to 't' for centered content
+  (setq dashboard-items '(
+                          ;(recents . 5)
+                          ;(agenda . 5 )
+                          ;(bookmarks . 3)
+                          ;(projects . 3)
+                          ;(registers . 3)
+                          ))
+  (dashboard-modify-heading-icons '(
+                                    ;(recents . "file-text")
+                                    ;(bookmarks . "book")
+                                    ))
+  :config
+  (dashboard-setup-startup-hook))
 
 (use-package which-key
-  :straight t)
+  :straight t
+  :init
+    (which-key-mode 1)
+  :diminish
+  :config
+  (setq which-key-side-window-location 'bottom
+	  which-key-sort-order #'which-key-key-order
+	  which-key-allow-imprecise-window-fit nil
+	  which-key-sort-uppercase-first nil
+	  which-key-add-column-padding 1
+	  which-key-max-display-columns nil
+	  which-key-min-display-lines 6
+	  which-key-side-window-slot -10
+	  which-key-side-window-max-height 0.25
+	  which-key-idle-delay 0.8
+	  which-key-max-description-length 25
+	  which-key-allow-imprecise-window-fit nil
+	  which-key-separator " → " ))
 
-(which-key-mode 1)
-(setq which-key-side-window-location 'bottom
-  which-key-sort-order #'which-key-key-order-alpha
-  which-key-sort-uppercase-first nil
-  which-key-add-column-padding 1
-  which-key-max-display-columns nil
-  which-key-min-display-lines 6
-  which-key-side-window-slot -10
-  which-key-side-window-max-height 0.25
-  which-key-idle-delay 0.8
-  which-key-max-description-length 25
-  which-key-allow-imprecise-window-fit t
-  which-key-separator " → ")
+(use-package counsel
+  :straight t
+  :after ivy
+  :diminish
+  :config (counsel-mode))
+
+(use-package ivy
+  :straight t
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion.
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :diminish
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+
+(use-package all-the-icons-ivy-rich
+  :straight t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :straight t
+  :after ivy
+  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
+
 
 (use-package doom-themes
   :straight t)
@@ -210,52 +298,36 @@
 ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config)
 
-;(require 'lsp-mode)
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1) ;; default is 0.2
+
 
 ;;; Programming Languages
 
 ; C/C++
-(use-package ccls
-  :straight t
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda ()
-           (require 'ccls)
-           (tree-sitter-hl-mode)
-           (lsp))))
+;; (use-package ccls
+;;   :straight t
+;;   :hook ((c-mode c++-mode objc-mode cuda-mode) .
+;;          (lambda ()
+;;            (require 'ccls)
+;;            (tree-sitter-hl-mode)
+;;            (lsp))))
 
 ; Golang
-(use-package go-mode
-  :straight t
-  :hook ((go-mode) .
-         (lambda ()
-           (require 'go-mode)
-           (tree-sitter-hl-mode)
-           (lsp))))
-;(add-hook 'go-mode-hook 'lsp-deferred)
+;; (use-package go-mode
+;;   :straight t
+;;   :hook ((go-mode) .
+;;          (lambda ()
+;;            (require 'go-mode)
+;;            (tree-sitter-hl-mode)
+;;            (lsp))))
+;; (add-hook 'go-mode-hook 'lsp-deferred)
 
 ; Racket
 (use-package racket-mode
   :straight t)
-(add-hook 'racket-mode-hook 'lsp-deferred)
+;(add-hook 'racket-mode-hook 'lsp-deferred)
 
 ; Lisp
 (load (expand-file-name "~/.quicklisp/slime-helper.el"))
-  ;; Replace "sbcl" with the path to your implementation
-  (setq inferior-lisp-program "sbcl")
+;; Replace "sbcl" with the path to your implementation
+(setq inferior-lisp-program "/home/hx/.local/bin/commonlisp/bin/sbcl")
 
-
-; Disable Warnings
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(warning-suppress-types '((lsp-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
