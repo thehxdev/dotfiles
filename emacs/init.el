@@ -12,6 +12,12 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq warning-minimum-level :emergency)
+;(set-frame-font "CaskaydiaCove Nerd Font Mono-110" nil t)
+
+;; disable line wrap
+(setq default-truncate-lines t)
+;; make side by side buffers function the same as the main window
+;(setq truncate-partial-width-windows nil)
 
 (straight-use-package 'use-package)
 (straight-use-package 'undo-tree)
@@ -19,6 +25,7 @@
 (straight-use-package 'goto-chg)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
+;(straight-use-package 'flycheck)
 (straight-use-package 'company-mode)
 (straight-use-package 'tree-sitter)
 (straight-use-package 'tree-sitter-langs)
@@ -141,6 +148,7 @@
 
 (dt/leader-keys
   "b"   '(:ignore t :wk "buffer")
+  "b i" '(ibuffer :wk "Switch buffer")
   "b b" '(switch-to-buffer :wk "Switch buffer")
   "b k" '(kill-this-buffer :wk "Kill this buffer")
   "b K" '(nuke-all-buffers :wk "Kill this buffer")
