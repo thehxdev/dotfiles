@@ -119,6 +119,8 @@
  
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
+(setq indent-line-function 'insert-tab)
+(setq-default c-basic-offset 4)
 
 (setq redisplay-dont-pause t
   scroll-margin 4
@@ -155,7 +157,8 @@
   "b n" '(next-buffer :wk "Next buffer")
   "b p" '(previous-buffer :wk "Previous buffer")
   "b r" '(revert-buffer :wk "Reload buffer")
-  "s h" '(async-shell-command :wk "Execute a shell command")
+  ;"s h" '(async-shell-command :wk "Execute an async shell command")
+  "s h" '(shell-command :wk "Execute a shell command")
   "s c" '(sly-compile-and-load-file :wk "Compile and load .lisp files in sly")
   "."   '(find-file :wk "Find file")
   "f r" '(counsel-recentf :wk "Find file")
@@ -310,13 +313,15 @@
 ;;; Programming Languages
 
 ; C/C++
-;; (use-package ccls
-;;   :straight t
-;;   :hook ((c-mode c++-mode objc-mode cuda-mode) .
-;;          (lambda ()
-;;            (require 'ccls)
-;;            (tree-sitter-hl-mode)
-;;            (lsp))))
+(use-package ccls
+  :straight t
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda ()
+           (require 'ccls)
+           (tree-sitter-hl-mode)
+           (lsp))))
+(add-hook 'c-mode-hook 'lsp-deferred)
+(c-set-offset 'syntactic-symbol 4)
 
 ; Golang
 ;; (use-package go-mode
@@ -329,9 +334,23 @@
 ;; (add-hook 'go-mode-hook 'lsp-deferred)
 
 ; Racket
-(use-package racket-mode
+;; (use-package racket-mode
+;;   :straight t
+;;   :hook ((racket-mode) .
+;;          (lambda ()
+;;            (require 'racket-mode)
+;;            (tree-sitter-hl-mode))))
+;; (add-hook 'racket-mode-hook 'lsp-deferred)
+
+;; Nix
+(use-package nix-mode
   :straight t)
-;(add-hook 'racket-mode-hook 'lsp-deferred)
+
+;; Clojure
+(use-package clojure-mode
+  :straight t)
+(use-package cider
+  :straight t)
 
 ; Lisp
 (load (expand-file-name "~/.quicklisp/slime-helper.el"))
