@@ -409,12 +409,17 @@
     # Security
     security.polkit.enable = true;
     services.gnome.gnome-keyring.enable = true;
+    # doas (modern sudo)
+    security.doas = {
+        enable = true;
+        wheelNeedsPassword = true;
+    };
 
 
     # Xray
     #services.xray = {
     #    enable = true;
-    #    settingsFile = "/usr/xray/config.json";
+    #    settingsFile = "/etc/xray/config.json";
     #};
 
 
@@ -422,12 +427,17 @@
     #virtualization.docker.enable = true;
     #users.extraGroups.docker.members = [ "hx" ];
 
+
     # dnscrypt-proxy
     #services.dnscrypt-proxy2 = {
     #    enable = true;
     #    upstreamDefaults = false;
     #    configFile = "/etc/dnscrypt-proxy/dnscrypt-proxy.toml";
     #};
+
+
+    # emacs
+    #services.emacs.enable = true;
 
 
     # system packages
@@ -496,12 +506,21 @@
         xarchiver
 
         # Dev
-        python311Full
+        ## C/C++
         gcc
-        #gnumake
+        gnumake
+        #binutils
         #cmake
+        #rlwrap
+
+        ## Python
+        python311Full
+        ## NodeJS
         #nodejs
         #nodePackages.npm
+
+        ## Java
+        jdk
 
         # xorg
         xorg.libX11
@@ -536,6 +555,10 @@
         #lxqt.pcmanfm-qt
         #dmenu
         #killall
+
+        # Security
+        openssl
+        #bubblewrap
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
