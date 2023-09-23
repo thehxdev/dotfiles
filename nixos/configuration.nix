@@ -71,6 +71,7 @@
     ];
 
     # nvidie prime
+    ## https://nixos.wiki/wiki/Nvidia
     #hardware.nvidia = {
     #    package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
     #    modesetting.enable = true;
@@ -90,6 +91,7 @@
     services.xserver = {
         enable = true;
 
+        # enable touchpad
         libinput.enable = true;
         libinput.touchpad.tapping = true;
 
@@ -133,6 +135,16 @@
         };
 
         windowManager = {
+            # i3
+            #i3 = {
+            #    enable = true;
+            #    configFile = "/home/hx/.config/i3/config";
+            #    extraPackages = with pkgs; [
+            #        i3status
+            #        i3lock
+            #    ]
+            #};
+
             # DWM
             #dwm.enable = true;
             
@@ -240,6 +252,7 @@
     # Enable CUPS to print documents.
     services.printing = {
         enable = true;
+        #drivers = with pkgs; [ canon-cups-ufr2 ];
     };
     services.avahi = {
         enable = true;
@@ -327,10 +340,10 @@
 
     # Aliases
     environment.shellAliases = {
-        l    = "exa -lha --group-directories-first";
-        ll   = "exa -lh --group-directories-first";
-        nv   = "nvim";
-        tm   = "tmux";
+        l  = "eza -lha --group-directories-first";
+        ll = "eza -lh --group-directories-first";
+        nv = "nvim";
+        tm = "tmux";
         #cdp  = "cd ~/projects";
     };
 
@@ -409,11 +422,12 @@
     # Security
     security.polkit.enable = true;
     services.gnome.gnome-keyring.enable = true;
+
     # doas (modern sudo)
-    security.doas = {
-        enable = true;
-        wheelNeedsPassword = true;
-    };
+    #security.doas = {
+    #    enable = true;
+    #    wheelNeedsPassword = true;
+    #};
 
 
     # Xray
@@ -457,10 +471,14 @@
         #chromium
         #ungoogled-chromium
         #brave
+        #tor-browser-bundle-bin
 
         # Icons and themes
         papirus-icon-theme
+        libsForQt5.qtstyleplugin
         libsForQt5.qtstyleplugin-kvantum
+        cinnamon.mint-cursor-themes
+        adapta-gtk-theme
 
         # Editors
         vim 
@@ -471,7 +489,7 @@
         alacritty
         ripgrep
         fd
-        exa
+        #eza
         tmux
         curl
         aria2
@@ -494,8 +512,9 @@
 
         # XFCE
         xfce.mousepad
-        xfce.xfce4-terminal
+        #xfce.xfce4-terminal
         xfce.xfce4-xkb-plugin
+        xfce.xfce4-clipman-plugin
 
         # Archive
         unrar
@@ -509,15 +528,16 @@
         ## C/C++
         gcc
         gnumake
-        #binutils
-        #cmake
-        #rlwrap
+        # binutils
+        # cmake
+        # rlwrap
 
         ## Python
         python311Full
+
         ## NodeJS
-        #nodejs
-        #nodePackages.npm
+        # nodejs
+        # nodePackages.npm
 
         ## Java
         jdk
@@ -535,6 +555,9 @@
         xsel
 
         # Tools
+        jcal
+        gparted
+        patchelf
         bleachbit
         libsForQt5.okular
         nitrogen
