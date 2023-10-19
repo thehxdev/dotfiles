@@ -243,18 +243,18 @@
   :diminish
   :config
   (setq which-key-side-window-location 'bottom
-	  which-key-sort-order #'which-key-key-order
-	  which-key-allow-imprecise-window-fit nil
-	  which-key-sort-uppercase-first nil
-	  which-key-add-column-padding 1
-	  which-key-max-display-columns nil
-	  which-key-min-display-lines 6
-	  which-key-side-window-slot -10
-	  which-key-side-window-max-height 0.25
-	  which-key-idle-delay 0.8
-	  which-key-max-description-length 25
-	  which-key-allow-imprecise-window-fit nil
-	  which-key-separator " → " ))
+      which-key-sort-order #'which-key-key-order
+      which-key-allow-imprecise-window-fit nil
+      which-key-sort-uppercase-first nil
+      which-key-add-column-padding 1
+      which-key-max-display-columns nil
+      which-key-min-display-lines 6
+      which-key-side-window-slot -10
+      which-key-side-window-max-height 0.25
+      which-key-idle-delay 0.8
+      which-key-max-description-length 25
+      which-key-allow-imprecise-window-fit nil
+      which-key-separator " → " ))
 
 (use-package counsel
   :straight t
@@ -312,16 +312,16 @@
 
 ;;; Programming Languages
 
-; C/C++
-(use-package ccls
-  :straight t
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda ()
-           (require 'ccls)
-           (tree-sitter-hl-mode)
-           (lsp))))
-(add-hook 'c-mode-hook 'lsp-deferred)
-(c-set-offset 'syntactic-symbol 4)
+;; C/C++
+;; (use-package ccls
+;;   :straight t
+;;   :hook ((c-mode c++-mode objc-mode cuda-mode) .
+;;          (lambda ()
+;;            (require 'ccls)
+;;            (tree-sitter-hl-mode)
+;;            (lsp))))
+;; (add-hook 'c-mode-hook 'lsp-deferred)
+;; (c-set-offset 'syntactic-symbol 4)
 
 ; Golang
 ;; (use-package go-mode
@@ -333,7 +333,8 @@
 ;;            (lsp))))
 ;; (add-hook 'go-mode-hook 'lsp-deferred)
 
-; Racket
+
+;; Racket
 ;; (use-package racket-mode
 ;;   :straight t
 ;;   :hook ((racket-mode) .
@@ -342,18 +343,37 @@
 ;;            (tree-sitter-hl-mode))))
 ;; (add-hook 'racket-mode-hook 'lsp-deferred)
 
+
 ;; Nix
-(use-package nix-mode
-  :straight t)
+;; (use-package nix-mode
+;;   :straight t)
+
 
 ;; Clojure
-(use-package clojure-mode
-  :straight t)
-(use-package cider
-  :straight t)
+;; (use-package clojure-mode
+;;   :straight t)
+;; (use-package cider
+;;   :straight t)
 
-; Lisp
-(load (expand-file-name "~/.quicklisp/slime-helper.el"))
+
+;; Haskell
+;; (use-package haskell-mode
+;;   :straight t
+;;   :hook ((haskell-mode) .
+;;          (lambda ()
+;;            (require 'haskell-mode)
+;;            (tree-sitter-hl-mode))))
+
+;; Lua
+;; (use-package lua-mode
+;;   :straight t
+;;   :hook ((lua-mode) .
+;;          (lambda ()
+;;            (require 'lua-mode)
+;;            (tree-sitter-hl-mode))))
+
+
+;; Lisp
+;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 ;; Replace "sbcl" with the path to your implementation
-(setq inferior-lisp-program "/home/hx/.local/bin/commonlisp/bin/sbcl")
-
+;; (setq inferior-lisp-program "/home/hx/.local/bin/commonlisp/bin/sbcl")
