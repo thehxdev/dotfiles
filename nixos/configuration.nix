@@ -17,16 +17,39 @@
         allowUnfree = true;
     };
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    # nix config
+    nix = {
+        settings.experimental-features = [ "nix-command" "flakes" ];
+        extraOptions = ''
+            keep-outputs = true
+            keep-derivations = true
+        '';
+    };
+
+
+    # enable man-db
+    documentation.man = {
+        enable = true;
+        man-db = {
+            enable = true;
+        };
+    };
+
 
     # Use the GRUB 2 boot loader.
-    boot.loader = {
-        grub = {
-            enable = true;
-            device = "/dev/sda"; 
+    boot = {
+        supportedFilesystems = [
+            "ntfs"
+        ];
+        loader = {
+            grub = {
+                enable = true;
+                device = "/dev/sda"; 
+            };
+            timeout = 10;
         };
-        timeout = 10;
     };
+
 
     # Network Manager
     networking = {
@@ -40,6 +63,8 @@
         resolvconf = {
             enable = false;
         };
+
+        # hosts = {};
     };
 
     # Set your time zone.
@@ -53,17 +78,16 @@
     i18n.defaultLocale = "en_US.UTF-8";
     console = {
         font = "Lat2-Terminus16";
-        #keyMap = "us";
         useXkbConfig = true; # use xkbOptions in tty.
     };
 
 
     # opengl
-    #hardware.opengl = {
-    #    enable = true;
-    #    driSupport = true;
-    #    driSupport32Bit = true;
-    #};
+    hardware.opengl = {
+       enable = true;
+       driSupport = true;
+       driSupport32Bit = true;
+    };
 
     # GPU acceleration
     hardware.opengl.extraPackages = [
@@ -117,7 +141,7 @@
             lightdm.enable = true;
 
             # default session
-            defaultSession = "xfce";
+            defaultSession = "none+bspwm";
         };
 
         desktopManager = {
@@ -136,46 +160,25 @@
 
         windowManager = {
             # i3
-            #i3 = {
-            #    enable = true;
-            #    configFile = "/home/hx/.config/i3/config";
-            #    extraPackages = with pkgs; [
-            #        i3status
-            #        i3lock
-            #    ]
-            #};
+            i3 = {
+               enable = true;
+               configFile = "/home/hx/.config/i3/config";
+               extraPackages = with pkgs; [
+                   i3status
+                   i3lock
+               ]
+            };
 
-            # DWM
-            #dwm.enable = true;
             
             # BSPWM
-            #bspwm = {
-            #  enable = true;
-            #  configFile = "/home/hx/.config/bspwm/bspwmrc";
-            #  sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
-            #};
-            
-            # Qtile
-            #qtile = {
-            #    enable = true;
-            #    configFile = "/home/hx/.config/qtile/config.py";
-            #    extraPackages = python3Packages: with python3Packages; [
-            #        qtile-extras
-            #    ];
-            #};
-            
-            # Xmonad
-            #xmonad = {
-            #    enable = true;
-            #    enableContribAndExtras = true;
-            #    extraPackages = hpkgs: with hpkgs; [
-            #        xmonad
-            #        xmonad-contrib
-            #        xmonad-extras
-            #    ];
-            #};
+            bspwm = {
+             enable = true;
+             configFile = "/home/hx/.config/bspwm/bspwmrc";
+             sxhkd.configFile = "/home/hx/.config/bspwm/sxhkd/sxhkdrc";
+            };
         };
     };
+
 
     # Thunar Options
     programs.thunar = {
@@ -186,25 +189,19 @@
         ];
     };
 
+
     # gvfs
     services.gvfs.enable = true;
+
 
     # Cinnamon Opts
     #services.cinnamon.apps.enable = true;
     
-    ### DWM and dmenu config path
-    #nixpkgs.overlays = [
-    #    (final: prev: {
-    #        dwm = prev.dwm.overrideAttrs (old: { src = /home/hx/.dwm/dwm ;});
-    #        dmenu = prev.dmenu.overrideAttrs (old: { src = /home/hx/.dwm/dmenu ;});
-    #    })
-    #];
-    
 
     # Fonts
     fonts = {
-        enableDefaultFonts = true;
-        fonts = with pkgs; [ 
+        enableDefaultPackages = true;
+        packages = with pkgs; [ 
             vazir-fonts
             noto-fonts
             noto-fonts-cjk
@@ -231,22 +228,22 @@
 
 
     # picom
-    #services.picom = {
-    #    enable = true;
-    #    fade = false;
-    #    shadow = false;
-    #    backend = "glx";
-    #    vSync = false;
-    #    inactiveOpacity = 1.0;
-    #    activeOpacity = 1.0;
-    #    #settings = {
-    #    #    blur = {
-    #    #        method = "gaussian";
-    #    #        size = 15;
-    #    #        deviation = 15;
-    #    #    };
-    #    #};
-    #};
+    services.picom = {
+       enable = true;
+       fade = false;
+       shadow = false;
+       backend = "glx";
+       vSync = false;
+       inactiveOpacity = 1.0;
+       activeOpacity = 1.0;
+       settings = {
+          blur = {
+              method = "gaussian";
+              size = 15;
+              deviation = 15;
+          };
+       };
+    };
 
 
     # Enable CUPS to print documents.
@@ -275,12 +272,12 @@
     };
 
     # pulseaudio
-    #hardware.pulseaudio = {
-    #    enable = true;
-    #    package = pkgs.pulseaudioFull;
-    #    #extraModules = [ pkgs.pulseaudio-modules-bt ];
-    #    extraConfig = "load-module module-switch-on-connect";
-    #};
+    # hardware.pulseaudio = {
+    #     enable = true;
+    #     package = pkgs.pulseaudioFull;
+    #     #extraModules = [ pkgs.pulseaudio-modules-bt ];
+    #     extraConfig = "load-module module-switch-on-connect";
+    # };
 
 
     # Bluetooth
@@ -295,12 +292,13 @@
     };
 
 
-    #services.blueman = {
-    #    enable = true;
-    #};
+    # services.blueman = {
+    #     enable = true;
+    # };
 
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
+    # Define a user account.
+    # Don't forget to set a password with ‘passwd’.
     users.users.hx = {
         isNormalUser = true;
         home = "/home/hx";
@@ -309,19 +307,14 @@
         "networkmanager"
         "audio"
         "video"
-        #"libvirtd"
-        #"docker"
-        #"vboxusers"
+        # "libvirtd"
+        # "docker"
+        # "vboxusers"
         ];
 
-        #packages = with pkgs; [
-        #];
+        # packages = with pkgs; [
+        # ];
     };
-
-
-    # Fish shell
-    #programs.fish.enable = true;
-    #users.defaultUserShell = pkgs.fish;
 
 
     # ZSH shell
@@ -344,7 +337,7 @@
         ll = "eza -lh --group-directories-first";
         nv = "nvim";
         tm = "tmux";
-        #cdp  = "cd ~/projects";
+        # cdp  = "cd ~/projects";
     };
 
     # ENV variables
@@ -368,17 +361,6 @@
     qt.platformTheme = "qt5ct";
 
 
-    # tmux
-    #programs.tmux = {
-    #    enable = true;
-    #    terminal = "tmux-256color";
-    #    extraConfig = ''
-    #    set -s escape-time 0
-    #    set -ag terminal-overrides ",*:RGB"
-    #    '';
-    #};
-
-
     # git
     programs.git = {
         enable = true;
@@ -390,68 +372,26 @@
     };
 
 
-    # proxychains
-    #programs.proxychains = {
-    #    enable = true;
-    #    proxies = {
-    #        nekoray = {
-    #            type = "socks5";
-    #            host = "127.0.0.1";
-    #            port = "10808";
-    #        };
-    #    };
-    #};
-
-
     # Qemu / Virtualization
-    #virtualisation.libvirtd = {
-    #  enable = true;
-    #};
-    #programs.dconf.enable = true;
-    #virtualisation.spiceUSBRedirection.enable = true;
-
-
-    # VirtualBox
-    #virtualisation.virtualbox.host = {
-    #    enable = true;
-    #    enableExtensionPack = true;
-    #};
-    #users.extraGroups.vboxusers.members = [ "hx" ];
+    # virtualisation.libvirtd = {
+    #   enable = true;
+    # };
+    # programs.dconf.enable = true;
+    # virtualisation.spiceUSBRedirection.enable = true;
 
 
     # Security
     security.polkit.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
-    # doas (modern sudo)
-    #security.doas = {
-    #    enable = true;
-    #    wheelNeedsPassword = true;
-    #};
-
-
-    # Xray
-    #services.xray = {
-    #    enable = true;
-    #    settingsFile = "/etc/xray/config.json";
-    #};
-
 
     # docker
-    #virtualization.docker.enable = true;
-    #users.extraGroups.docker.members = [ "hx" ];
-
-
-    # dnscrypt-proxy
-    #services.dnscrypt-proxy2 = {
-    #    enable = true;
-    #    upstreamDefaults = false;
-    #    configFile = "/etc/dnscrypt-proxy/dnscrypt-proxy.toml";
-    #};
+    # virtualization.docker.enable = true;
+    # users.extraGroups.docker.members = [ "hx" ];
 
 
     # emacs
-    #services.emacs.enable = true;
+    # services.emacs.enable = true;
 
 
     # system packages
@@ -467,37 +407,36 @@
 
         # Browsers
         firefox
+        #brave
         #librewolf
         #chromium
         #ungoogled-chromium
-        #brave
-        #tor-browser-bundle-bin
 
-        # Icons and themes
+        # Icons, themes and WM
         papirus-icon-theme
         libsForQt5.qtstyleplugin
         libsForQt5.qtstyleplugin-kvantum
         cinnamon.mint-cursor-themes
         adapta-gtk-theme
+        polybarFull
 
         # Editors
-        vim 
         neovim
+        tree-sitter
         #emacs
 
         # Terminals and Command-line tools
         alacritty
         ripgrep
         fd
-        #eza
+        eza
         tmux
-        curl
+        curlFull
         aria2
         wget
         htop
         neofetch
         yt-dlp
-        #kitty
 
         # Multi media
         pavucontrol
@@ -512,41 +451,33 @@
 
         # XFCE
         xfce.mousepad
-        #xfce.xfce4-terminal
-        xfce.xfce4-xkb-plugin
+        #xfce.xfce4-xkb-plugin
         xfce.xfce4-clipman-plugin
 
         # Archive
-        unrar
+        rar
+        # unrar
         unzip
+        zip
         gzip
         p7zip
         zstd
-        xarchiver
 
         # Dev
-        ## C/C++
-        gcc
-        gnumake
-        # binutils
-        # cmake
+        man-pages
         # rlwrap
 
         ## Python
-        python311Full
+        python312Full
 
         ## NodeJS
-        # nodejs
-        # nodePackages.npm
+        nodejs
+        nodePackages.npm
 
         ## Java
         jdk
 
         # xorg
-        xorg.libX11
-        xorg.libXinerama
-        xorg.libXft
-        xorg.libxcb
         xorg.xcbutil
         xorg.xcbutilkeysyms
         xorg.xcbutilwm
@@ -564,33 +495,30 @@
         rofi
         galculator
         brightnessctl
-        #lxsession
-        #lxappearance
-        #viewnior
+        lxsession
+        lxappearance
+        viewnior
         font-manager
         acpid
         flameshot
         xdg-user-dirs
         xdg-utils
         dig
-        #tun2socks
-        #pcmanfm
-        #lxqt.pcmanfm-qt
-        #dmenu
-        #killall
 
         # Security
         openssl
-        #bubblewrap
+        bubblewrap
+        pinentry
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     #programs.mtr.enable = true;
-    #programs.gnupg.agent = {
-    #  enable = true;
-    #  enableSSHSupport = true;
-    #};
+    programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+        pinentryFlavor = "curses";
+    };
 
     # List services that you want to enable:
 
@@ -614,6 +542,6 @@
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "23.05"; # Did you read the comment?
+    system.stateVersion = "23.11"; # Did you read the comment?
 }
 
