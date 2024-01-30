@@ -13,7 +13,6 @@ prevent errors. But if thats not the case, install these packages before running
 - `nitrogen`
 - `rofi`
 - `alacritty`
-- `blueman-applet` (Blueman Bluetooth manager)
 - `Thunar` (File Manager)
 
 ## Xresources file
