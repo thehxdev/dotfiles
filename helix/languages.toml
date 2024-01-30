@@ -1,4 +1,0 @@
-[[language]]
-name = "c"
-auto-format = false
-language-server = { command = "ccls", args = [] }
