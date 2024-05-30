@@ -1,4 +1,4 @@
-### Install TPM
+## Install TPM
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -7,5 +7,5 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 Then run command below in tmux session:
 
 ```bash
-tmux source ~/.tmux.conf
+tmux source ~/.config/tmux/tmux.conf
 ```
