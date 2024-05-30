@@ -51,6 +51,12 @@
     };
 
 
+    # journald config
+    services.journald.extraConfig = ''
+    SystemMaxUse=25M
+    SystemMaxFileSize=10M
+    '';
+
     # Network Manager
     networking = {
         hostName = "nixos"; 
@@ -123,7 +129,7 @@
         xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
 
         #videoDrivers = [
-        #    #"intel"
+        #    # "intel"
         #    "modesetting"
         #];
 
@@ -209,8 +215,8 @@
             font-awesome
             (nerdfonts.override { fonts = [
              "Ubuntu"
-             "FiraMono"
-             "Mononoki"
+             # "FiraMono"
+             # "Mononoki"
              "UbuntuMono"
              "RobotoMono"
              "JetBrainsMono"
@@ -242,6 +248,13 @@
               size = 15;
               deviation = 15;
           };
+       };
+       wintypes = {
+           dropdown_menu = { shadow = false; blur-background = false; };
+           popup_menu    = { shadow = false; blur-background = false; };
+           utility       = { shadow = false; blur-background = false; };
+           desktop       = { shadow = false; blur-background = false; };
+           notification  = { shadow = true;  blur-background = false; };
        };
     };
 
@@ -307,12 +320,21 @@
         "networkmanager"
         "audio"
         "video"
+        "users"
+        # "kvm"
         # "libvirtd"
         # "docker"
         # "vboxusers"
         ];
 
         # packages = with pkgs; [
+        #     jq
+        #     btop
+        #     sqlite
+        #     nodePackages.vscode-langservers-extracted
+        #     lua-language-server
+        #     tokei
+        #     # obs-studio
         # ];
     };
 
@@ -326,15 +348,18 @@
         ohMyZsh = {
             enable = true;
             theme = "robbyrussell";
-            plugins = [ "git" ];
+            plugins = [
+                "git"
+                "sudo"
+            ];
         };
     };
     users.defaultUserShell = pkgs.zsh;
 
     # Aliases
     environment.shellAliases = {
-        l  = "eza -lha --group-directories-first";
-        ll = "eza -lh --group-directories-first";
+        # l  = "eza -lha --group-directories-first";
+        # ll = "eza -lh --group-directories-first";
         nv = "nvim";
         tm = "tmux";
         # cdp  = "cd ~/projects";
@@ -373,12 +398,13 @@
 
 
     # Qemu / Virtualization
-    # virtualisation.libvirtd = {
-    #   enable = true;
+    # virtualisation = {
+    #     libvirtd = {
+    #         enable = true;
+    #     };
+    #     spiceUSBRedirection.enable = true;
     # };
     # programs.dconf.enable = true;
-    # virtualisation.spiceUSBRedirection.enable = true;
-
 
     # Security
     security.polkit.enable = true;
@@ -423,6 +449,7 @@
         # Editors
         neovim
         tree-sitter
+        #helix
         #emacs
 
         # Terminals and Command-line tools
@@ -437,6 +464,8 @@
         htop
         neofetch
         yt-dlp
+        #eza
+        nnn
 
         # Multi media
         pavucontrol
@@ -448,6 +477,7 @@
         x264
         x265
         libvpx
+        usbutils
 
         # XFCE
         xfce.mousepad
@@ -509,6 +539,7 @@
         openssl
         bubblewrap
         pinentry
+        wireguard-tools
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
