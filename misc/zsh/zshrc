@@ -1,0 +1,21 @@
+# Created by newuser for 5.9
+
+export HX_OPT_DIR="$HOME/opt"
+export HX_OPT_BIN="$HX_OPT_DIR/bin"
+
+export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin:$HX_OPT_BIN"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+
+alias cdo="cd $HX_OPT_DIR"
+alias cdp="cd ~/projects"
+alias blt="bluetoothctl"
+# alias kem="pkill emacs"
+# alias rem="pkill emacs ; emacs --daemon >/dev/null 2>&1 &"
+alias nix-shell-unstable="nix-shell -I nixpkgs=$HOME/.nix-defexpr/channels/unstable"
+alias cat='bat -p --theme=gruvbox-dark'
+alias ip='ip -c=always'
+
+function cdl() {
+    cd $1 && clear && ll
+}
