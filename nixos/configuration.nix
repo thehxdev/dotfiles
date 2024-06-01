@@ -116,17 +116,27 @@
     #    nvidiaSettings = true;
     #};
 
+    services.libinput = {
+        enable = true;
+        touchpad = {
+            tapping = true;
+        };
+    };
+
+    services.displayManager = {
+        defaultSession = "none+bspwm";
+    };
 
     # X11 and Xserver settings
     services.xserver = {
         enable = true;
 
         # enable touchpad
-        libinput.enable = true;
-        libinput.touchpad.tapping = true;
 
-        layout = "us,ir";
-        xkbOptions = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+        xkb = {
+            layout = "us,ir";
+            options = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+        };
 
         #videoDrivers = [
         #    # "intel"
@@ -145,9 +155,6 @@
 
             # lightdm
             lightdm.enable = true;
-
-            # default session
-            defaultSession = "none+bspwm";
         };
 
         desktopManager = {
@@ -266,7 +273,8 @@
     };
     services.avahi = {
         enable = true;
-        nssmdns = true;
+        nssmdns4 = true;
+        # nssmdns6 = true;
     };
 
 
@@ -548,7 +556,7 @@
     programs.gnupg.agent = {
         enable = true;
         enableSSHSupport = true;
-        pinentryFlavor = "curses";
+        pinentryPackage = pkgs.pinentry-curses;
     };
 
     # List services that you want to enable:
@@ -573,6 +581,6 @@
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "23.11"; # Did you read the comment?
+    system.stateVersion = "24.05"; # Did you read the comment?
 }
 
