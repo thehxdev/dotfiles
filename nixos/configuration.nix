@@ -285,8 +285,11 @@
             enable = true;
             driSupport = true;
             driSupport32Bit = true;
-            extraPackages = [
-                pkgs.intel-compute-runtime
+            extraPackages = with pkgs; [
+                intel-compute-runtime
+                intel-media-driver  # LIBVA_DRIVER_NAME=iHD
+                intel-vaapi-driver  # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+                libvdpau-va-gl
             ];
         };
 
@@ -409,6 +412,12 @@
         # ENV variables
         variables = {
             EDITOR = "nvim";
+        };
+
+        sessionVariables = {
+            # Force intel-media-driver
+            # See hardware opengl section
+            LIBVA_DRIVER_NAME = "iHD";
         };
 
 
