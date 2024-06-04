@@ -78,6 +78,7 @@
 
 
         displayManager = {
+            sddm.enable = false;
             defaultSession = "none+bspwm";
         };
 
@@ -90,22 +91,18 @@
                 options = "eurosign:e,caps:escape,grp:alt_shift_toggle";
             };
 
-            #videoDrivers = [
-            #    # "intel"
-            #    "modesetting"
-            #];
+            videoDrivers = [
+                # "intel"
+                "modesetting"
+            ];
 
-            #deviceSection = ''
-            #    Option "DRI" "2"
-            #    Option "TearFree" "true"
-            #'';
+            deviceSection = ''
+                Option "DRI" "2"
+                Option "TearFree" "true"
+            '';
 
 
             displayManager = {
-                # sddm
-                #sddm.enable = true;
-
-                # lightdm
                 lightdm.enable = true;
             };
 
@@ -128,7 +125,7 @@
                    extraPackages = with pkgs; [
                        i3status
                        i3lock
-                   ]
+                   ];
                 };
 
                 bspwm = {
@@ -214,7 +211,7 @@
             enable = true;
             enableCompletion = true;
             syntaxHighlighting.enable = true;
-            #autosuggestions.enable = true;
+            # autosuggestions.enable = true;
             ohMyZsh = {
                 enable = true;
                 theme = "robbyrussell";
@@ -352,7 +349,7 @@
             defaultFonts = {
                 serif = [ "Vazirmatn" "Ubuntu Nerd Font" ];
                 sansSerif = [ "Vazirmatn" "Ubuntu Nerd Font" ];
-                monospace = [ "CaskaydiaCove Nerd Font" ];
+                monospace = [ "JetBrainsMono Nerd Font" ];
             };
         };
     };
@@ -402,8 +399,8 @@
     environment = {
         # Aliases
         shellAliases = {
-            # l  = "eza -lha --group-directories-first";
-            # ll = "eza -lh --group-directories-first";
+            l  = "eza -lha --group-directories-first";
+            ll = "eza -lh --group-directories-first";
             nv = "nvim";
             tm = "tmux";
             # cdp  = "cd ~/projects";
@@ -440,7 +437,7 @@
 
             # Icons, themes and WM
             papirus-icon-theme
-            libsForQt5.qtstyleplugin
+            libsForQt5.qtstyleplugins
             libsForQt5.qtstyleplugin-kvantum
             cinnamon.mint-cursor-themes
             adapta-gtk-theme
@@ -453,7 +450,8 @@
             #emacs
 
             # Terminals and Command-line tools
-            alacritty
+            # alacritty
+            kitty
             ripgrep
             fd
             eza
@@ -546,14 +544,42 @@
 
 
     # xdg portal for flatpak
-    xdg.portal = {
-        enable = true;
-        xdgOpenUsePortal = true;
-        extraPortals = with pkgs; [
-            xdg-desktop-portal
-            xdg-desktop-portal-gtk
-            xdg-desktop-portal-shana
-        ];
+    xdg = {
+        mime = {
+            enable = true;
+            addedAssociations = {
+                "application/pdf" = "okularApplication_pdf.desktop";
+                "text/html"  = "firefox.desktop";
+                "image/png"  = "viewnior.desktop";
+                "image/jpeg" = "viewnior.desktop";
+                "video/mp4" = [
+                    "mpv.desktop"
+                        "vlc.desktop"
+                ];
+                "video/mkv" = [
+                    "mpv.desktop"
+                        "vlc.desktop"
+                ];
+            };
+            defaultApplications = {
+                "application/pdf" = "okularApplication_pdf.desktop";
+                "text/html"  = "firefox.desktop";
+                "image/png"  = "viewnior.desktop";
+                "image/jpeg" = "viewnior.desktop";
+                "video/mp4" = "mpv.desktop";
+                "video/mkv" = "mpv.desktop";
+            };
+        };
+
+        portal = {
+            enable = true;
+            xdgOpenUsePortal = true;
+            extraPortals = with pkgs; [
+                xdg-desktop-portal
+                xdg-desktop-portal-gtk
+                xdg-desktop-portal-shana
+            ];
+        };
     };
 
 
