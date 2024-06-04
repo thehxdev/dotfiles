@@ -4,7 +4,7 @@
 #################################################
 
 
-{ config, pkgs, ... }:
+{ config, pkgs, options, ... }:
 
 { 
     imports = [ 
@@ -54,16 +54,6 @@
     sound.enable = true;
 
     services = {
-        dnsmasq = {
-            enable = true;
-            settings = {
-                server = [
-                    "1.1.1.1"
-                    "1.0.0.1"
-                ];
-            };
-        };
-
         journald.extraConfig = ''
         SystemMaxUse=25M
         SystemMaxFileSize=10M
@@ -243,6 +233,63 @@
             enableSSHSupport = true;
             pinentryPackage = pkgs.pinentry-curses;
         };
+
+        # https://unix.stackexchange.com/a/522823
+        nix-ld = {
+            enable = true;
+            libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
+                stdenv.cc.cc
+                openssl
+                zlib
+                libcxx
+                # sane-backends
+
+                qt5.qtbase
+                qt5.qtsvg
+                # qt5.qtwayland
+                qt5.qtx11extras
+                qt5.qtdeclarative
+
+                xorg.libXcomposite
+                xorg.libXtst
+                xorg.libXrandr
+                xorg.libXext
+                xorg.libX11
+                xorg.libXfixes
+                xorg.libxcb
+                xorg.libXdamage
+                xorg.libxshmfence
+                xorg.libXxf86vm
+                xorg.libXinerama
+                xorg.libXcursor
+                xorg.libXrender
+                xorg.libXScrnSaver
+                xorg.libXi
+                xorg.libSM
+                xorg.libICE
+                xorg.libXt
+                xorg.libXmu
+                xorg.libXft
+
+                libjpeg
+                libpng
+                libGL
+                libva
+                libxkbcommon
+                libdrm
+                mesa
+                dbus
+                libelf
+                glib
+                gtk2
+                bzip2
+                cups
+                ffmpeg
+                freetype
+                fontconfig
+                alsaLib
+            ]);
+        };
     };
 
     # Network Manager
@@ -251,7 +298,7 @@
 
         networkmanager = {
             enable = true;
-            dns = "dnsmasq";
+            dns = "default";
         };
 
         resolvconf = {
@@ -292,19 +339,19 @@
 
         # nvidie prime
         ## https://nixos.wiki/wiki/Nvidia
-        # nvidia = {
-        #     package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
-        #     modesetting.enable = true;
-        #     prime = {
-        #         offload = {
-        #             enable = true;
-        #             enableOffloadCmd = true;
-        #         };
-        #         intelBusId = "PCI:0:2:0";
-        #         nvidiaBusId = "PCI:1:0:0";
-        #     };
-        #     nvidiaSettings = true;
-        # };
+        nvidia = {
+            package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+            modesetting.enable = true;
+            prime = {
+                offload = {
+                    enable = true;
+                    enableOffloadCmd = true;
+                };
+                intelBusId = "PCI:0:2:0";
+                nvidiaBusId = "PCI:1:0:0";
+            };
+            nvidiaSettings = true;
+        };
 
 
         # pulseaudio = {
@@ -380,12 +427,12 @@
             ];
 
             packages = with pkgs; [
-                # jq
-                # btop
+                jq
+                btop
                 # sqlite
-                # nodePackages.vscode-langservers-extracted
-                # lua-language-server
-                # tokei
+                nodePackages.vscode-langservers-extracted
+                lua-language-server
+                tokei
                 # obs-studio
                 # yt-dlp
             ];
@@ -403,7 +450,7 @@
             ll = "eza -lh --group-directories-first";
             nv = "nvim";
             tm = "tmux";
-            # cdp  = "cd ~/projects";
+            cdp  = "cd ~/projects";
         };
 
         # ENV variables
@@ -518,7 +565,7 @@
             # gparted
             # patchelf
             # bleachbit
-            libsForQt5.okular
+            # libsForQt5.okular
             nitrogen
             rofi
             galculator
@@ -570,7 +617,6 @@
                 "video/mkv" = "mpv.desktop";
             };
         };
-
         portal = {
             enable = true;
             xdgOpenUsePortal = true;
