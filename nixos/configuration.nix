@@ -112,26 +112,24 @@
             desktopManager = {
                 # XFCE
                 xfce = {
-                    enable = true;
-                    enableXfwm = true;
+                    enable = false;
+                    enableXfwm = false;
                 };
 
-                # Cinnamon
-                #cinnamon.enable = true;
+                cinnamon.enable = false;
 
-                # KDE plasma
-                #plasma5.enable = true;
+                plasma5.enable = false;
             };
 
             windowManager = {
-                # i3 = {
-                #    enable = true;
-                #    configFile = "/home/hx/.config/i3/config";
-                #    extraPackages = with pkgs; [
-                #        i3status
-                #        i3lock
-                #    ]
-                # };
+                i3 = {
+                   enable = false;
+                   configFile = "/home/hx/.config/i3/config";
+                   extraPackages = with pkgs; [
+                       i3status
+                       i3lock
+                   ]
+                };
 
                 bspwm = {
                     enable = true;
@@ -174,7 +172,7 @@
         # Enable CUPS for printing.
         printing = {
             enable = true;
-            #drivers = with pkgs; [ canon-cups-ufr2 ];
+            # drivers = with pkgs; [ canon-cups-ufr2 ];
         };
         avahi = {
             enable = true;
@@ -389,6 +387,7 @@
                 # lua-language-server
                 # tokei
                 # obs-studio
+                # yt-dlp
             ];
         };
 
@@ -451,13 +450,12 @@
             eza
             tmux
             curlFull
-            aria2
+            # aria2
             wget
             htop
             neofetch
-            yt-dlp
-            #eza
             nnn
+            bat
 
             # Multi media
             pavucontrol
@@ -511,7 +509,7 @@
             # Tools
             jcal
             # gparted
-            patchelf
+            # patchelf
             # bleachbit
             libsForQt5.okular
             nitrogen
@@ -531,7 +529,7 @@
 
             # Security
             openssl
-            bubblewrap
+            # bubblewrap
             pinentry
             wireguard-tools
         ];
