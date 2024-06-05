@@ -159,7 +159,7 @@
         # Enable CUPS for printing.
         printing = {
             enable = true;
-            # drivers = with pkgs; [ canon-cups-ufr2 ];
+            drivers = with pkgs; [ canon-cups-ufr2 ];
         };
         avahi = {
             enable = true;
