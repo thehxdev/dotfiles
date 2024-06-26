@@ -223,7 +223,7 @@
         };
 
         # for virtualisation and kvm
-        dconf.enable = false;
+        dconf.enable = true;
 
         # Some programs need SUID wrappers, can be configured further or are
         # started in user sessions.
@@ -246,7 +246,7 @@
 
                 qt5.qtbase
                 qt5.qtsvg
-                # qt5.qtwayland
+                #qt5.qtwayland
                 qt5.qtx11extras
                 qt5.qtdeclarative
 
@@ -289,6 +289,13 @@
                 fontconfig
                 alsaLib
             ]);
+        };
+
+        slock.enable = true;
+
+        xss-lock = {
+            enable = true;
+            lockerCommand = "${pkgs.slock}/bin/slock";
         };
     };
 
@@ -434,7 +441,7 @@
                 lua-language-server
                 tokei
                 # obs-studio
-                # yt-dlp
+                yt-dlp
             ];
         };
 
@@ -446,11 +453,13 @@
     environment = {
         # Aliases
         shellAliases = {
-            l  = "eza -lha --group-directories-first";
-            ll = "eza -lh --group-directories-first";
-            nv = "nvim";
-            tm = "tmux";
-            cdp  = "cd ~/projects";
+            l   = "eza -lha --group-directories-first";
+            ll  = "eza -lh --group-directories-first";
+            nv  = "nvim";
+            tm  = "tmux";
+            tma = "tmux a -t";
+            cdp = "cd ~/projects";
+            # cat = "bat -p --theme=\"Catppuccin Mocha\""
         };
 
         # ENV variables
@@ -472,8 +481,8 @@
             #xournalpp
 
             # virtualization
-            #virt-manager
-            #spice-gtk
+            # virt-manager
+            # spice-gtk
 
             # Browsers
             firefox
@@ -527,6 +536,7 @@
             xfce.mousepad
             #xfce.xfce4-xkb-plugin
             xfce.xfce4-clipman-plugin
+            #xfce.xfce4-power-manager
 
             # Archive
             rar
@@ -580,6 +590,7 @@
             xdg-launch
             xdg-utils
             dig
+            scrcpy
 
             # Security
             openssl
@@ -638,7 +649,7 @@
     # virtualization
     virtualisation = {
         libvirtd = {
-            enable = false;
+            enable = true;
         };
         spiceUSBRedirection.enable = true;
 
