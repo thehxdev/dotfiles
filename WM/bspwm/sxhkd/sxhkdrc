@@ -22,6 +22,10 @@ super + d
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# lock screen with slock
+super + semicolon
+	slock
+
 #
 # bspwm hotkeys
 #
@@ -139,3 +143,9 @@ XF86AudioLowerVolume
 
 XF86AudioMute
 	pamixer --toggle-mute
+
+XF86MonBrightnessUp
+    brightnessctl set 10%+
+
+XF86MonBrightnessDown
+    brightnessctl set 10%-
