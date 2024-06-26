@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 nitrogen --restore &
-# picom --backend glx &
-# nm-applet &
-#xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
-# setxkbmap -layout 'us,ir' -option 'eurosign:e,caps:escape,grp:alt_shift_toggle' &
+picom --backend glx &
+nm-applet &
+xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1 &
+setxkbmap -layout 'us,ir' -option 'eurosign:e,caps:escape,grp:alt_shift_toggle' &
 xset r rate 220 30 &
-# xfce4-power-manager &
+xfce4-power-manager --daemon &
 flameshot &
 #xrdb /home/hx/.Xresources
 if ! pgrep clipman >/dev/null 2>&1; then
@@ -16,5 +16,5 @@ fi
 #blueberry-tray &
 #volumeicon &
 #lxsession &
-systemctl --user import-environment PATH &
-systemctl --user restart xdg-desktop-portal.service &
+systemctl --user import-environment PATH
+systemctl --user restart xdg-desktop-portal.service
