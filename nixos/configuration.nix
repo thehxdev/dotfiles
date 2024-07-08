@@ -297,6 +297,8 @@
             enable = true;
             lockerCommand = "${pkgs.slock}/bin/slock";
         };
+
+        appimage.enable = true;
     };
 
     # Network Manager
@@ -513,7 +515,7 @@
             eza
             tmux
             curlFull
-            # aria2
+            aria2
             wget
             htop
             neofetch
@@ -631,6 +633,7 @@
         portal = {
             enable = true;
             xdgOpenUsePortal = true;
+            config.common.default = "*";
             extraPortals = with pkgs; [
                 xdg-desktop-portal
                 xdg-desktop-portal-gtk
