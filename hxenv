@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+export OPT="$HOME/opt"
+# export JAVA_HOME="$OPT/jdk"
+# export ANDROID_HOME="$OPT/Android"
+# export PYTHON_HOME="$OPT/python"
+# export LLVM_HOME="$OPT/llvm"
+
+export PATH="$OPT/bin:$PATH"
+
+export EDITOR="nvim"
+export GOPROXY="https://goproxy.io,direct"
+
+alias ll="eza -lh --group-directories-first"
+alias l="eza -lha --group-directories-first"
+alias cdo="cd $OPT"
+alias cdp="cd $HOME/projects"
+alias tm="tmux"
+alias nv="nvim"
+alias aria2c="aria2c -x16"
+alias ip='ip -c=auto'
+alias bat='batcat --theme="CatppuccinMocha"'
+alias blt='bluetoothctl'
+
+editdns() {
+    local RESOLVE_CONF
+    RESOLVE_CONF="/etc/resolv.conf"
+
+    sudo chattr -i $RESOLVE_CONF
+    sudo $EDITOR $RESOLVE_CONF
+    sudo chattr +i $RESOLVE_CONF
+}
+
+. "$HOME/.asdf/asdf.sh"
