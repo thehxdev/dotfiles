@@ -1,23 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 export OPT="$HOME/opt"
-# export JAVA_HOME="$OPT/jdk"
-# export ANDROID_HOME="$OPT/Android"
-# export PYTHON_HOME="$OPT/python"
-# export LLVM_HOME="$OPT/llvm"
+# export JAVA_HOME="$OPT/jdk/jdk-17.0.12"
+export LLVM_HOME="$OPT/llvm"
+export APTGIT_HOME="$HOME/.aptgit"
 
-export PATH="$OPT/bin:$PATH"
+export PATH="$OPT/bin:$APTGIT_HOME/bin:$HOME/go/bin:$JAVA_HOME/bin:$LLVM_HOME/bin:$PATH"
 
 export EDITOR="nvim"
 export GOPROXY="https://goproxy.io,direct"
 
 alias ll="eza -lh --group-directories-first"
+alias lt="eza -T --group-directories-first"
 alias l="eza -lha --group-directories-first"
 alias cdo="cd $OPT"
 alias cdp="cd $HOME/projects"
 alias tm="tmux"
 alias nv="nvim"
-alias aria2c="aria2c -x16"
+alias aria2c="aria2c -x16 -j1"
 alias ip='ip -c=auto'
 alias bat='batcat --theme="CatppuccinMocha"'
 alias blt='bluetoothctl'
@@ -31,4 +31,9 @@ editdns() {
     sudo chattr +i $RESOLVE_CONF
 }
 
-. "$HOME/.asdf/asdf.sh"
+myip() {
+    curl -sSLf https://httpbin.org/ip | jq '.origin' | tr -d '"'
+}
+
+# . "$HOME/.cargo/env"
+# . "$HOME/.asdf/asdf.sh"
