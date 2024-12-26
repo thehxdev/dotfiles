@@ -13,11 +13,16 @@
 
 (setq custom-file "~/.emacs.d/emacs.custom.el")
 
+;; disable line wrap
+(set-default 'truncate-lines t)
+(setq default-truncate-lines t)
+
 (setq warning-minimum-level :emergency)
 ;; (set-frame-font "CaskaydiaCove Nerd Font Mono-110" nil t)
 
-;; disable line wrap
-(setq default-truncate-lines t)
+;; Disable escape key
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 ;; (text-scale-set 1)
 (set-face-attribute 'default nil :height 140)
 ;; make side by side buffers function the same as the main window
@@ -53,33 +58,14 @@
 (use-package vterm
     :straight t)
 
-(use-package evil
-  :straight t
-  :init ;; tweak evil's configuration before loading it
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (evil-mode))
-
-(use-package evil-collection
-  :straight t
-  :after evil
-  :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (evil-collection-init))
-
-(use-package evil-tutor
-  :straight t)
-
 (use-package all-the-icons
   :straight t
   :if (display-graphic-p))
 
-;; (use-package all-the-icons-dired
-;;   :straight t
-;;   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
-
+;; (setq backup-directory-alist
+;;     `((".*" . ,temporary-file-directory)))
+;; (setq auto-save-file-name-transforms
+;;     `((".*" ,temporary-file-directory t))
 
 (setq make-backup-files nil)
 (menu-bar-mode -1)
@@ -97,10 +83,10 @@
 ;;   :init (global-flycheck-mode))
 
 
-(use-package electric
-  :init
-  (electric-pair-mode 1)
-  (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+;; (use-package electric
+;;   :init
+;;   (electric-pair-mode 1)
+;;   (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
 
 ;; (use-package company
 ;;   :straight t
@@ -143,102 +129,25 @@
   (mapcar 'kill-buffer (buffer-list))
   (delete-other-windows))
 
-(use-package general
-  :straight t)
-(general-evil-setup)
-
-;; set up 'SPC' as the global leader key
-(general-create-definer dt/leader-keys
-  :states '(normal insert visual emacs)
-  :keymaps 'override
-  :prefix "SPC" ;; set leader
-  :global-prefix "M-SPC") ;; access leader in insert mode
-
-(dt/leader-keys
-  "b"   '(:ignore t :wk "buffer")
-  "b i" '(ibuffer :wk "Switch buffer")
-  "b b" '(switch-to-buffer :wk "Switch buffer")
-  "b k" '(kill-this-buffer :wk "Kill this buffer")
-  "b K" '(nuke-all-buffers :wk "Kill all buffers")
-  "b n" '(next-buffer :wk "Next buffer")
-  "b p" '(previous-buffer :wk "Previous buffer")
-  "b r" '(revert-buffer :wk "Reload buffer")
-  ;"s h" '(async-shell-command :wk "Execute an async shell command")
-  "s h" '(shell-command :wk "Execute a shell command")
-  "s c" '(sly-compile-and-load-file :wk "Compile and load .lisp files in sly")
-  "."   '(find-file :wk "Find file")
-  "f r" '(recentf-open :wk "Find file")
-  "c l" '(comment-line :wk "Comment lines")
-  )
-
-(dt/leader-keys
-  "e" '(:ignore t :wk "Eshell/Evaluate")
-  "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-  "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-  "e e" '(eval-expression :wk "Evaluate and elisp expression")
-  "e h" '(counsel-esh-history :which-key "Eshell history")
-  "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-  "e r" '(eval-region :wk "Evaluate elisp in region")
-  "e s" '(eshell :which-key "Eshell")
-  )
-
-(dt/leader-keys
-  "h" '(:ignore t :wk "Help")
-  "h f" '(describe-function :wk "Describe function")
-  "h v" '(describe-variable :wk "Describe variable")
-  "h r r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :wk "Reload emacs config")
-  ;;"h r r" '(reload-init-file :wk "Reload emacs config")
-  )
-
-(dt/leader-keys
-  "t" '(:ignore t :wk "Toggle")
-  "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-  "t t" '(visual-line-mode :wk "Toggle truncated lines")
-  ;"t v" '(vterm-toggle :wk "Toggle vterm")
-  )
-
-(dt/leader-keys
-  "w" '(:ignore t :wk "Windows")
-  ;; Window splits
-  "w c" '(evil-window-delete :wk "Close window")
-  "w n" '(evil-window-new :wk "New window")
-  "w s" '(evil-window-split :wk "Horizontal split window")
-  "w v" '(evil-window-vsplit :wk "Vertical split window")
-  ;; Window motions
-  "w h" '(evil-window-left :wk "Window left")
-  "w j" '(evil-window-down :wk "Window down")
-  "w k" '(evil-window-up :wk "Window up")
-  "w l" '(evil-window-right :wk "Window right")
-  "w w" '(evil-window-next :wk "Goto next window")
-  ;; Move Windows
-  "w H" '(buf-move-left :wk "Buffer move left")
-  "w J" '(buf-move-down :wk "Buffer move down")
-  "w K" '(buf-move-up :wk "Buffer move up")
-  "w L" '(buf-move-right :wk "Buffer move right")
-  )
+;; (use-package general
+;;   :straight t)
 
 ;; Emacs Dashboard
 (use-package dashboard
   :straight t
   :init
   (setq initial-buffer-choice 'dashboard-open)
-  (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
-  (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  ;(setq dashboard-startup-banner "/home/dt/.config/emacs/images/dtmacs-logo.png")  ;; use custom image as banner
-  (setq dashboard-center-content t) ;; set to 't' for centered content
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
   (setq dashboard-items '(
-                          ;(recents . 5)
-                          ;(agenda . 5 )
-                          ;(bookmarks . 3)
-                          ;(projects . 3)
-                          ;(registers . 3)
-                          ))
-  (dashboard-modify-heading-icons '(
-                                    ;(recents . "file-text")
-                                    ;(bookmarks . "book")
-                                    ))
+                        ;; (recents   . 5)
+                        ;; (bookmarks . 5)
+                        ;; (projects  . 5)
+                        ;; (agenda    . 5)
+                        ;; (registers . 5)
+                        ))
   :config
   (dashboard-setup-startup-hook))
 
@@ -262,11 +171,6 @@
       which-key-allow-imprecise-window-fit nil
       which-key-separator " → " ))
 
-;; (use-package counsel
-;;   :straight t
-;;   :after ivy
-;;   :diminish
-;;   :config (counsel-mode))
 
 ;; (use-package ivy
 ;;   :straight t
@@ -281,6 +185,12 @@
 ;;   (setq enable-recursive-minibuffers t)
 ;;   :config
 ;;   (ivy-mode))
+
+;; (use-package counsel
+;;   :straight t
+;;   :after ivy
+;;   :diminish
+;;   :config (counsel-mode))
 
 ;; (use-package all-the-icons-ivy-rich
 ;;   :straight t
@@ -298,10 +208,16 @@
 ;;   (ivy-set-display-transformer 'ivy-switch-buffer
 ;;                                'ivy-rich-switch-buffer-transformer))
 
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-enable-flex-matching t)
+
 (use-package gruber-darker-theme
   :straight t)
+
 (require 'gruber-darker-theme)
 (load-theme 'gruber-darker 1)
+
 (global-hl-line-mode 1)
 
 ;; (use-package doom-themes
@@ -383,6 +299,8 @@
 ;;          (lambda ()
 ;;            (require 'lua-mode)
 ;;            (tree-sitter-hl-mode))))
+(use-package lua-mode
+  :straight t)
 
 
 ;; Lisp
@@ -391,9 +309,13 @@
 ;; (setq inferior-lisp-program "/home/hx/.local/bin/commonlisp/bin/sbcl")
 
 ;; Rust
-;; (use-package rust-mode
-;;   :straight t)
+(use-package rust-mode
+  :straight t)
 
 ;; Golang
-;; (use-package go-mode
-;;   :straight t)
+(use-package go-mode
+  :straight t)
+
+;; Python
+(use-package python-mode
+  :straight t)
