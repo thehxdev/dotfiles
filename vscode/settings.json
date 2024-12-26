@@ -1,0 +1,15 @@
+{
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "Tokyo Night",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+    "editor.fontLigatures": true,
+    "keyboard.dispatch": "keyCode",
+    "editor.fontSize": 15,
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+    "rust-analyzer.inlayHints.parameterHints.enable": false,
+    "workbench.iconTheme": "material-icon-theme",
+    "files.autoSave": "afterDelay",
+    "explorer.confirmDelete": false,
+    "git.openRepositoryInParentFolders": "never",
+    "makefile.configureOnOpen": true
+}
