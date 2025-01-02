@@ -14,19 +14,27 @@
 (setq custom-file "~/.emacs.d/emacs.custom.el")
 
 ;; disable line wrap
-(set-default 'truncate-lines t)
-(setq default-truncate-lines t)
+(set-default 'truncate-lines 1)
+(setq default-truncate-lines 1)
+(global-display-line-numbers-mode 1)
+(global-visual-line-mode -1)
+;; (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
+;; enable current line highlight
+(global-hl-line-mode 1)
 
 (setq warning-minimum-level :emergency)
-;; (set-frame-font "CaskaydiaCove Nerd Font Mono-110" nil t)
+
 
 ;; Disable escape key
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; (text-scale-set 1)
 (set-face-attribute 'default nil :height 140)
+;; (set-frame-font "CaskaydiaCove Nerd Font Mono-110" nil t)
+
 ;; make side by side buffers function the same as the main window
-;(setq truncate-partial-width-windows nil)
+(setq truncate-partial-width-windows nil)
 
 (straight-use-package 'use-package)
 (straight-use-package 'undo-tree)
@@ -36,14 +44,24 @@
 ;; (straight-use-package 'lsp-ui)
 ;; (straight-use-package 'flycheck)
 ;; (straight-use-package 'company-mode)
-(straight-use-package 'tree-sitter)
-(straight-use-package 'tree-sitter-langs)
 ;; (straight-use-package 'lsp-treemacs)
 ;; (straight-use-package 'lsp-ivy)
 ;; (straight-use-package 'helm-lsp)
 ;; (straight-use-package 'dap-mode)
 ;; (straight-use-package 'sly)
 (straight-use-package 'magit)
+(straight-use-package 'multiple-cursors)
+
+;; (use-package tree-sitter
+;;   :straight t
+;;   :init
+;;   (require 'tree-sitter))
+
+;; (use-package tree-sitter-langs
+;;   :straight t
+;;   :init
+;;   (require 'tree-sitter-langs))
+
 
 ;; The path to lsp-mode needs to be added to load-path as well as the
 ;; path to the `clients' subdirectory.
@@ -51,9 +69,6 @@
 ;; (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
 ;; (add-hook 'prog-mode-hook 'lsp-deferred)
 ;; (require 'lsp-mode)
-
-(require 'tree-sitter)
-(require 'tree-sitter-langs)
 
 (use-package vterm
     :straight t)
@@ -68,10 +83,12 @@
 ;;     `((".*" ,temporary-file-directory t))
 
 (setq make-backup-files nil)
+(setq backup-by-copying t)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-
 
 (use-package diminish
   :straight t)
@@ -121,8 +138,6 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-(global-display-line-numbers-mode 1)
-(global-visual-line-mode t)
 
 (defun nuke-all-buffers ()
   (interactive)
@@ -209,34 +224,33 @@
 ;;                                'ivy-rich-switch-buffer-transformer))
 
 (ido-mode 1)
-(ido-everywhere 1)
+(setq ido-everywhere t)
 (setq ido-enable-flex-matching t)
+(setq ido-use-filename-at-point 'guess)
+(put 'dired-find-alternate-file 'disabled nil)
 
 (use-package gruber-darker-theme
   :straight t)
 
-(require 'gruber-darker-theme)
-(load-theme 'gruber-darker 1)
+;; (require 'gruber-darker-theme)
+;; (load-theme 'gruber-darker 1)
 
-(global-hl-line-mode 1)
-
-;; (use-package doom-themes
-;;   :straight t)
-
-;; (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-;;     doom-themes-enable-italic t) ; if nil, italics is universally disabled
-;; (load-theme 'doom-one t)
-;; ;; Enable flashing mode-line on errors
-;; (doom-themes-visual-bell-config)
-;; ;; Enable custom neotree theme (all-the-icons must be installed!)
-;; (doom-themes-neotree-config)
-;; ;; or for treemacs users
-;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-;; (doom-themes-treemacs-config)
-;; ;; Corrects (and improves) org-mode's native fontification.
-;; (doom-themes-org-config)
+(use-package doom-themes
+  :straight t
+  :init
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme 'doom-tokyo-night t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config))
 
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :bind (:map markdown-mode-map
+         ("C-c C-e" . markdown-do)))
 
 ;;; Programming Languages
 
@@ -251,7 +265,7 @@
 ;; (add-hook 'c-mode-hook 'lsp-deferred)
 ;; (c-set-offset 'syntactic-symbol 4)
 
-; Golang
+;; Golang
 ;; (use-package go-mode
 ;;   :straight t
 ;;   :hook ((go-mode) .
