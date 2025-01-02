@@ -1,0 +1,4 @@
+[leaseweb]
+name=leaseweb $releasever - $basearch
+enabled=1
+baseurl=https://mirror.de.leaseweb.net/fedora/linux/releases/$releasever/Everything/$basearch/os/
