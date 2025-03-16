@@ -17,11 +17,4 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-$env.path ++= ["~/.local/bin", "~/opt/_root/bin", "~/go/bin"]
-
-$env.config.buffer_editor = "nvim"
-$env.config.show_banner = false
-$env.FZF_DEFAULT_OPTS = "--tmux -m"
-
-alias tm = tmux
-alias nv = nvim
+source "hxenv.nu"
