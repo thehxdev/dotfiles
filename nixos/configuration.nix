@@ -110,12 +110,12 @@
 
             windowManager = {
                 i3 = {
-                   enable = false;
-                   configFile = "/home/hx/.config/i3/config";
-                   extraPackages = with pkgs; [
-                       i3status
-                       i3lock
-                   ];
+                    enable = false;
+                    configFile = "/home/hx/.config/i3/config";
+                    extraPackages = with pkgs; [
+                        i3status
+                        i3lock
+                    ];
                 };
 
                 bspwm = {
@@ -132,27 +132,27 @@
 
         # picom
         picom = {
-           enable = true;
-           fade = false;
-           shadow = false;
-           backend = "glx";
-           vSync = false;
-           inactiveOpacity = 1.0;
-           activeOpacity = 1.0;
-           settings = {
-              blur = {
-                  method = "gaussian";
-                  size = 15;
-                  deviation = 15;
-              };
-           };
-           wintypes = {
-               dropdown_menu = { shadow = false; blur-background = false; };
-               popup_menu    = { shadow = false; blur-background = false; };
-               utility       = { shadow = false; blur-background = false; };
-               desktop       = { shadow = false; blur-background = false; };
-               notification  = { shadow = true;  blur-background = false; };
-           };
+            enable = true;
+            fade = false;
+            shadow = false;
+            backend = "glx";
+            vSync = false;
+            inactiveOpacity = 1.0;
+            activeOpacity = 1.0;
+            settings = {
+                blur = {
+                    method = "gaussian";
+                    size = 15;
+                    deviation = 15;
+                };
+            };
+            wintypes = {
+                dropdown_menu = { shadow = false; blur-background = false; };
+                popup_menu    = { shadow = false; blur-background = false; };
+                utility       = { shadow = false; blur-background = false; };
+                desktop       = { shadow = false; blur-background = false; };
+                notification  = { shadow = true;  blur-background = false; };
+            };
         };
 
 
@@ -219,7 +219,6 @@
                     defaultBranch = "main";
                 };
             };
-
         };
 
         # for virtualisation and kvm
@@ -323,7 +322,7 @@
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-    
+
     # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
     console = {
@@ -392,13 +391,13 @@
             noto-fonts-emoji
             font-awesome
             (nerdfonts.override { fonts = [
-             "Ubuntu"
-             # "FiraMono"
-             # "Mononoki"
-             "UbuntuMono"
-             "RobotoMono"
-             "JetBrainsMono"
-             "CascadiaCode"
+                "Ubuntu"
+                # "FiraMono"
+                # "Mononoki"
+                "UbuntuMono"
+                "RobotoMono"
+                "JetBrainsMono"
+                "CascadiaCode"
             ]; })
         ];
         fontconfig = {
@@ -614,11 +613,11 @@
                 "image/jpeg" = "viewnior.desktop";
                 "video/mp4" = [
                     "mpv.desktop"
-                        "vlc.desktop"
+                    "vlc.desktop"
                 ];
                 "video/mkv" = [
                     "mpv.desktop"
-                        "vlc.desktop"
+                    "vlc.desktop"
                 ];
             };
             defaultApplications = {
