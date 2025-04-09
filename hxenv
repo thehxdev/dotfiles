@@ -1,36 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export OPT="$HOME/opt"
+export OPT_GLOBAL="$OPT/_global"
 
-export EDITOR="nvim"
-export GOPROXY="https://goproxy.io,direct"
+local OPT_GLOBAL_PATH=""
+for p in $(ls -1 $OPT_GLOBAL); do
+    OPT_GLOBAL_PATH+="$OPT_GLOBAL/$p/bin:"
+done
+
+export PATH="$PATH:$HOME/.local/bin:$OPT_GLOBAL_PATH"
 export MANPAGER="nvim +Man!"
-# export FZF_DEFAULT_OPTS="--tmux -m"
 
-export PATH="$PATH:$OPT/bin"
-
-alias ll="eza -lh --group-directories-first"
-alias lt="eza -T --group-directories-first"
-alias l="eza -lha --group-directories-first"
-alias cdo="cd $OPT"
-alias cdp="cd $HOME/projects"
-alias tm="tmux"
-alias nv="nvim"
-alias aria2c="aria2c -x16 --conditional-get --auto-file-renaming=false --allow-overwrite=false"
-alias ip='ip -c=auto'
-alias bat='batcat --theme="CatppuccinMocha"'
-alias blt='bluetoothctl'
-alias premacs='pkill emacs; emacs --daemon'
-
-editdns() {
-    local RESOLVE_CONF
-    RESOLVE_CONF="/etc/resolv.conf"
-
-    sudo chattr -i $RESOLVE_CONF
-    sudo $EDITOR $RESOLVE_CONF
-    sudo chattr +i $RESOLVE_CONF
-}
-
-myip() {
-    curl -sSLf https://httpbin.org/ip | jq '.origin' | tr -d '"'
-}
+alias nv='nvim'
+alias tm='tmux'
+alias ll='eza -lh --group-directories-first'
+alias la='eza -lha --group-directories-first'
+alias cdp='cd ~/projects'
+alias cdo='cd ~/opt'
