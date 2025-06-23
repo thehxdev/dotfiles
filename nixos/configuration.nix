@@ -13,9 +13,7 @@
     ];
 
     # Allow unfree packages
-    nixpkgs.config = {
-        allowUnfree = true;
-    };
+    nixpkgs.config.allowUnfree = true;
 
     # nix config
     nix = {
@@ -68,10 +66,10 @@
             };
         };
 
-
-        displayManager = {
-            sddm.enable = true;
-            defaultSession = "plasma6";
+        desktopManager.plasma6.enable = true;
+        displayManager.sddm = {
+            enable = true;
+            wayland.enable = true;
         };
 
         # X11 and Xserver settings
@@ -96,68 +94,56 @@
             # '';
 
 
-            displayManager = {
-                lightdm.enable = false;
-            };
+            # displayManager = {
+            #     lightdm.enable = false;
+            # };
 
-            desktopManager = {
-                # XFCE
-                xfce = {
-                    enable = false;
-                    enableXfwm = false;
-                };
-
-                cinnamon.enable = false;
-
-                plasma6.enable = true;
-            };
-
-            windowManager = {
-                i3 = {
-                    enable = false;
-                    configFile = "/home/hx/.config/i3/config";
-                    extraPackages = with pkgs; [
-                        i3status
-                        i3lock
-                    ];
-                };
-
-                bspwm = {
-                    enable = false;
-                    configFile = "/home/hx/.config/bspwm/bspwmrc";
-                    sxhkd.configFile = "/home/hx/.config/sxhkd/sxhkdrc";
-                };
-            };
+            # windowManager = {
+            #     i3 = {
+            #         enable = false;
+            #         configFile = "/home/hx/.config/i3/config";
+            #         extraPackages = with pkgs; [
+            #             i3status
+            #             i3lock
+            #         ];
+            #     };
+            #
+            #     bspwm = {
+            #         enable = false;
+            #         configFile = "/home/hx/.config/bspwm/bspwmrc";
+            #         sxhkd.configFile = "/home/hx/.config/sxhkd/sxhkdrc";
+            #     };
+            # };
         };
 
         gvfs.enable = true;
 
-        cinnamon.apps.enable = false;
+        # cinnamon.apps.enable = false;
 
         # picom
-        picom = {
-            enable = false;
-            fade = false;
-            shadow = false;
-            backend = "glx";
-            vSync = false;
-            inactiveOpacity = 1.0;
-            activeOpacity = 1.0;
-            settings = {
-                blur = {
-                    method = "gaussian";
-                    size = 15;
-                    deviation = 15;
-                };
-            };
-            wintypes = {
-                dropdown_menu = { shadow = false; blur-background = false; };
-                popup_menu    = { shadow = false; blur-background = false; };
-                utility       = { shadow = false; blur-background = false; };
-                desktop       = { shadow = false; blur-background = false; };
-                notification  = { shadow = true;  blur-background = false; };
-            };
-        };
+        # picom = {
+        #     enable = false;
+        #     fade = false;
+        #     shadow = false;
+        #     backend = "glx";
+        #     vSync = false;
+        #     inactiveOpacity = 1.0;
+        #     activeOpacity = 1.0;
+        #     settings = {
+        #         blur = {
+        #             method = "gaussian";
+        #             size = 15;
+        #             deviation = 15;
+        #         };
+        #     };
+        #     wintypes = {
+        #         dropdown_menu = { shadow = false; blur-background = false; };
+        #         popup_menu    = { shadow = false; blur-background = false; };
+        #         utility       = { shadow = false; blur-background = false; };
+        #         desktop       = { shadow = false; blur-background = false; };
+        #         notification  = { shadow = true;  blur-background = false; };
+        #     };
+        # };
 
 
         # Enable CUPS for printing.
@@ -378,12 +364,12 @@
         };
 
 
-        pulseaudio = {
-            enable = false;
-            package = pkgs.pulseaudioFull;
-            # extraModules = [ pkgs.pulseaudio-modules-bt ];
-            extraConfig = "load-module module-switch-on-connect";
-        };
+        # pulseaudio = {
+        #     enable = false;
+        #     package = pkgs.pulseaudioFull;
+        #     # extraModules = [ pkgs.pulseaudio-modules-bt ];
+        #     extraConfig = "load-module module-switch-on-connect";
+        # };
 
         bluetooth = {
             enable = true;
@@ -410,10 +396,10 @@
                 "Ubuntu"
                 # "FiraMono"
                 # "Mononoki"
-                "UbuntuMono"
-                "RobotoMono"
+                # "UbuntuMono"
+                # "RobotoMono"
                 "JetBrainsMono"
-                "CascadiaCode"
+                # "CascadiaCode"
             ]; })
         ];
         fontconfig = {
@@ -435,10 +421,11 @@
     # Define a user account.
     # Don't forget to set a password with ‘passwd’.
     users = {
-        # EDITME: set username
+        # EDITME: set username and configure user settings
         users.hx = {
+            enbale = true;
             isNormalUser = true;
-            # EDITME: set user home directory
+            createHome = false;
             home = "/home/hx";
             extraGroups = [
                 "wheel"
@@ -452,8 +439,8 @@
                 # "vboxusers"
             ];
 
-            packages = with pkgs; [
-            ];
+            # packages = with pkgs; [
+            # ];
         };
 
         defaultUserShell = pkgs.zsh;
@@ -464,13 +451,13 @@
     environment = {
         # Aliases
         shellAliases = {
-            l   = "eza -lha --group-directories-first";
-            ll  = "eza -lh --group-directories-first";
-            nv  = "nvim";
-            tm  = "tmux";
-            tma = "tmux a -t";
-            cdp = "cd ~/projects";
-            ip  = "ip -c=auto";
+            l    = "eza -lha --group-directories-first";
+            ll   = "eza -lh --group-directories-first";
+            nv   = "nvim";
+            tm   = "tmux";
+            tma  = "tmux a -t";
+            cdp  = "cd ~/projects";
+            ip   = "ip -c=auto";
             gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1"
         };
 
@@ -483,27 +470,27 @@
         sessionVariables = {
             # Force intel-media-driver
             # See hardware opengl section
-            LIBVA_DRIVER_NAME = "iHD";
+            # LIBVA_DRIVER_NAME = "iHD";
         };
 
 
         systemPackages = with pkgs; [
-            # office
+            ## office
             # libreoffice-fresh
             # xournalpp
 
-            # virtualization
+            ## virtualization
             # virt-manager
             # spice-gtk
 
-            # Browsers
+            ## Browsers
             firefox
             # brave
             # librewolf
             # chromium
             # ungoogled-chromium
 
-            # Icons, themes and WM
+            ## Icons, themes and WM
             # papirus-icon-theme
             # libsForQt5.qtstyleplugins
             # libsForQt5.qtstyleplugin-kvantum
@@ -511,13 +498,13 @@
             # adapta-gtk-theme
             # polybarFull
 
-            # Editors
+            ## Editors
             neovim
             tree-sitter
             # helix
             # emacs
 
-            # Terminals and Command-line tools
+            ## Terminals and Command-line tools
             # alacritty
             kitty
             ripgrep
@@ -537,7 +524,7 @@
             tokei
 
 
-            # Multi media
+            ## Multi media
             pavucontrol
             pamixer
             arandr
@@ -551,13 +538,13 @@
             yt-dlp
             # obs-studio
 
-            # XFCE
+            ## XFCE
             # xfce.mousepad
-            #xfce.xfce4-xkb-plugin
+            # xfce.xfce4-xkb-plugin
             # xfce.xfce4-clipman-plugin
-            #xfce.xfce4-power-manager
+            # xfce.xfce4-power-manager
 
-            # Archive
+            ## Archive
             rar
             # unrar
             unzip
@@ -566,7 +553,7 @@
             p7zip
             zstd
 
-            # Dev
+            ## dev
             # man-pages
             # rlwrap
             lua-language-server
@@ -583,7 +570,7 @@
             ## Java
             # jdk
 
-            # xorg
+            ## xorg
             xorg.xcbutil
             xorg.xcbutilkeysyms
             xorg.xcbutilwm
@@ -591,7 +578,11 @@
             xclip
             xsel
 
-            # Tools
+            ## wayland
+            wayland-utils
+            wl-clipboard
+
+            ## Tools
             jcal
             # gparted
             # patchelf
@@ -612,7 +603,7 @@
             dig
             # scrcpy
 
-            # Security
+            ## Security
             openssl
             # bubblewrap
             # pinentry
@@ -662,10 +653,11 @@
 
 
     # QT Themes
-    # qt = {
-    #     enable = true;
-    #     platformTheme = "qt5ct";
-    # };
+    qt = {
+        enable = true;
+        platformTheme = "gnome";
+        style = "adwaita-dark";
+    };
 
     # virtualization
     virtualisation = {
@@ -673,7 +665,6 @@
             enable = true;
         };
         spiceUSBRedirection.enable = true;
-
         docker.enable = false;
     };
 
