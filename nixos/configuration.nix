@@ -33,31 +33,33 @@
         man-db = {
             enable = true;
         };
+        nixos.enable = true;
+        dev.enable = true;
     };
 
 
     # Use the GRUB 2 boot loader.
     boot = {
-        supportedFilesystems = [
-            "ntfs"
-        ];
+        supportedFilesystems = {
+            ntfs = true;
+        };
         loader = {
             grub = {
                 enable = true;
-                device = "/dev/sda"; 
+                # EDITME: set the boot device
+                device = "/dev/nvme0n1"; 
             };
             timeout = 10;
         };
     };
-
-    # enable sound
-    sound.enable = true;
 
     services = {
         journald.extraConfig = ''
         SystemMaxUse=25M
         SystemMaxFileSize=10M
         '';
+
+        acpid.enable = true;
 
         libinput = {
             enable = true;
@@ -68,8 +70,8 @@
 
 
         displayManager = {
-            sddm.enable = false;
-            defaultSession = "none+bspwm";
+            sddm.enable = true;
+            defaultSession = "plasma6";
         };
 
         # X11 and Xserver settings
@@ -83,17 +85,19 @@
 
             videoDrivers = [
                 # "intel"
-                "modesetting"
+                # "modesetting"
+                "amdgpu"
+                "nvidia"
             ];
 
-            deviceSection = ''
-                Option "DRI" "2"
-                Option "TearFree" "true"
-            '';
+            # deviceSection = ''
+            #     Option "DRI" "2"
+            #     Option "TearFree" "true"
+            # '';
 
 
             displayManager = {
-                lightdm.enable = true;
+                lightdm.enable = false;
             };
 
             desktopManager = {
@@ -105,7 +109,7 @@
 
                 cinnamon.enable = false;
 
-                plasma5.enable = false;
+                plasma6.enable = true;
             };
 
             windowManager = {
@@ -119,7 +123,7 @@
                 };
 
                 bspwm = {
-                    enable = true;
+                    enable = false;
                     configFile = "/home/hx/.config/bspwm/bspwmrc";
                     sxhkd.configFile = "/home/hx/.config/sxhkd/sxhkdrc";
                 };
@@ -132,7 +136,7 @@
 
         # picom
         picom = {
-            enable = true;
+            enable = false;
             fade = false;
             shadow = false;
             backend = "glx";
@@ -169,8 +173,10 @@
 
         pipewire = {
             enable = true;
+            audio.enable = true;
+            wireplumber.enable = true;
             alsa.enable = true;
-            alsa.support32Bit = true;
+            alsa.support32Bit = false;
             pulse.enable = true;
             jack.enable = false;
         };
@@ -189,7 +195,7 @@
     programs = {
         # Thunar options
         thunar = {
-            enable = true;
+            enable = false;
             plugins = with pkgs.xfce; [
                 thunar-archive-plugin
                 thunar-volman
@@ -201,7 +207,7 @@
             enable = true;
             enableCompletion = true;
             syntaxHighlighting.enable = true;
-            # autosuggestions.enable = true;
+            autosuggestions.enable = false;
             ohMyZsh = {
                 enable = true;
                 theme = "robbyrussell";
@@ -215,6 +221,15 @@
         git = {
             enable = true;
             config = {
+                user = {
+                    # EDITME: git user and email
+                    name = "";
+                    email = "";
+                };
+                core = {
+                    editor = "nvim";
+                    autocrlf = "input";
+                };
                 init = {
                     defaultBranch = "main";
                 };
@@ -234,66 +249,66 @@
         };
 
         # https://unix.stackexchange.com/a/522823
-        nix-ld = {
-            enable = true;
-            libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
-                stdenv.cc.cc
-                openssl
-                zlib
-                libcxx
-                # sane-backends
+        # nix-ld = {
+        #     enable = true;
+        #     libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
+        #         stdenv.cc.cc
+        #         openssl
+        #         zlib
+        #         libcxx
+        #         # sane-backends
+        #
+        #         qt5.qtbase
+        #         qt5.qtsvg
+        #         #qt5.qtwayland
+        #         qt5.qtx11extras
+        #         qt5.qtdeclarative
+        #
+        #         xorg.libXcomposite
+        #         xorg.libXtst
+        #         xorg.libXrandr
+        #         xorg.libXext
+        #         xorg.libX11
+        #         xorg.libXfixes
+        #         xorg.libxcb
+        #         xorg.libXdamage
+        #         xorg.libxshmfence
+        #         xorg.libXxf86vm
+        #         xorg.libXinerama
+        #         xorg.libXcursor
+        #         xorg.libXrender
+        #         xorg.libXScrnSaver
+        #         xorg.libXi
+        #         xorg.libSM
+        #         xorg.libICE
+        #         xorg.libXt
+        #         xorg.libXmu
+        #         xorg.libXft
+        #
+        #         libjpeg
+        #         libpng
+        #         libGL
+        #         libva
+        #         libxkbcommon
+        #         libdrm
+        #         mesa
+        #         dbus
+        #         libelf
+        #         glib
+        #         gtk2
+        #         bzip2
+        #         cups
+        #         ffmpeg
+        #         freetype
+        #         fontconfig
+        #         alsaLib
+        #     ]);
+        # };
 
-                qt5.qtbase
-                qt5.qtsvg
-                #qt5.qtwayland
-                qt5.qtx11extras
-                qt5.qtdeclarative
-
-                xorg.libXcomposite
-                xorg.libXtst
-                xorg.libXrandr
-                xorg.libXext
-                xorg.libX11
-                xorg.libXfixes
-                xorg.libxcb
-                xorg.libXdamage
-                xorg.libxshmfence
-                xorg.libXxf86vm
-                xorg.libXinerama
-                xorg.libXcursor
-                xorg.libXrender
-                xorg.libXScrnSaver
-                xorg.libXi
-                xorg.libSM
-                xorg.libICE
-                xorg.libXt
-                xorg.libXmu
-                xorg.libXft
-
-                libjpeg
-                libpng
-                libGL
-                libva
-                libxkbcommon
-                libdrm
-                mesa
-                dbus
-                libelf
-                glib
-                gtk2
-                bzip2
-                cups
-                ffmpeg
-                freetype
-                fontconfig
-                alsaLib
-            ]);
-        };
-
-        slock.enable = true;
+        slock.enable = false;
 
         xss-lock = {
-            enable = true;
+            enable = false;
             lockerCommand = "${pkgs.slock}/bin/slock";
         };
 
@@ -332,42 +347,43 @@
 
 
     hardware = {
-        # opengl
-        opengl = {
+        # graphics
+        graphics = {
             enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
-            extraPackages = with pkgs; [
-                intel-compute-runtime
-                intel-media-driver  # LIBVA_DRIVER_NAME=iHD
-                intel-vaapi-driver  # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-                libvdpau-va-gl
-            ];
+            # extraPackages = with pkgs; [
+            #     intel-compute-runtime
+            #     intel-media-driver  # LIBVA_DRIVER_NAME=iHD
+            #     intel-vaapi-driver  # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+            #     libvdpau-va-gl
+            # ];
         };
 
         # nvidie prime
         ## https://nixos.wiki/wiki/Nvidia
         nvidia = {
-            package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+            package = config.boot.kernelPackages.nvidiaPackages.production;
             modesetting.enable = true;
             prime = {
                 offload = {
                     enable = true;
                     enableOffloadCmd = true;
                 };
-                intelBusId = "PCI:0:2:0";
+                # intelBusId = "PCI:0:2:0";
+                amdgpuBusId = "PCI:65:0:0";
                 nvidiaBusId = "PCI:1:0:0";
             };
+            powerManagement.finegrained = false;
+            open = true;
             nvidiaSettings = true;
         };
 
 
-        # pulseaudio = {
-        #     enable = false;
-        #     package = pkgs.pulseaudioFull;
-        #     #extraModules = [ pkgs.pulseaudio-modules-bt ];
-        #     extraConfig = "load-module module-switch-on-connect";
-        # };
+        pulseaudio = {
+            enable = false;
+            package = pkgs.pulseaudioFull;
+            # extraModules = [ pkgs.pulseaudio-modules-bt ];
+            extraConfig = "load-module module-switch-on-connect";
+        };
 
         bluetooth = {
             enable = true;
@@ -419,8 +435,10 @@
     # Define a user account.
     # Don't forget to set a password with ‘passwd’.
     users = {
+        # EDITME: set username
         users.hx = {
             isNormalUser = true;
+            # EDITME: set user home directory
             home = "/home/hx";
             extraGroups = [
                 "wheel"
@@ -435,14 +453,6 @@
             ];
 
             packages = with pkgs; [
-                jq
-                btop
-                # sqlite
-                nodePackages.vscode-langservers-extracted
-                lua-language-server
-                tokei
-                # obs-studio
-                yt-dlp
             ];
         };
 
@@ -460,12 +470,14 @@
             tm  = "tmux";
             tma = "tmux a -t";
             cdp = "cd ~/projects";
-            # cat = "bat -p --theme=\"Catppuccin Mocha\""
+            ip  = "ip -c=auto";
+            gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1"
         };
 
         # ENV variables
         variables = {
             EDITOR = "nvim";
+            MANPAGER = "nvim +Man!"
         };
 
         sessionVariables = {
@@ -476,10 +488,9 @@
 
 
         systemPackages = with pkgs; [
-
             # office
-            #libreoffice-fresh
-            #xournalpp
+            # libreoffice-fresh
+            # xournalpp
 
             # virtualization
             # virt-manager
@@ -487,24 +498,24 @@
 
             # Browsers
             firefox
-            #brave
-            #librewolf
-            #chromium
-            #ungoogled-chromium
+            # brave
+            # librewolf
+            # chromium
+            # ungoogled-chromium
 
             # Icons, themes and WM
-            papirus-icon-theme
-            libsForQt5.qtstyleplugins
-            libsForQt5.qtstyleplugin-kvantum
-            cinnamon.mint-cursor-themes
-            adapta-gtk-theme
-            polybarFull
+            # papirus-icon-theme
+            # libsForQt5.qtstyleplugins
+            # libsForQt5.qtstyleplugin-kvantum
+            # cinnamon.mint-cursor-themes
+            # adapta-gtk-theme
+            # polybarFull
 
             # Editors
             neovim
             tree-sitter
-            #helix
-            #emacs
+            # helix
+            # emacs
 
             # Terminals and Command-line tools
             # alacritty
@@ -517,9 +528,14 @@
             aria2
             wget
             htop
-            neofetch
+            # neofetch
             nnn
             bat
+            jq
+            btop
+            # sqlite
+            tokei
+
 
             # Multi media
             pavucontrol
@@ -532,11 +548,13 @@
             x265
             libvpx
             usbutils
+            yt-dlp
+            # obs-studio
 
             # XFCE
-            xfce.mousepad
+            # xfce.mousepad
             #xfce.xfce4-xkb-plugin
-            xfce.xfce4-clipman-plugin
+            # xfce.xfce4-clipman-plugin
             #xfce.xfce4-power-manager
 
             # Archive
@@ -549,19 +567,21 @@
             zstd
 
             # Dev
-            man-pages
+            # man-pages
             # rlwrap
+            lua-language-server
 
             ## Python
-            python312Full
-            python312Packages.pip
+            python313Full
+            python313Packages.pip
 
             ## NodeJS
             nodejs
             nodePackages.npm
+            nodePackages.vscode-langservers-extracted
 
             ## Java
-            jdk
+            # jdk
 
             # xorg
             xorg.xcbutil
@@ -577,26 +597,25 @@
             # patchelf
             # bleachbit
             # libsForQt5.okular
-            nitrogen
-            rofi
-            galculator
-            brightnessctl
-            lxsession
-            lxappearance
-            viewnior
+            # nitrogen
+            # rofi
+            # galculator
+            # brightnessctl
+            # lxsession
+            # lxappearance
+            # viewnior
             font-manager
-            acpid
             flameshot
             xdg-user-dirs
             xdg-launch
             xdg-utils
             dig
-            scrcpy
+            # scrcpy
 
             # Security
             openssl
             # bubblewrap
-            pinentry
+            # pinentry
             wireguard-tools
         ];
     };
@@ -606,47 +625,47 @@
     xdg = {
         mime = {
             enable = true;
-            addedAssociations = {
-                "application/pdf" = "okularApplication_pdf.desktop";
-                "text/html"  = "firefox.desktop";
-                "image/png"  = "viewnior.desktop";
-                "image/jpeg" = "viewnior.desktop";
-                "video/mp4" = [
-                    "mpv.desktop"
-                    "vlc.desktop"
-                ];
-                "video/mkv" = [
-                    "mpv.desktop"
-                    "vlc.desktop"
-                ];
-            };
-            defaultApplications = {
-                "application/pdf" = "okularApplication_pdf.desktop";
-                "text/html"  = "firefox.desktop";
-                "image/png"  = "viewnior.desktop";
-                "image/jpeg" = "viewnior.desktop";
-                "video/mp4" = "mpv.desktop";
-                "video/mkv" = "mpv.desktop";
-            };
+            # addedAssociations = {
+            #     "application/pdf" = "okularApplication_pdf.desktop";
+            #     "text/html"  = "firefox.desktop";
+            #     "image/png"  = "viewnior.desktop";
+            #     "image/jpeg" = "viewnior.desktop";
+            #     "video/mp4" = [
+            #         "mpv.desktop"
+            #         "vlc.desktop"
+            #     ];
+            #     "video/mkv" = [
+            #         "mpv.desktop"
+            #         "vlc.desktop"
+            #     ];
+            # };
+            # defaultApplications = {
+            #     "application/pdf" = "okularApplication_pdf.desktop";
+            #     "text/html"  = "firefox.desktop";
+            #     "image/png"  = "viewnior.desktop";
+            #     "image/jpeg" = "viewnior.desktop";
+            #     "video/mp4" = "mpv.desktop";
+            #     "video/mkv" = "mpv.desktop";
+            # };
         };
         portal = {
             enable = true;
             xdgOpenUsePortal = true;
             config.common.default = "*";
-            extraPortals = with pkgs; [
-                xdg-desktop-portal
-                xdg-desktop-portal-gtk
-                xdg-desktop-portal-shana
-            ];
+            # extraPortals = with pkgs; [
+            #     xdg-desktop-portal
+            #     xdg-desktop-portal-gtk
+            #     xdg-desktop-portal-shana
+            # ];
         };
     };
 
 
     # QT Themes
-    qt = {
-        enable = true;
-        platformTheme = "qt5ct";
-    };
+    # qt = {
+    #     enable = true;
+    #     platformTheme = "qt5ct";
+    # };
 
     # virtualization
     virtualisation = {
@@ -664,5 +683,5 @@
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "24.05"; # Did you read the comment?
+    system.stateVersion = "25.05"; # Did you read the comment?
 }
