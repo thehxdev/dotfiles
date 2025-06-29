@@ -6,7 +6,7 @@
 
 { config, pkgs, options, ... }:
 
-{ 
+    { 
     imports = [ 
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
@@ -44,8 +44,9 @@
         loader = {
             grub = {
                 enable = true;
-                # EDITME: set the boot device
-                device = "/dev/nvme0n1"; 
+                # FIXME: set the boot device
+                device = "nodev"; 
+                efiSupport = true;
             };
             timeout = 10;
         };
@@ -66,20 +67,30 @@
             };
         };
 
-        desktopManager.plasma6.enable = true;
-        displayManager.sddm = {
-            enable = true;
-            wayland.enable = true;
-        };
+        # FIXME: Since 25.11
+        # desktopManager.gnome.enable = true;
+        # displayManager.gdm = {
+        #     enable = true;
+        #     wayland.enable = true;
+        # };
+
+        udev.packages = [ pkgs.gnome-settings-daemon ];
 
         # X11 and Xserver settings
         xserver = {
             enable = true;
 
-            xkb = {
-                layout = "us,ir";
-                options = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+            # xkb = {
+            #     layout = "us,ir";
+            #     options = "eurosign:e,caps:escape,grp:alt_shift_toggle";
+            # };
+
+            # FIXME: Pre 25.11
+            displayManager.gdm = {
+                enable = true;
+                wayland = true;
             };
+            desktopManager.gnome.enable = true;
 
             videoDrivers = [
                 # "intel"
@@ -149,7 +160,7 @@
         # Enable CUPS for printing.
         printing = {
             enable = true;
-            drivers = with pkgs; [ canon-cups-ufr2 ];
+            # drivers = with pkgs; [ canon-cups-ufr2 ];
         };
         avahi = {
             enable = true;
@@ -208,7 +219,7 @@
             enable = true;
             config = {
                 user = {
-                    # EDITME: git user and email
+                    # FIXME: git user and email
                     name = "";
                     email = "";
                 };
@@ -223,7 +234,22 @@
         };
 
         # for virtualisation and kvm
-        dconf.enable = true;
+        dconf = {
+            enable = true;
+            # Gnome
+            profiles.user.databases = [
+                {
+                    # prevents overriding
+                    lockAll = false;
+                    settings = {
+                        "org/gnome/desktop/input-sources" = {
+                            xkb-options = [ "caps:escape", "lv3:ralt_switch" ];
+                            sources = [ "('xkb', 'us')", "('xkb', 'ir')" ]
+                        };
+                    };
+                }
+            ];
+        };
 
         # Some programs need SUID wrappers, can be configured further or are
         # started in user sessions.
@@ -291,12 +317,11 @@
         #     ]);
         # };
 
-        slock.enable = false;
-
-        xss-lock = {
-            enable = false;
-            lockerCommand = "${pkgs.slock}/bin/slock";
-        };
+        # slock.enable = false;
+        # xss-lock = {
+        #     enable = false;
+        #     lockerCommand = "${pkgs.slock}/bin/slock";
+        # };
 
         appimage.enable = true;
     };
@@ -317,7 +342,7 @@
         # hosts = {};
     };
 
-    # Set your time zone.
+    # FIXME: Set your time zone.
     time.timeZone = "Asia/Tehran";
 
     # Configure network proxy if necessary
@@ -421,7 +446,7 @@
     # Define a user account.
     # Don't forget to set a password with ‘passwd’.
     users = {
-        # EDITME: set username and configure user settings
+        # FIXME: set username and configure user settings
         users.hx = {
             enbale = true;
             isNormalUser = true;
@@ -449,230 +474,231 @@
 
 
     environment = {
-        # Aliases
-        shellAliases = {
-            l    = "eza -lha --group-directories-first";
-            ll   = "eza -lh --group-directories-first";
-            nv   = "nvim";
-            tm   = "tmux";
-            tma  = "tmux a -t";
-            cdp  = "cd ~/projects";
-            ip   = "ip -c=auto";
-            gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1"
-        };
+    # Aliases
+    shellAliases = {
+        l    = "eza -lha --group-directories-first";
+        ll   = "eza -lh --group-directories-first";
+        nv   = "nvim";
+        tm   = "tmux";
+        tma  = "tmux a -t";
+        cdp  = "cd ~/projects";
+        ip   = "ip -c=auto";
+        gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1"
+            };
 
         # ENV variables
         variables = {
             EDITOR = "nvim";
             MANPAGER = "nvim +Man!"
+                };
+
+            sessionVariables = {
+                # Force intel-media-driver
+                # See hardware opengl section
+                # LIBVA_DRIVER_NAME = "iHD";
+            };
+
+
+            systemPackages = with pkgs; [
+                ## office
+                # libreoffice-fresh
+                # xournalpp
+
+                ## virtualization
+                # virt-manager
+                # spice-gtk
+
+                ## Browsers
+                firefox
+                # brave
+                # librewolf
+                # chromium
+                # ungoogled-chromium
+
+                ## Icons, themes and WM
+                # papirus-icon-theme
+                # libsForQt5.qtstyleplugins
+                # libsForQt5.qtstyleplugin-kvantum
+                # cinnamon.mint-cursor-themes
+                # adapta-gtk-theme
+                # polybarFull
+
+                ## Editors
+                neovim
+                tree-sitter
+                # helix
+                # emacs
+
+                ## Terminals and Command-line tools
+                # alacritty
+                kitty
+                ripgrep
+                fd
+                eza
+                tmux
+                curlFull
+                aria2
+                wget
+                htop
+                # neofetch
+                nnn
+                bat
+                jq
+                btop
+                # sqlite
+                tokei
+
+
+                ## Multi media
+                pavucontrol
+                pamixer
+                arandr
+                vlc
+                mpv
+                ffmpeg
+                x264
+                x265
+                libvpx
+                usbutils
+                yt-dlp
+                # obs-studio
+
+                ## XFCE
+                # xfce.mousepad
+                # xfce.xfce4-xkb-plugin
+                # xfce.xfce4-clipman-plugin
+                # xfce.xfce4-power-manager
+
+                ## Archive
+                rar
+                # unrar
+                unzip
+                zip
+                gzip
+                p7zip
+                zstd
+
+                ## dev
+                # man-pages
+                # rlwrap
+                lua-language-server
+
+                ## Python
+                python313Full
+                python313Packages.pip
+
+                ## NodeJS
+                nodejs
+                nodePackages.npm
+                nodePackages.vscode-langservers-extracted
+
+                ## Java
+                # jdk
+
+                ## xorg
+                xorg.xcbutil
+                xorg.xcbutilkeysyms
+                xorg.xcbutilwm
+                xorg.xkill
+                xclip
+                xsel
+
+                ## wayland
+                wayland-utils
+                wl-clipboard
+
+                ## Tools
+                jcal
+                # gparted
+                # patchelf
+                # bleachbit
+                # libsForQt5.okular
+                # nitrogen
+                # rofi
+                # galculator
+                # brightnessctl
+                # lxsession
+                # lxappearance
+                # viewnior
+                font-manager
+                flameshot
+                xdg-user-dirs
+                xdg-launch
+                xdg-utils
+                dig
+                # scrcpy
+
+                ## Security
+                openssl
+                # bubblewrap
+                # pinentry
+                wireguard-tools
+
+                ## Gnome
+                gnomeExtensions.appindicator
+            ];
         };
 
-        sessionVariables = {
-            # Force intel-media-driver
-            # See hardware opengl section
-            # LIBVA_DRIVER_NAME = "iHD";
+
+        # xdg portal for flatpak
+        xdg = {
+            mime = {
+                enable = true;
+                # addedAssociations = {
+                #     "application/pdf" = "okularApplication_pdf.desktop";
+                #     "text/html"  = "firefox.desktop";
+                #     "image/png"  = "viewnior.desktop";
+                #     "image/jpeg" = "viewnior.desktop";
+                #     "video/mp4" = [
+                #         "mpv.desktop"
+                #         "vlc.desktop"
+                #     ];
+                #     "video/mkv" = [
+                #         "mpv.desktop"
+                #         "vlc.desktop"
+                #     ];
+                # };
+                # defaultApplications = {
+                #     "application/pdf" = "okularApplication_pdf.desktop";
+                #     "text/html"  = "firefox.desktop";
+                #     "image/png"  = "viewnior.desktop";
+                #     "image/jpeg" = "viewnior.desktop";
+                #     "video/mp4" = "mpv.desktop";
+                #     "video/mkv" = "mpv.desktop";
+                # };
+            };
+            portal = {
+                enable = true;
+                xdgOpenUsePortal = true;
+                config.common.default = "*";
+                # extraPortals = with pkgs; [
+                #     xdg-desktop-portal
+                #     xdg-desktop-portal-gtk
+                #     xdg-desktop-portal-shana
+                # ];
+            };
         };
 
 
-        systemPackages = with pkgs; [
-            ## office
-            # libreoffice-fresh
-            # xournalpp
-
-            ## virtualization
-            # virt-manager
-            # spice-gtk
-
-            ## Browsers
-            firefox
-            # brave
-            # librewolf
-            # chromium
-            # ungoogled-chromium
-
-            ## Icons, themes and WM
-            # papirus-icon-theme
-            # libsForQt5.qtstyleplugins
-            # libsForQt5.qtstyleplugin-kvantum
-            # cinnamon.mint-cursor-themes
-            # adapta-gtk-theme
-            # polybarFull
-
-            ## Editors
-            neovim
-            tree-sitter
-            # helix
-            # emacs
-
-            ## Terminals and Command-line tools
-            # alacritty
-            kitty
-            ripgrep
-            fd
-            eza
-            tmux
-            curlFull
-            aria2
-            wget
-            htop
-            # neofetch
-            nnn
-            bat
-            jq
-            btop
-            # sqlite
-            tokei
-
-
-            ## Multi media
-            pavucontrol
-            pamixer
-            arandr
-            vlc
-            mpv
-            ffmpeg
-            x264
-            x265
-            libvpx
-            usbutils
-            yt-dlp
-            # obs-studio
-
-            ## XFCE
-            # xfce.mousepad
-            # xfce.xfce4-xkb-plugin
-            # xfce.xfce4-clipman-plugin
-            # xfce.xfce4-power-manager
-
-            ## Archive
-            rar
-            # unrar
-            unzip
-            zip
-            gzip
-            p7zip
-            zstd
-
-            ## dev
-            # man-pages
-            # rlwrap
-            lua-language-server
-
-            ## Python
-            python313Full
-            python313Packages.pip
-
-            ## NodeJS
-            nodejs
-            nodePackages.npm
-            nodePackages.vscode-langservers-extracted
-
-            ## Java
-            # jdk
-
-            ## xorg
-            xorg.xcbutil
-            xorg.xcbutilkeysyms
-            xorg.xcbutilwm
-            xorg.xkill
-            xclip
-            xsel
-
-            ## wayland
-            wayland-utils
-            wl-clipboard
-
-            ## Tools
-            jcal
-            # gparted
-            # patchelf
-            # bleachbit
-            # libsForQt5.okular
-            # nitrogen
-            # rofi
-            # galculator
-            # brightnessctl
-            # lxsession
-            # lxappearance
-            # viewnior
-            font-manager
-            flameshot
-            xdg-user-dirs
-            xdg-launch
-            xdg-utils
-            dig
-            # scrcpy
-
-            ## Security
-            openssl
-            # bubblewrap
-            # pinentry
-            wireguard-tools
-        ];
-    };
-
-
-    # xdg portal for flatpak
-    xdg = {
-        mime = {
+        # QT Themes
+        qt = {
             enable = true;
-            # addedAssociations = {
-            #     "application/pdf" = "okularApplication_pdf.desktop";
-            #     "text/html"  = "firefox.desktop";
-            #     "image/png"  = "viewnior.desktop";
-            #     "image/jpeg" = "viewnior.desktop";
-            #     "video/mp4" = [
-            #         "mpv.desktop"
-            #         "vlc.desktop"
-            #     ];
-            #     "video/mkv" = [
-            #         "mpv.desktop"
-            #         "vlc.desktop"
-            #     ];
-            # };
-            # defaultApplications = {
-            #     "application/pdf" = "okularApplication_pdf.desktop";
-            #     "text/html"  = "firefox.desktop";
-            #     "image/png"  = "viewnior.desktop";
-            #     "image/jpeg" = "viewnior.desktop";
-            #     "video/mp4" = "mpv.desktop";
-            #     "video/mkv" = "mpv.desktop";
-            # };
+            platformTheme = "gnome";
+            style = "adwaita-dark";
         };
-        portal = {
-            enable = true;
-            xdgOpenUsePortal = true;
-            config.common.default = "*";
-            # extraPortals = with pkgs; [
-            #     xdg-desktop-portal
-            #     xdg-desktop-portal-gtk
-            #     xdg-desktop-portal-shana
-            # ];
+
+        # virtualization
+        virtualisation = {
+            libvirtd.enable = true;
+            spiceUSBRedirection.enable = true;
+            docker.enable = false;
         };
-    };
 
-
-    # QT Themes
-    qt = {
-        enable = true;
-        platformTheme = "gnome";
-        style = "adwaita-dark";
-    };
-
-    # virtualization
-    virtualisation = {
-        libvirtd = {
-            enable = true;
-        };
-        spiceUSBRedirection.enable = true;
-        docker.enable = false;
-    };
-
-    # This value determines the NixOS release from which the default
-    # settings for stateful data, like file locations and database versions
-    # on your system were taken. It‘s perfectly fine and recommended to leave
-    # this value at the release version of the first install of this system.
-    # Before changing this value read the documentation for this option
-    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "25.05"; # Did you read the comment?
-}
+        # This value determines the NixOS release from which the default
+        # settings for stateful data, like file locations and database versions
+        # on your system were taken. It‘s perfectly fine and recommended to leave
+        # this value at the release version of the first install of this system.
+        # Before changing this value read the documentation for this option
+        # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+        system.stateVersion = "25.05"; # Did you read the comment?
+    }
