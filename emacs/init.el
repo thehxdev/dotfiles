@@ -13,158 +13,71 @@
 
 (setq custom-file "~/.emacs.d/emacs.custom.el")
 
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-hl-line-mode 1)
+
+(setq-default inhibit-splash-screen t
+              backup-by-copying t
+              auto-save-default nil
+              create-lockfiles nil
+              make-backup-files nil
+              tab-width 4
+              indent-tabs-mode nil
+              c-basic-offset 4
+              indent-line-function 'insert-tab
+              compilation-scroll-output t
+              visible-bell (equal system-type 'windows-nt))
+
 ;; disable line wrap
 (set-default 'truncate-lines 1)
 (setq default-truncate-lines 1)
-(global-display-line-numbers-mode 1)
-(global-visual-line-mode -1)
-;; (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
-
-;; enable current line highlight
-(global-hl-line-mode 1)
+(electric-indent-mode 1)
 
 (setq warning-minimum-level :emergency)
-
 
 ;; Disable escape key
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; (text-scale-set 1)
-(set-face-attribute 'default nil :height 140)
-;; (set-frame-font "CaskaydiaCove Nerd Font Mono-110" nil t)
+;; (set-face-attribute 'default nil :height 140)
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-14"))
 
 ;; make side by side buffers function the same as the main window
 (setq truncate-partial-width-windows nil)
 
 (straight-use-package 'use-package)
-(straight-use-package 'undo-tree)
-;; (straight-use-package 'undo-fu)
-(straight-use-package 'goto-chg)
-;; (straight-use-package 'lsp-mode)
-;; (straight-use-package 'lsp-ui)
-;; (straight-use-package 'flycheck)
-;; (straight-use-package 'company-mode)
-;; (straight-use-package 'lsp-treemacs)
-;; (straight-use-package 'lsp-ivy)
-;; (straight-use-package 'helm-lsp)
-;; (straight-use-package 'dap-mode)
-;; (straight-use-package 'sly)
-(straight-use-package 'magit)
-(straight-use-package 'multiple-cursors)
 
-;; (use-package tree-sitter
-;;   :straight t
-;;   :init
-;;   (require 'tree-sitter))
-
-;; (use-package tree-sitter-langs
-;;   :straight t
-;;   :init
-;;   (require 'tree-sitter-langs))
-
-
-;; The path to lsp-mode needs to be added to load-path as well as the
-;; path to the `clients' subdirectory.
-;; (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
-;; (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
-;; (add-hook 'prog-mode-hook 'lsp-deferred)
-;; (require 'lsp-mode)
-
-(use-package vterm
-    :straight t)
-
-(use-package all-the-icons
-  :straight t
-  :if (display-graphic-p))
-
-;; (setq backup-directory-alist
-;;     `((".*" . ,temporary-file-directory)))
-;; (setq auto-save-file-name-transforms
-;;     `((".*" ,temporary-file-directory t))
-
-(setq make-backup-files nil)
-(setq backup-by-copying t)
-(setq auto-save-default nil)
-(setq create-lockfiles nil)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(use-package multiple-cursors
+  :straight t)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->")         'mc/mark-next-like-this)
+(global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
+(global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this)
 
 (use-package diminish
   :straight t)
 
-;; (use-package flycheck
-;;   :straight t
-;;   :defer t
-;;   :diminish
-;;   :init (global-flycheck-mode))
-
-
-;; (use-package electric
-;;   :init
-;;   (electric-pair-mode 1)
-;;   (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
-
-;; (use-package company
-;;   :straight t
-;;   :defer 2
-;;   :diminish
-;;   :custom
-;;   (company-begin-commands '(self-insert-command))
-;;   (company-idle-delay .1)
-;;   (company-minimum-prefix-length 2)
-;;   (company-show-numbers t)
-;;   (company-tooltip-align-annotations 't)
-;;   (global-company-mode t))
-
-;; (use-package company-box
-;;   :straight t
-;;   :after company
-;;   :diminish
-;;   :hook (company-mode . company-box-mode))
-
+(use-package electric
+  :init
+  (electric-pair-mode 1)
+  (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
  
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
-(setq indent-line-function 'insert-tab)
-(setq-default c-basic-offset 4)
-
 (setq redisplay-dont-pause t
   scroll-margin 4
   scroll-step 1
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-
 (defun nuke-all-buffers ()
   (interactive)
   (mapcar 'kill-buffer (buffer-list))
   (delete-other-windows))
-
-;; (use-package general
-;;   :straight t)
-
-;; Emacs Dashboard
-(use-package dashboard
-  :straight t
-  :init
-  (setq initial-buffer-choice 'dashboard-open)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-center-content t)
-  (setq dashboard-items '(
-                        ;; (recents   . 5)
-                        ;; (bookmarks . 5)
-                        ;; (projects  . 5)
-                        ;; (agenda    . 5)
-                        ;; (registers . 5)
-                        ))
-  :config
-  (dashboard-setup-startup-hook))
 
 (use-package which-key
   :straight t
@@ -186,54 +99,72 @@
       which-key-allow-imprecise-window-fit nil
       which-key-separator " → " ))
 
-
-;; (use-package ivy
-;;   :straight t
-;;   :bind
-;;   ;; ivy-resume resumes the last Ivy-based completion.
-;;   (("C-c C-r" . ivy-resume)
-;;    ("C-x B" . ivy-switch-buffer-other-window))
-;;   :diminish
-;;   :custom
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   (setq enable-recursive-minibuffers t)
-;;   :config
-;;   (ivy-mode))
-
-;; (use-package counsel
-;;   :straight t
-;;   :after ivy
-;;   :diminish
-;;   :config (counsel-mode))
-
-;; (use-package all-the-icons-ivy-rich
-;;   :straight t
-;;   :init (all-the-icons-ivy-rich-mode 1))
-
-;; (use-package ivy-rich
-;;   :straight t
-;;   :after ivy
-;;   :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
-;;   :custom
-;;   (ivy-virtual-abbreviate 'full
-;;    ivy-rich-switch-buffer-align-virtual-buffer t
-;;    ivy-rich-path-style 'abbrev)
-;;   :config
-;;   (ivy-set-display-transformer 'ivy-switch-buffer
-;;                                'ivy-rich-switch-buffer-transformer))
-
 (ido-mode 1)
-(setq ido-everywhere t)
-(setq ido-enable-flex-matching t)
+(ido-everywhere 1)
+(setq ido-enable-flex-matching 1)
 (setq ido-use-filename-at-point 'guess)
 (put 'dired-find-alternate-file 'disabled nil)
 
-(use-package gruber-darker-theme
-  :straight t)
+(use-package ivy
+  :straight t
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion.
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :diminish
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
 
-;; (require 'gruber-darker-theme)
-;; (load-theme 'gruber-darker 1)
+(use-package counsel
+  :straight t
+  :after ivy
+  :diminish
+  :config (counsel-mode))
+
+(use-package all-the-icons-ivy-rich
+  :straight t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :straight t
+  :after ivy
+  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
+
+(ivy-mode)
+(ivy-rich-mode)
+
+(setopt ivy-use-virtual-buffers t)
+(setopt enable-recursive-minibuffers t)
+(setopt search-default-mode #'char-fold-to-regexp)
+(keymap-global-set "C-s" #'swiper-isearch)
+(keymap-global-set "C-c C-r" #'ivy-resume)
+(keymap-global-set "<f6>" #'ivy-resume)
+(keymap-global-set "M-x" #'counsel-M-x)
+(keymap-global-set "C-x C-f" #'counsel-find-file)
+(keymap-global-set "<f1> f" #'counsel-describe-function)
+(keymap-global-set "<f1> v" #'counsel-describe-variable)
+(keymap-global-set "<f1> o" #'counsel-describe-symbol)
+(keymap-global-set "<f1> l" #'counsel-find-library)
+(keymap-global-set "<f2> i" #'counsel-info-lookup-symbol)
+(keymap-global-set "<f2> u" #'counsel-unicode-char)
+(keymap-global-set "C-c g" #'counsel-git)
+(keymap-global-set "C-c j" #'counsel-git-grep)
+(keymap-global-set "C-c k" #'counsel-ag)
+(keymap-global-set "C-x l" #'counsel-locate)
+(keymap-global-set "C-S-o" #'counsel-rhythmbox)
+(keymap-set minibuffer-local-map "C-r" #'counsel-minibuffer-history)
+
 
 (use-package doom-themes
   :straight t
@@ -246,11 +177,18 @@
 
 
 (use-package markdown-mode
+  :straight t
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown")
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
+
+(use-package company
+  :straight t
+  :init
+  (global-company-mode)
+  (define-key company-active-map [escape] 'company-abort))
 
 ;;; Programming Languages
 
@@ -313,8 +251,8 @@
 ;;          (lambda ()
 ;;            (require 'lua-mode)
 ;;            (tree-sitter-hl-mode))))
-(use-package lua-mode
-  :straight t)
+;; (use-package lua-mode
+;;   :straight t)
 
 
 ;; Lisp
