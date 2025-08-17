@@ -33,6 +33,7 @@
 
 (indent-tabs-mode nil)
 (electric-indent-mode 1)
+(electric-pair-mode -1)
 
 (setq warning-minimum-level :emergency)
 
@@ -47,6 +48,22 @@
 
 (straight-use-package 'use-package)
 
+(use-package tree-sitter
+  :straight t
+  :init
+  (require 'tree-sitter))
+
+(use-package tree-sitter-langs
+  :straight t
+  :after tree-sitter
+  :init
+  (require 'tree-sitter-langs))
+
+(global-tree-sitter-mode)
+;; (add-hook 'c-mode-hook #'tree-sitter-hl-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
+
 (use-package multiple-cursors
   :straight t)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -59,11 +76,11 @@
 (use-package diminish
   :straight t)
 
-(use-package electric
-  :straight t
-  :init
-  (electric-pair-mode 1)
-  (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+;; (use-package electric
+;;   :straight t
+;;   :init
+;;   (electric-pair-mode 1)
+;;   (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
 
 ;; (setq electric-pair-inhibit-predicate
 ;;       `(lambda (c)
