@@ -24,15 +24,14 @@
               create-lockfiles nil
               make-backup-files nil
               tab-width 4
-              indent-tabs-mode nil
               c-basic-offset 4
               indent-line-function 'insert-tab
               compilation-scroll-output t
+              truncate-lines 1
+              default-truncate-lines 1
               visible-bell (equal system-type 'windows-nt))
 
-;; disable line wrap
-(set-default 'truncate-lines 1)
-(setq default-truncate-lines 1)
+(indent-tabs-mode nil)
 (electric-indent-mode 1)
 
 (setq warning-minimum-level :emergency)
@@ -61,9 +60,16 @@
   :straight t)
 
 (use-package electric
+  :straight t
   :init
   (electric-pair-mode 1)
   (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+
+;; (setq electric-pair-inhibit-predicate
+;;       `(lambda (c)
+;;          (if (or (char-equal c ?\") (char-equal c ?\'))
+;;              t
+;;            (,electric-pair-inhibit-predicate c))))
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
@@ -82,7 +88,7 @@
 (use-package which-key
   :straight t
   :init
-    (which-key-mode 1)
+  (which-key-mode 1)
   :diminish
   :config
   (setq which-key-side-window-location 'bottom
@@ -110,14 +116,14 @@
   :bind
   ;; ivy-resume resumes the last Ivy-based completion.
   (("C-c C-r" . ivy-resume)
-   ("C-x B" . ivy-switch-buffer-other-window))
+   ("C-x B" . ivy-switch-buffer))
   :diminish
   :custom
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
   (setq enable-recursive-minibuffers t)
   :config
-  (ivy-mode))
+  (ivy-mode 1))
 
 (use-package counsel
   :straight t
@@ -136,21 +142,19 @@
   :custom
   (ivy-virtual-abbreviate 'full
    ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
-
-(ivy-mode)
-(ivy-rich-mode)
+   ivy-rich-path-style 'abbrev))
+  ;; :config
+  ;; (ivy-set-display-transformer 'ivy-switch-buffer
+  ;;                              'ivy-rich-switch-buffer-transformer))
 
 (setopt ivy-use-virtual-buffers t)
 (setopt enable-recursive-minibuffers t)
 (setopt search-default-mode #'char-fold-to-regexp)
 (keymap-global-set "C-s" #'swiper-isearch)
-(keymap-global-set "C-c C-r" #'ivy-resume)
-(keymap-global-set "<f6>" #'ivy-resume)
+;; (keymap-global-set "C-c C-r" #'ivy-resume)
+;; (keymap-global-set "<f6>" #'ivy-resume)
 (keymap-global-set "M-x" #'counsel-M-x)
+(keymap-global-set "M-p" #'counsel-fzf)
 (keymap-global-set "C-x C-f" #'counsel-find-file)
 (keymap-global-set "<f1> f" #'counsel-describe-function)
 (keymap-global-set "<f1> v" #'counsel-describe-variable)
@@ -160,9 +164,9 @@
 (keymap-global-set "<f2> u" #'counsel-unicode-char)
 (keymap-global-set "C-c g" #'counsel-git)
 (keymap-global-set "C-c j" #'counsel-git-grep)
-(keymap-global-set "C-c k" #'counsel-ag)
-(keymap-global-set "C-x l" #'counsel-locate)
-(keymap-global-set "C-S-o" #'counsel-rhythmbox)
+;; (keymap-global-set "C-c k" #'counsel-ag)
+;; (keymap-global-set "C-x l" #'counsel-locate)
+;; (keymap-global-set "C-S-o" #'counsel-rhythmbox)
 (keymap-set minibuffer-local-map "C-r" #'counsel-minibuffer-history)
 
 
