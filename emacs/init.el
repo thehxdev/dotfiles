@@ -25,10 +25,13 @@
               make-backup-files nil
               tab-width 4
               c-basic-offset 4
-              indent-line-function 'insert-tab
+              c-toggle-comment-style -1
+              show-trailing-whitespace t
+              indent-tabs-mode nil
               compilation-scroll-output t
               truncate-lines 1
               default-truncate-lines 1
+              editorconfig-mode t
               visible-bell (equal system-type 'windows-nt))
 
 (indent-tabs-mode nil)
@@ -40,7 +43,6 @@
 ;; Disable escape key
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; (set-face-attribute 'default nil :height 140)
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-14"))
 
 ;; make side by side buffers function the same as the main window
@@ -48,8 +50,14 @@
 
 (straight-use-package 'use-package)
 
+(use-package exec-path-from-shell
+  :straight t)
+(when (daemonp)
+  (exec-path-from-shell-initialize))
+
 (use-package tree-sitter
   :straight t
+  :defer
   :init
   (require 'tree-sitter))
 
@@ -61,11 +69,16 @@
 
 (global-tree-sitter-mode)
 ;; (add-hook 'c-mode-hook #'tree-sitter-hl-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;; (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
+
+(use-package magit
+  :straight t
+  :defer)
 
 (use-package multiple-cursors
-  :straight t)
+  :straight t
+  :defer)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)
 (global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
@@ -90,7 +103,7 @@
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
- 
+
 (setq redisplay-dont-pause t
   scroll-margin 4
   scroll-step 1
@@ -107,6 +120,7 @@
   :init
   (which-key-mode 1)
   :diminish
+  :defer
   :config
   (setq which-key-side-window-location 'bottom
       which-key-sort-order #'which-key-key-order
@@ -150,6 +164,7 @@
 
 (use-package all-the-icons-ivy-rich
   :straight t
+  :after ivy
   :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package ivy-rich
@@ -190,16 +205,18 @@
 (use-package doom-themes
   :straight t
   :init
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
+  (setq doom-themes-enable-bold nil
+        doom-themes-enable-italic nil)
+  ;; (load-theme 'doom-tokyo-night t)
   (load-theme 'doom-tokyo-night t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
+(setq doom-modeline-icon t)
 
 
 (use-package markdown-mode
   :straight t
-  :ensure t
+  :defer
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown")
   :bind (:map markdown-mode-map
@@ -283,12 +300,15 @@
 
 ;; Rust
 (use-package rust-mode
-  :straight t)
+  :straight t
+  :defer)
 
 ;; Golang
 (use-package go-mode
-  :straight t)
+  :straight t
+  :defer)
 
 ;; Python
 (use-package python-mode
-  :straight t)
+  :straight t
+  :defer)
