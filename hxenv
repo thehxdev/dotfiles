@@ -3,12 +3,15 @@
 export OPT="$HOME/opt"
 export OPT_GLOBAL="$OPT/_global"
 
-local OPT_GLOBAL_PATH=""
+__GLOBAL_PATH=""
 for p in $(ls -1 $OPT_GLOBAL); do
-    OPT_GLOBAL_PATH+="$OPT_GLOBAL/$p/bin:"
+    __absolute_path="$OPT_GLOBAL/$p/bin"
+    if [[ ! "$PATH" == *"$__absolute_path"* ]]; then
+        __GLOBAL_PATH+="$__absolute_path:"
+    fi
 done
 
-export PATH="$PATH:$HOME/.local/bin:$OPT_GLOBAL_PATH"
+export PATH="$PATH:$HOME/.local/bin:$__GLOBAL_PATH"
 export MANPAGER="nvim +Man!"
 
 alias nv='nvim'
