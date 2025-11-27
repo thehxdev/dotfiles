@@ -1,83 +1,78 @@
-@import "tokyonight.css";
-
 * {
-  background-color: @background;
-  color: @foreground;
+    font-family: "Iosevka Nerd Font";
+    font-size: 20px;
+    transition: background-color .3s ease-out;
+}
 
-  border: none;
-  border-radius: 0;
-  min-height: 0;
-  font-family: 'Iosevka Nerd Font';
-  font-size: 16px;
+window#waybar {
+    background: transparent;
+    transition: background-color .5s;
+}
+
+.modules-left,
+.modules-center,
+.modules-right
+{
+    margin: 0 10px;
+    padding: 0 5px;
+    border-radius: 15px;
+    color: #cdd6f4;
+    background: #1a1b26;
 }
 
 .modules-left {
-  margin-left: 8px;
 }
 
-.modules-right {
-  margin-right: 8px;
+.modules-center {
+}
+
+#clock,
+#bluetooth,
+#battery,
+#cpu,
+#network,
+#pulseaudio,
+#tray,
+#language {
+    padding: 0 10px;
+    border-radius: 15px;
+}
+
+#clock:hover,
+#bluetooth:hover,
+#battery:hover,
+#cpu:hover,
+#network:hover,
+#pulseaudio:hover,
+#tray:hover,
+#language:hover {
+    background: #2f3145;
 }
 
 #workspaces button {
-  all: initial;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
+    background: transparent;
+    font-weight: bold;
+    color: #c0caf5;
+    border: none;
+    border-radius: 15px;
 }
 
 #workspaces button.empty {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
-#cpu,
-#battery,
-#pulseaudio,
-#custom-omarchy,
-#custom-screenrecording-indicator,
-#custom-update {
-  min-width: 12px;
-  margin: 0 7.5px;
+#workspaces button:hover {
+    background: #2f3145;
+    color: #cdd6f4;
+    box-shadow: none;
 }
 
-#tray {
-  margin-right: 16px;
+#custom-arch {
+    margin-left: 5px;
+    padding: 0 0 0 10px;
+    font-size: 25px;
+    transition: color .5s;
 }
-
-#bluetooth {
-  margin-right: 17px;
-}
-
-#network {
-  margin-right: 13px;
-}
-
-#custom-expand-icon {
-  margin-right: 20px;
-}
-
-tooltip {
-  padding: 2px;
-}
-
-#custom-update {
-  font-size: 10px;
-}
-
-#clock {
-  margin-left: 8.75px;
-}
-
-.hidden {
-  opacity: 0;
-}
-
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 10px;
-}
-
-#custom-screenrecording-indicator.active {
-  color: #a55555;
+#custom-arch:hover {
+    color: #1793d1;
 }
