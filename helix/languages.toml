@@ -1,9 +1,0 @@
-[language-server.gopls]
-command = "gopls"
-
-[[language]]
-name = "go"
-indent = { tab-width = 4, unit = "\t" }
-# comment-tokens = "//"
-language-servers = [ "gopls" ]
-roots = [ "go.work", "go.mod" ]

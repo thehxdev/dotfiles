@@ -79,7 +79,8 @@
         "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-disconnected": "Disconnected",
-        "interval": 3
+        "interval": 3,
+        "on-click": "kitty -e iwctl"
     },
 
     "battery": {
