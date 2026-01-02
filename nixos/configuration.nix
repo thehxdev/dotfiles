@@ -166,6 +166,8 @@
         uwsm.enable = true;
         waybar.enable = true;
 
+        xwayland.enable = true;
+
         virt-manager.enable = true;
 
         git = {
@@ -341,9 +343,10 @@
     fonts = {
         enableDefaultPackages = true;
         packages = with pkgs; [ 
-            liberation_ttf
             vazir-fonts
             noto-fonts
+            noto-fonts-cjk-sans
+            noto-fonts-cjk-serif
             noto-fonts-color-emoji
             font-awesome
             nerd-fonts.iosevka
@@ -351,8 +354,8 @@
         ];
         fontconfig = {
             defaultFonts = {
-                sansSerif = [ "Liberation Sans" ];
-                serif = [ "Liberation Serif" ];
+                sansSerif = [ "Noto Sans" "Vazirmatn" ];
+                serif = [ "Noto Serif" "Vazirmatn" ];
                 monospace = [ "Iosevka Nerd Font" ];
             };
         };
