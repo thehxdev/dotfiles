@@ -59,6 +59,8 @@
         # systemd-boot.enable = true;
     };
 
+    zramSwap.enable = true;
+
     networking = {
         hostName = "nixos";
         enableIPv6 = true;
@@ -94,6 +96,8 @@
     };
 
     services = {
+        zram-generator.enable = true;
+
         journald.extraConfig = ''
             SystemMaxUse=25M
             SystemMaxFileSize=10M
