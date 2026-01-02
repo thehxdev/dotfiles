@@ -18,8 +18,6 @@
     };
 
     hardware = {
-        alsa.enable = true;
-
         bluetooth = {
             enable = true;
             powerOnBoot = true;
@@ -33,7 +31,6 @@
         graphics.enable = true;
 
         nvidia = {
-            enable = true;
             open = true;
             package = config.boot.kernelPackages.nvidiaPackages.production;
             modesetting.enable = true;
@@ -51,12 +48,8 @@
     };
 
     boot.loader = {
-        limine = {
-            enable = true;
-            efiSupport = true;
-        };
-
-        # systemd-boot.enable = true;
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
     };
 
     zramSwap.enable = true;
@@ -96,6 +89,8 @@
     };
 
     services = {
+        xserver.enable = true;
+
         zram-generator.enable = true;
 
         journald.extraConfig = ''
@@ -113,33 +108,7 @@
             wayland.enable = false;
         };
 
-        desktopManager.plasma6 = {
-            enable = true;
-            excludePackages = with pkgs.kdePackages; [
-                yakuake
-                discover
-                cantor
-                dragon
-                elisa
-                gwenview
-                kalm
-                kalzium
-                kate
-                kbackup
-
-                # Games
-                bovo
-                bomber
-                granatier
-                kanagram
-                kapman
-                katomic
-                kblackbox
-                kblocks
-                kbounce
-                kbreakout
-            ];
-        };
+        desktopManager.plasma6.enable = true;
 
         pipewire = {
             enable = true;
@@ -245,13 +214,17 @@
             '';
         };
 
-        mtr.enable = false;
+        mtr.enable = true;
+        gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+        };
     }; # End programs
 
     xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-            xdg-desktop-portal-kde
+            kdePackages.xdg-desktop-portal-kde
             xdg-desktop-portal-hyprland
         ];
     };
@@ -292,7 +265,6 @@
             btop
 
             ## Archive
-            rar
             unzip
             zip
             gzip
@@ -316,6 +288,31 @@
             # Misc.
             usbutils
         ]; # end systemPackages
+
+        plasma6.excludePackages = with pkgs.kdePackages; [
+            yakuake
+            discover
+            cantor
+            dragon
+            elisa
+            gwenview
+            kalm
+            kalzium
+            kate
+            kbackup
+
+            # Games
+            bovo
+            bomber
+            granatier
+            kanagram
+            kapman
+            katomic
+            kblackbox
+            kblocks
+            kbounce
+            kbreakout
+        ];
     };
 
     virtualisation = {
@@ -326,35 +323,16 @@
         spiceUSBRedirection.enable = true;
     };
 
-    documentation.man = {
-        enable = true;
-        man-db = {
-            enable = true;
-        };
-        nixos.enable = true;
-        dev.enable = true;
-    };
-
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
-    };
-
     fonts = {
         enableDefaultPackages = true;
         packages = with pkgs; [ 
             liberation_ttf
             vazir-fonts
             noto-fonts
-            noto-fonts-cjk
-            noto-fonts-emoji
+            noto-fonts-color-emoji
             font-awesome
-            (nerdfonts.override { fonts = [
-                "Iosevka"
-                "JetBrainsMono"
-            ]; })
+            nerd-fonts.iosevka
+            nerd-fonts.jetbrains-mono
         ];
         fontconfig = {
             defaultFonts = {
