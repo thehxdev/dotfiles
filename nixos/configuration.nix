@@ -139,6 +139,12 @@
     };
 
     programs = {
+        nix-ld = {
+            enable = true;
+            libraries = with pkgs; [
+                # Add any missing dynamic libraries for unpackaged programs
+            ];
+        };
         firefox.enable = true;
 
         appimage = {
