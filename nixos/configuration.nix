@@ -34,6 +34,7 @@
             open = true;
             package = config.boot.kernelPackages.nvidiaPackages.production;
             modesetting.enable = true;
+            powerManagement.enable = false;
             prime = {
                 offload = {
                     enable = true;
@@ -41,7 +42,7 @@
                 };
                 # nvidiaBusId = "PCI:1@0:0:0";
                 # amdgpuBusId = "PCI:65@0:0:0";
-                nvidiaBusId = "PCI:1:0:0";
+                nvidiaBusId = "PCI:01:0:0";
                 amdgpuBusId = "PCI:65:0:0";
             };
         };
@@ -89,7 +90,13 @@
     };
 
     services = {
-        xserver.enable = true;
+        xserver = {
+            enable = true;
+            videoDrivers = [
+                "amdgpu"
+                "nvidia"
+            ];
+        };
 
         zram-generator.enable = true;
 
@@ -151,6 +158,7 @@
         };
         hyprlock.enable = true;
         uwsm.enable = true;
+        waybar.enable = true;
 
         virt-manager.enable = true;
 
@@ -284,6 +292,7 @@
             wayfreeze
             satty
             slurp
+            walker
 
             # Misc.
             usbutils
@@ -349,4 +358,5 @@
     };
 
     qt.enable = true;
+    system.stateVersion = "25.11";
 }
