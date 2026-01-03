@@ -40,8 +40,6 @@
                     enable = true;
                     enableOffloadCmd = true;
                 };
-                # nvidiaBusId = "PCI:1@0:0:0";
-                # amdgpuBusId = "PCI:65@0:0:0";
                 nvidiaBusId = "PCI:01:0:0";
                 amdgpuBusId = "PCI:65:0:0";
             };
@@ -125,7 +123,7 @@
             pulse.enable = true;
         };
 
-        blueman.enable = true;
+        blueman.enable = false;
 
         libinput = {
             enable = true;
@@ -254,6 +252,7 @@
             tma  = "tmux at";
             ip   = "ip -c=auto";
             gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1";
+            blt  = "bluetoothctl";
         };
 
         variables = {
