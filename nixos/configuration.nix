@@ -203,7 +203,29 @@
             defaultEditor = true;
         };
 
-        yazi.enable = true;
+        yazi = {
+            enable = true;
+            settings = {
+                yazi = {
+                    opener = {
+                        edit = [ { run = "nvim \"$@\""; block = true; } ];
+                        play = [ { run = "flatpak run org.videolan.VLC \"$@\""; orphan = true; } ];
+                        open-image = [ { run = "imv \"$@\""; } ];
+                        open-pdf = [ { run = "flatpak run org.gnome.Evince \"$@\""; orphan = true; } ];
+                    };
+
+                    open = {
+                        rules = [
+                            { mime = "video/*"; use = "play"; }
+                            { mime = "audio/*"; use = "play"; }
+                            { mime = "image/*"; use = "open-image"; }
+                            { mime = "text/*"; use = "edit"; }
+                            { mime = "application/pdf"; use = "open-pdf"; }
+                        ];
+                    };
+                };
+            };
+        };
 
         tmux = {
             enable = true;
@@ -278,6 +300,7 @@
             tokei
             htop
             btop
+            imv
 
             ## Archive
             unzip
@@ -286,11 +309,11 @@
             zstd
 
             # Multimedia
-            pamixer
             ffmpeg
             x264
             x265
             libvpx
+            mpv
 
             # Hyprland and Wayland related
             hyprpaper
@@ -332,9 +355,7 @@
     };
 
     virtualisation = {
-        podman = {
-            enable = true;
-        };
+        podman.enable = true;
         libvirtd.enable = true;
         spiceUSBRedirection.enable = true;
     };
