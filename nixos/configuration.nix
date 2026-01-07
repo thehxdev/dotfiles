@@ -323,6 +323,7 @@
             satty
             slurp
             walker
+            brightnessctl
 
             # Misc.
             usbutils
