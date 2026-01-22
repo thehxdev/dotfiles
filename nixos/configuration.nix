@@ -81,9 +81,9 @@
                 "video"
                 "audio"
                 "networkmanager"
-		"libvirtd"
-		"kvm"
-		"qemu-libvirtd"
+                "libvirtd"
+                "kvm"
+                "qemu-libvirtd"
             ];
         };
 
