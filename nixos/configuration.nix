@@ -90,6 +90,12 @@
         defaultUserShell = pkgs.zsh;
     };
 
+    documentation = {
+        man.enable = true;
+        nixos.enable = true;
+        dev.enable = true;
+    };
+
     services = {
         xserver = {
             enable = true;
