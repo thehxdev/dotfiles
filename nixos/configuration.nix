@@ -334,6 +334,13 @@
             walker
             brightnessctl
 
+            # Man pages
+            man-pages
+            man-pages-posix
+            glibc.dev
+            gcc.man
+            binutils.man
+
             # Misc.
             usbutils
         ]; # end systemPackages
