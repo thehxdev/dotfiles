@@ -194,7 +194,7 @@
             enable = true;
             enableBashCompletion = true;
             enableCompletion = true;
-            histSize = 10000;
+            histSize = 20000;
 
             syntaxHighlighting.enable = true;
             ohMyZsh = {
@@ -218,7 +218,7 @@
                 yazi = {
                     opener = {
                         edit = [ { run = "nvim \"$@\""; block = true; } ];
-                        play = [ { run = "flatpak run org.videolan.VLC \"$@\""; orphan = true; } ];
+                        play = [ { run = "mpv --force-window --hwdec=auto \"$@\""; orphan = true; } ];
                         open-image = [ { run = "imv \"$@\""; } ];
                         open-pdf = [ { run = "flatpak run org.gnome.Evince \"$@\""; orphan = true; } ];
                     };
@@ -282,7 +282,7 @@
             tm   = "tmux";
             tma  = "tmux at";
             ip   = "ip -c=auto";
-            gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4 --depth=1";
+            gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4";
             blt  = "bluetoothctl";
         };
 
@@ -316,6 +316,7 @@
             zip
             gzip
             zstd
+            lz4
 
             # Multimedia
             ffmpeg
@@ -325,6 +326,7 @@
             mpv
 
             # Hyprland and Wayland related
+            hyprsunset
             hyprpaper
             wl-clipboard
             grim
@@ -333,6 +335,15 @@
             slurp
             walker
             brightnessctl
+
+            # Minimal developer tools
+            llvmPackages.clang
+            llvmPackages.clang-tools
+            gcc
+            gdb
+            gnumake
+            cmake
+            distrobox
 
             # Man pages
             man-pages
@@ -343,6 +354,7 @@
 
             # Misc.
             usbutils
+            openssl
         ]; # end systemPackages
 
         plasma6.excludePackages = with pkgs.kdePackages; [
