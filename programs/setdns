@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+print() {
+    echo -e $@
+}
+
+RESOLV_CONF="/etc/resolv.conf"
+SUPPORTED_PROVIDERS=(cloudflare google quad9 electro arvancloud adguard dynx dynx-anti-ban begzar localhost)
+
+if [[ "$#" -ne 1 ]]; then
+    print "Usage: $0 <${SUPPORTED_PROVIDERS[@]}>"
+    exit 1
+fi
+
+if [[ "$UID" -ne 0 ]]; then
+    print "[ERROR] Run the script with root previlages"
+    exit 1
+fi
+
+PROVIDER_NAME="$1"
+
+chattr -i "$RESOLV_CONF"
+trap "chattr +i \"$RESOLV_CONF\"" EXIT
+
+cp -f "$RESOLV_CONF" "$RESOLV_CONF.bak"
+case "$PROVIDER_NAME" in
+    cloudflare)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+EOF
+        ;;
+
+    google)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+        ;;
+
+    'quad9')
+        tee "$RESOLV_CONF" <<EOF
+nameserver 9.9.9.9
+nameserver 149.112.112.112
+EOF
+        ;;
+
+    electro)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 78.157.42.100
+nameserver 78.157.42.101
+EOF
+        ;;
+
+    arvancloud)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 217.218.155.155
+nameserver 217.218.127.127
+EOF
+        ;;
+
+    hiweb)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 37.10.67.10
+nameserver 37.10.67.11
+EOF
+        ;;
+
+    adguard)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 94.140.14.14
+nameserver 94.140.15.15
+EOF
+        ;;
+
+    dynx)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 109.70.74.38
+nameserver 109.70.74.68
+EOF
+        ;;
+
+    'dynx-anti-ban')
+        tee "$RESOLV_CONF" <<EOF
+nameserver 10.139.177.18
+nameserver 10.139.177.16
+EOF
+        ;;
+
+    begzar)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 185.55.226.26
+nameserver 185.55.225.25
+nameserver 185.55.224.24
+EOF
+        ;;
+
+    localhost)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 127.0.0.1
+EOF
+        ;;
+
+    *)
+        print "[ERROR] Invalid or unsupported DNS provider name '$PROVIDER_NAME'"
+        ;;
+esac
