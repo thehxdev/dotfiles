@@ -5,7 +5,7 @@
         ./hardware-configuration.nix
     ];
 
-    
+
     nix = {
         settings.experimental-features = [ "nix-command" "flakes" ];
         extraOptions = ''
@@ -117,12 +117,24 @@
 
         hypridle.enable = true;
 
-        displayManager.sddm = {
-            enable = true;
-            wayland.enable = false;
+        displayManager = {
+            sddm = {
+                enable = true;
+                wayland.enable = false;
+            };
+
+            gdm.enable = false;
         };
 
-        desktopManager.plasma6.enable = true;
+        desktopManager = {
+            plasma6.enable = false;
+            gnome.enable = false;
+        };
+
+        gnome = {
+            games.enable = false;
+            core-developer-tools.enable = false;
+        };
 
         pipewire = {
             enable = true;
@@ -220,7 +232,7 @@
                         edit = [ { run = "nvim \"$@\""; block = true; } ];
                         play = [ { run = "mpv --force-window --hwdec=auto \"$@\""; orphan = true; } ];
                         open-image = [ { run = "imv \"$@\""; } ];
-                        open-pdf = [ { run = "flatpak run org.gnome.Evince \"$@\""; orphan = true; } ];
+                        open-pdf = [ { run = "evince \"$@\""; orphan = true; } ];
                     };
 
                     open = {
@@ -234,6 +246,11 @@
                     };
                 };
             };
+        };
+
+        thunar = {
+            enable = true;
+            plugins = [];
         };
 
         tmux = {
@@ -258,6 +275,8 @@
                 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
             '';
         };
+
+        evince.enable = true;
 
         mtr.enable = true;
         gnupg.agent = {
@@ -309,7 +328,6 @@
             tokei
             htop
             btop
-            imv
 
             ## Archive
             unzip
@@ -324,19 +342,22 @@
             x265
             libvpx
             mpv
+            imv
 
             # Hyprland and Wayland related
             hyprsunset
             hyprpaper
+            hyprlauncher
             wl-clipboard
             grim
             wayfreeze
             satty
             slurp
-            walker
             brightnessctl
+            # walker
 
             # Minimal developer tools
+            llvm
             llvmPackages.clang
             llvmPackages.clang-tools
             gcc
