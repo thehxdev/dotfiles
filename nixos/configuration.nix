@@ -164,7 +164,12 @@
                 # Add any missing dynamic libraries for unpackaged programs
             ];
         };
+
         firefox.enable = true;
+        chromium = {
+            enable = true;
+            package = pkgs.ungoogled-chromium;
+        };
 
         appimage = {
             enable = true;
