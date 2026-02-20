@@ -30,20 +30,20 @@
 
         graphics.enable = true;
 
-        nvidia = {
-            open = true;
-            package = config.boot.kernelPackages.nvidiaPackages.production;
-            modesetting.enable = true;
-            powerManagement.enable = false;
-            prime = {
-                offload = {
-                    enable = true;
-                    enableOffloadCmd = true;
-                };
-                nvidiaBusId = "PCI:01:0:0";
-                amdgpuBusId = "PCI:65:0:0";
-            };
-        };
+        # nvidia = {
+        #     open = true;
+        #     package = config.boot.kernelPackages.nvidiaPackages.production;
+        #     modesetting.enable = true;
+        #     powerManagement.enable = false;
+        #     prime = {
+        #         offload = {
+        #             enable = true;
+        #             enableOffloadCmd = true;
+        #         };
+        #         nvidiaBusId = "PCI:01:0:0";
+        #         amdgpuBusId = "PCI:65:0:0";
+        #     };
+        # };
     };
 
     boot.loader = {
@@ -101,7 +101,7 @@
             enable = true;
             videoDrivers = [
                 "amdgpu"
-                "nvidia"
+                # "nvidia"
             ];
         };
 
@@ -166,10 +166,6 @@
         };
 
         firefox.enable = true;
-        chromium = {
-            enable = true;
-            package = pkgs.ungoogled-chromium;
-        };
 
         appimage = {
             enable = true;
@@ -293,9 +289,13 @@
     xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-            kdePackages.xdg-desktop-portal-kde
+            # kdePackages.xdg-desktop-portal-kde
+            pkgs.xdg-desktop-portal-gtk
             xdg-desktop-portal-hyprland
         ];
+        config = {
+            hyprland.preffered = [ "hyprland" "gtk" ];
+        };
     };
 
     environment = {
@@ -326,13 +326,13 @@
             fd
             eza
             curlFull
-            distrobox
             aria2
             bat
             jq
             tokei
             htop
             btop
+            tree-sitter
 
             ## Archive
             unzip
@@ -350,6 +350,7 @@
             imv
 
             # Hyprland and Wayland related
+            hyprcursor
             hyprsunset
             hyprpaper
             hyprlauncher
@@ -359,7 +360,8 @@
             satty
             slurp
             brightnessctl
-            # walker
+            walker
+            mint-cursor-themes
 
             # Minimal developer tools
             llvm
@@ -383,30 +385,30 @@
             openssl
         ]; # end systemPackages
 
-        plasma6.excludePackages = with pkgs.kdePackages; [
-            yakuake
-            discover
-            cantor
-            dragon
-            elisa
-            gwenview
-            kalm
-            kalzium
-            kate
-            kbackup
-
-            # Games
-            bovo
-            bomber
-            granatier
-            kanagram
-            kapman
-            katomic
-            kblackbox
-            kblocks
-            kbounce
-            kbreakout
-        ];
+        # plasma6.excludePackages = with pkgs.kdePackages; [
+        #     yakuake
+        #     discover
+        #     cantor
+        #     dragon
+        #     elisa
+        #     gwenview
+        #     kalm
+        #     kalzium
+        #     kate
+        #     kbackup
+        #
+        #     # Games
+        #     bovo
+        #     bomber
+        #     granatier
+        #     kanagram
+        #     kapman
+        #     katomic
+        #     kblackbox
+        #     kblocks
+        #     kbounce
+        #     kbreakout
+        # ];
     };
 
     virtualisation = {
