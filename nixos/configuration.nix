@@ -92,7 +92,7 @@
 
     documentation = {
         man.enable = true;
-        nixos.enable = true;
+        nixos.enable = false;
         dev.enable = true;
     };
 
@@ -104,6 +104,7 @@
                 # "nvidia"
             ];
         };
+        hypridle.enable = true;
 
         zram-generator.enable = true;
 
@@ -114,8 +115,6 @@
 
         acpid.enable = true;
         gvfs.enable = true;
-
-        hypridle.enable = true;
 
         displayManager = {
             sddm = {
@@ -188,7 +187,7 @@
 
         xwayland.enable = true;
 
-        virt-manager.enable = true;
+        virt-manager.enable = false;
 
         git = {
             enable = true;
@@ -226,7 +225,7 @@
         };
 
         yazi = {
-            enable = true;
+            enable = false;
             settings = {
                 yazi = {
                     opener = {
@@ -300,7 +299,7 @@
 
     environment = {
         shellAliases = {
-            l    = "eza -lha --group-directories-first";
+            la   = "eza -lha --group-directories-first";
             ll   = "eza -lh --group-directories-first";
             nv   = "nvim";
             tm   = "tmux";
@@ -327,11 +326,11 @@
             eza
             curlFull
             aria2
-            bat
+            # bat
             jq
             tokei
             htop
-            btop
+            # btop
             tree-sitter
 
             ## Archive
@@ -343,9 +342,9 @@
 
             # Multimedia
             ffmpeg
-            x264
-            x265
-            libvpx
+            # x264
+            # x265
+            # libvpx
             mpv
             imv
 
@@ -354,24 +353,27 @@
             hyprsunset
             hyprpaper
             hyprlauncher
+            brightnessctl
             wl-clipboard
             grim
             wayfreeze
             satty
             slurp
-            brightnessctl
-            walker
             mint-cursor-themes
+            flat-remix-gtk
+            flat-remix-icon-theme
+            dconf
+            # walker
 
             # Minimal developer tools
-            llvm
-            llvmPackages.clang
-            llvmPackages.clang-tools
+            # llvm
+            # llvmPackages.clang
+            # llvmPackages.clang-tools
             gcc
             gdb
             gnumake
             cmake
-            distrobox
+            # distrobox
 
             # Man pages
             man-pages
@@ -412,14 +414,14 @@
     };
 
     virtualisation = {
-        podman.enable = true;
-        libvirtd.enable = true;
-        spiceUSBRedirection.enable = true;
+        podman.enable = false;
+        libvirtd.enable = false;
+        spiceUSBRedirection.enable = false;
     };
 
     fonts = {
         enableDefaultPackages = true;
-        packages = with pkgs; [ 
+        packages = with pkgs; [
             vazir-fonts
             noto-fonts
             noto-fonts-cjk-sans
@@ -427,7 +429,7 @@
             noto-fonts-color-emoji
             font-awesome
             nerd-fonts.iosevka
-            nerd-fonts.jetbrains-mono
+            # nerd-fonts.jetbrains-mono
         ];
         fontconfig = {
             defaultFonts = {
