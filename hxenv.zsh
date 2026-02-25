@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-export OPT="$HOME/opt"
-export OPT_GLOBAL="$OPT/_global"
+export MY_OPT_PATH="$HOME/opt"
+export MY_OPT_GLOBAL_PATH="$MY_OPT_PATH/_global"
+export ZED_DEVICE_ID=0x2860
+export GOPROXY='https://goproxy.io,direct'
 
 __PATH=""
-for p in $(ls -1 $OPT_GLOBAL); do
-    __absolute_path="$OPT_GLOBAL/$p/bin"
+for p in $(ls -1 $MY_OPT_GLOBAL_PATH); do
+    __absolute_path="$MY_OPT_GLOBAL_PATH/$p/bin"
     if [[ ! "$PATH" == *"$__absolute_path"* ]]; then
         __PATH+="$__absolute_path:"
     fi
@@ -32,16 +34,16 @@ alias ip='ip -c=auto'
 alias gitc='git clone --shallow-submodules --remote-submodules --recursive'
 
 # Yazi file manager
-function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    IFS= read -r -d '' cwd < "$tmp"
-    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-    rm -f -- "$tmp"
-}
+# function y() {
+#     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+#     yazi "$@" --cwd-file="$tmp"
+#     IFS= read -r -d '' cwd < "$tmp"
+#     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+#     rm -f -- "$tmp"
+# }
 
 # FZF
-__FZF_WALKER_SKIP=".git,node_modules,target,build,vcpkg"
+__FZF_WALKER_SKIP=".git,.var,.cargo,node_modules,target,build,vcpkg"
 export FZF_DEFAULT_OPTS='--tmux 70% --layout reverse'
 export FZF_CTRL_T_OPTS="
     --walker-skip ${__FZF_WALKER_SKIP}
