@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+if [[ "$UID" -ne 0 ]]; then
+    echo "run script as root"
+    exit 1
+fi
+
+PUB_NIC=$(ip -4 route ls | grep default | awk '/dev/ {for (i=1; i<=NF; i++) if ($i == "dev") print $(i+1)}' | head -1)
+if [[ "$PUB_NIC" =~ "w.+" ]]; then
+    echo "[ERROR] your main network interface is wireless. connect to internet with ethernet."
+    exit 1
+fi
+
+QEMU_BRIDGE_HELPER='/usr/lib/qemu/qemu-bridge-helper'
+if [[ ! -e "$QEMU_BRIDGE_HELPER" ]]; then
+    echo "[ERROR] failed to find qemu-bridge-helper: $QEMU_BRIDGE_HELPER"
+    exit 1
+fi
+chmod u+s "$QEMU_BRIDGE_HELPER"
+
+QEMU_BRIDGE_CONF_FILE='/etc/qemu/bridge.conf'
+mkdir -p /etc/qemu/
+chmod 755 /etc/qemu/
+if [[ -e "$QEMU_BRIDGE_CONF_FILE" && ! -e "${QEMU_BRIDGE_CONF_FILE}.bak" ]]; then
+    cp "$QEMU_BRIDGE_CONF_FILE" "${QEMU_BRIDGE_CONF_FILE}.bak"
+fi
+echo "allow virtbr0" > "$QEMU_BRIDGE_CONF_FILE"
+chown root:kvm "$QEMU_BRIDGE_CONF_FILE"
+chmod 0660 "$QEMU_BRIDGE_CONF_FILE"
+
+ip link add name virtbr0 type bridge
+ip link set dev $PUB_NIC master virtbr0
+ip addr add 192.168.0.20/24 dev virtbr0
+ip link set virtbr0 up
+
+if command -v nft >/dev/null; then
+    nft add table bridge filter
+    nft 'add chain bridge filter FORWARD { type filter hook forward priority 0 ; }'
+    nft add rule bridge filter FORWARD accept
+else
+    iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT
+fi
+
+# Append this flag to `qemu-system-*` command:
+#   -nic bridge,br=virtbr0,model=virtio
+#
+# Then on the guest machine bring up main network interface and setup with dhcp:
+#   $ ip link set eth0 up
+#   $ udhcpc -i eth0
