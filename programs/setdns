@@ -5,7 +5,7 @@ print() {
 }
 
 RESOLV_CONF="/etc/resolv.conf"
-SUPPORTED_PROVIDERS=(cloudflare google quad9 electro arvancloud adguard dynx dynx-anti-ban begzar localhost)
+SUPPORTED_PROVIDERS=(cloudflare google quad9 electro arvancloud adguard dynx dynx-anti-ban begzar pishgaman parspack localhost)
 
 if [[ "$#" -ne 1 ]]; then
     print "Usage: $0 <${SUPPORTED_PROVIDERS[@]}>"
@@ -92,6 +92,20 @@ EOF
 nameserver 185.55.226.26
 nameserver 185.55.225.25
 nameserver 185.55.224.24
+EOF
+        ;;
+
+    pishgaman)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 5.202.100.100
+nameserver 5.202.100.101
+EOF
+        ;;
+
+    parspack)
+        tee "$RESOLV_CONF" <<EOF
+nameserver 195.177.255.170
+nameserver 178.239.151.228
 EOF
         ;;
 
