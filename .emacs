@@ -39,6 +39,7 @@
 (setq-default dired-dwim-target t)
 (setq dired-listing-switches "-alh")
 (setq dired-mouse-drag-files t)
+(setq dired-listing-switches "-agho --group-directories-first")
 
 (global-set-key (kbd "C-,") 'duplicate-line)
 
@@ -90,6 +91,7 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-\"")    'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-:")     'mc/skip-to-previous-like-this)
+;; (global-set-key (kbd "C-;")     'mark-word)
 
 ;;; Gruvbox theme
 (hx/install-packages 'gruvbox-theme)
@@ -118,8 +120,9 @@
 
 
 (hx/install-packages
- ;; 'cl-lib
- ;; 'magit
+ 'cl-lib
+ 'magit
+ 'markdown-mode
  'clojure-mode
  'cider
  'go-mode
