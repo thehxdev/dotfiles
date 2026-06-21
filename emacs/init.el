@@ -1,21 +1,8 @@
-(setq initial-frame-alist '((top . 20) (left . 20) (width . 100) (height . 30)))
-
-(setq custom-file "~/.emacs.d/custom.el")
-(load-file custom-file)
-
-(add-to-list 'load-path "~/.emacs.d/hxlocal")
-
-(setq-default inhibit-startup-screen t
-              tab-width 4
+(setq-default tab-width 4
               indent-tabs-mode nil
               compilation-scoll-output t)
 
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(add-to-list 'default-frame-alist '(font . "Iosevka NF-13"))
-
-(setq display-line-numbers-type 'relative)
+;; (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 
@@ -58,6 +45,11 @@
 
 (global-set-key (kbd "C-c f") 'astyle-buffer)
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load-file custom-file)
+
+;; (add-to-list 'load-path "~/.emacs.d/hxlocal")
+
 
 
 ;;; Initialize Straight.el package manager
@@ -82,7 +74,7 @@
   (dolist (package packages)
     (straight-use-package package)))
 
-(require 'treesit)
+;; (require 'treesit)
 
 ;;; Multiple cursors
 (straight-use-package 'multiple-cursors)
@@ -120,11 +112,9 @@
 
 
 (hx/install-packages
- 'cl-lib
- 'magit
+ 'yaml-mode
+ 'json-mode
  'markdown-mode
- 'clojure-mode
- 'cider
  'go-mode
  'rust-mode)
 
