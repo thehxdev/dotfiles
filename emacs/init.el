@@ -7,7 +7,8 @@
 (global-hl-line-mode 1)
 
 (setq scroll-conservatively 4
-      scroll-margin 4)
+      scroll-margin 4
+      split-width-threshold nil)
 
 ;;; Disable backup files
 (setq make-backup-files nil)
