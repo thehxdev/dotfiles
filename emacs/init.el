@@ -112,6 +112,8 @@
 
 
 (hx/install-packages
+ 'cl-lib
+ 'magit
  'yaml-mode
  'json-mode
  'markdown-mode
