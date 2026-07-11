@@ -1,3 +1,5 @@
+;; -*- coding: utf-8-unix -*-
+
 (setq gc-cons-percentage 0.6
       inhibit-startup-screen t
       native-comp-speed 2
