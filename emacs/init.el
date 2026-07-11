@@ -1,18 +1,21 @@
+(setq custom-file "~/.emacs.d/custom.el")
+(load-file custom-file)
+
+(add-to-list 'load-path "~/.emacs.d/hxlocal")
+
+;;; Disable backup files
+(setq make-backup-files nil)
+(setq backup-directory-alist '((".*" . "~/.emacs.d/.trash")))
+
+
 (setq-default tab-width 4
               indent-tabs-mode nil
               compilation-scoll-output t)
 
 ;; (setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode 1)
-(global-hl-line-mode 1)
-
 (setq scroll-conservatively 4
       scroll-margin 4
       split-width-threshold nil)
-
-;;; Disable backup files
-(setq make-backup-files nil)
-(setq backup-directory-alist '((".*" . "~/.emacs.d/.trash")))
 
 ;;; ido mode
 (require 'ido)
@@ -46,35 +49,6 @@
 
 (global-set-key (kbd "C-c f") 'astyle-buffer)
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load-file custom-file)
-
-;; (add-to-list 'load-path "~/.emacs.d/hxlocal")
-
-
-
-;;; Initialize Straight.el package manager
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-(setq package-enable-at-startup nil)
-
-(defun hx/install-packages (&rest packages)
-  (dolist (package packages)
-    (straight-use-package package)))
-
 ;; (require 'treesit)
 
 ;;; Multiple cursors
@@ -85,10 +59,6 @@
 (global-set-key (kbd "C-\"")    'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-:")     'mc/skip-to-previous-like-this)
 ;; (global-set-key (kbd "C-;")     'mark-word)
-
-;;; Gruvbox theme
-(hx/install-packages 'gruvbox-theme)
-(load-theme 'gruvbox-dark-medium t)
 
 ;;; Smex and Ido
 (hx/install-packages 'smex 'ido-completing-read+)
@@ -136,10 +106,13 @@
                          (interactive)
                          (c-toggle-comment-style -1)))
 
-;;; Enable simpc-mode
+;;; simpc-mode
 ;; (require 'simpc-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
+;;; odin-mode
+(require 'odin-mode)
+(add-to-list 'auto-mode-alist '("\\.odin" . odin-mode))
 
 (c-set-offset 'comment-intro 0)
 (put 'dired-find-alternate-file 'disabled nil)
