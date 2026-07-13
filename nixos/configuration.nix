@@ -30,20 +30,20 @@
 
         graphics.enable = true;
 
-        # nvidia = {
-        #     open = true;
-        #     package = config.boot.kernelPackages.nvidiaPackages.production;
-        #     modesetting.enable = true;
-        #     powerManagement.enable = false;
-        #     prime = {
-        #         offload = {
-        #             enable = true;
-        #             enableOffloadCmd = true;
-        #         };
-        #         nvidiaBusId = "PCI:01:0:0";
-        #         amdgpuBusId = "PCI:65:0:0";
-        #     };
-        # };
+        nvidia = {
+            open = true;
+            package = config.boot.kernelPackages.nvidiaPackages.production;
+            modesetting.enable = true;
+            powerManagement.enable = false;
+            prime = {
+                offload = {
+                    enable = true;
+                    enableOffloadCmd = true;
+                };
+                nvidiaBusId = "PCI:01:0:0";
+                amdgpuBusId = "PCI:65:0:0";
+            };
+        };
     };
 
     boot.loader = {
@@ -51,7 +51,10 @@
         efi.canTouchEfiVariables = true;
     };
 
-    zramSwap.enable = true;
+    zramSwap = {
+        enable = true;
+        algorithm = "zstd";
+    };
 
     networking = {
         hostName = "nixos";
@@ -99,10 +102,10 @@
     services = {
         xserver = {
             enable = true;
-            videoDrivers = [
-                "amdgpu"
-                # "nvidia"
-            ];
+            # videoDrivers = [
+            #     "amdgpu"
+            #     "nvidia"
+            # ];
         };
         hypridle.enable = true;
 
@@ -126,7 +129,7 @@
         };
 
         desktopManager = {
-            plasma6.enable = false;
+            plasma6.enable = true;
             gnome.enable = false;
         };
 
@@ -177,27 +180,23 @@
         };
 
         hyprland = {
-            enable = true;
+            enable = false;
             withUWSM = true;
             xwayland.enable = true;
         };
-        hyprlock.enable = true;
-        uwsm.enable = true;
-        waybar.enable = true;
+        hyprlock.enable = false;
+        uwsm.enable = false;
+        waybar.enable = false;
 
         xwayland.enable = true;
 
-        virt-manager.enable = false;
+        virt-manager.enable = true;
 
         git = {
             enable = true;
             config = {
                 init = {
-                    defaultBranch = "main";
-                };
-                user = {
-                    name = "thehxdev";
-                    email = "hossein.khosravi.ce@gmail.com";
+                    defaultBranch = "master";
                 };
             };
         };
@@ -230,7 +229,7 @@
                 yazi = {
                     opener = {
                         edit = [ { run = "nvim \"$@\""; block = true; } ];
-                        play = [ { run = "mpv --force-window --hwdec=auto \"$@\""; orphan = true; } ];
+                        play = [ { run = "mpv --force-window --hwdec=gpux \"$@\""; orphan = true; } ];
                         open-image = [ { run = "imv \"$@\""; } ];
                         open-pdf = [ { run = "evince \"$@\""; orphan = true; } ];
                     };
@@ -249,14 +248,14 @@
         };
 
         thunar = {
-            enable = true;
+            enable = false;
             plugins = [];
         };
 
         tmux = {
             enable = true;
-            historyLimit = 10000;
-            keyMode = "vi";
+            historyLimit = 20000;
+            keyMode = "emacs";
             plugins = with pkgs.tmuxPlugins; [ yank ];
             extraConfig = ''
                 set -g allow-passthrough on
@@ -288,9 +287,9 @@
     xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-            # kdePackages.xdg-desktop-portal-kde
-            pkgs.xdg-desktop-portal-gtk
-            xdg-desktop-portal-hyprland
+            kdePackages.xdg-desktop-portal-kde
+            xdg-desktop-portal-gtk
+            # xdg-desktop-portal-hyprland
         ];
         config = {
             hyprland.preffered = [ "hyprland" "gtk" ];
@@ -328,7 +327,7 @@
             aria2
             # bat
             jq
-            tokei
+            # tokei
             htop
             # btop
             tree-sitter
@@ -346,23 +345,23 @@
             # x265
             # libvpx
             mpv
-            imv
+            # imv
 
             # Hyprland and Wayland related
-            hyprcursor
-            hyprsunset
-            hyprpaper
-            hyprlauncher
-            brightnessctl
-            wl-clipboard
-            grim
-            wayfreeze
-            satty
-            slurp
-            mint-cursor-themes
-            flat-remix-gtk
-            flat-remix-icon-theme
-            dconf
+            # hyprcursor
+            # hyprsunset
+            # hyprpaper
+            # hyprlauncher
+            # brightnessctl
+            # wl-clipboard
+            # grim
+            # wayfreeze
+            # satty
+            # slurp
+            # mint-cursor-themes
+            # flat-remix-gtk
+            # flat-remix-icon-theme
+            # dconf
             # walker
 
             # Minimal developer tools
@@ -373,7 +372,7 @@
             gdb
             gnumake
             cmake
-            # distrobox
+            distrobox
 
             # Man pages
             man-pages
@@ -387,36 +386,36 @@
             openssl
         ]; # end systemPackages
 
-        # plasma6.excludePackages = with pkgs.kdePackages; [
-        #     yakuake
-        #     discover
-        #     cantor
-        #     dragon
-        #     elisa
-        #     gwenview
-        #     kalm
-        #     kalzium
-        #     kate
-        #     kbackup
-        #
-        #     # Games
-        #     bovo
-        #     bomber
-        #     granatier
-        #     kanagram
-        #     kapman
-        #     katomic
-        #     kblackbox
-        #     kblocks
-        #     kbounce
-        #     kbreakout
-        # ];
+        plasma6.excludePackages = with pkgs.kdePackages; [
+            yakuake
+            discover
+            cantor
+            dragon
+            elisa
+            # gwenview
+            kalm
+            kalzium
+            kate
+            kbackup
+        
+            # Games
+            bovo
+            bomber
+            granatier
+            kanagram
+            kapman
+            katomic
+            kblackbox
+            kblocks
+            kbounce
+            kbreakout
+        ];
     };
 
     virtualisation = {
-        podman.enable = false;
-        libvirtd.enable = false;
-        spiceUSBRedirection.enable = false;
+        podman.enable = true;
+        libvirtd.enable = true;
+        spiceUSBRedirection.enable = true;
     };
 
     fonts = {
@@ -429,13 +428,14 @@
             noto-fonts-color-emoji
             font-awesome
             nerd-fonts.iosevka
+            nerd-fonts.cascadia-code
             # nerd-fonts.jetbrains-mono
         ];
         fontconfig = {
             defaultFonts = {
                 sansSerif = [ "Noto Sans" "Vazirmatn" ];
                 serif = [ "Noto Serif" "Vazirmatn" ];
-                monospace = [ "Iosevka Nerd Font" ];
+                monospace = [ "CaskaydiaCove Nerd Font SemiLight" ];
             };
         };
     };
@@ -446,5 +446,5 @@
     };
 
     qt.enable = true;
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
 }
