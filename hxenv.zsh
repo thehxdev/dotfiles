@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-export MY_OPT_PATH="$HOME/opt"
-export MY_OPT_GLOBAL_PATH="$MY_OPT_PATH/_global"
-export ZED_DEVICE_ID=0x2860
+export __HX_OPT_PATH="$HOME/opt"
+export __HX_OPT_GLOBAL_PATH="$__HX_OPT_PATH/_global"
 export GOPROXY='https://goproxy.io,direct'
 
 __PATH=""
-for p in $(ls -1 $MY_OPT_GLOBAL_PATH); do
-    __absolute_path="$MY_OPT_GLOBAL_PATH/$p/bin"
+for p in $(ls -1 $__HX_OPT_GLOBAL_PATH); do
+    __absolute_path="$__HX_OPT_GLOBAL_PATH/$p/bin"
     if [[ ! "$PATH" == *"$__absolute_path"* ]]; then
         __PATH+="$__absolute_path:"
     fi
@@ -28,7 +27,6 @@ alias nv='nvim'
 alias tm='tmux'
 alias ll='eza -lh --group-directories-first'
 alias la='eza -lha --group-directories-first'
-alias cdp='cd ~/projects'
 alias cdo='cd ~/opt'
 alias ip='ip -c=auto'
 alias gitc='git clone --shallow-submodules --remote-submodules --recursive'
