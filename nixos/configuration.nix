@@ -107,7 +107,7 @@
             #     "nvidia"
             # ];
         };
-        hypridle.enable = true;
+        hypridle.enable = false;
 
         zram-generator.enable = true;
 
@@ -158,10 +158,10 @@
 
         flatpak.enable = true;
 
-        emacs = {
-          enable = true;
-          defaultEditor = false;
-        };
+        # emacs = {
+        #   enable = true;
+        #   defaultEditor = false;
+        # };
     };
 
     programs = {
@@ -417,10 +417,17 @@
             kbounce
             kbreakout
         ];
+
+        etc."distrobox/distrobox.conf".text = ''
+  container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
+        '';
     };
 
     virtualisation = {
-        podman.enable = true;
+        podman = {
+            enable = true;
+            dockerCompat = true;
+        };
         libvirtd.enable = true;
         spiceUSBRedirection.enable = true;
     };
@@ -435,7 +442,7 @@
             noto-fonts-color-emoji
             font-awesome
             nerd-fonts.iosevka
-            nerd-fonts.cascadia-code
+            nerd-fonts.caskaydia-cove
             # nerd-fonts.jetbrains-mono
         ];
         fontconfig = {
