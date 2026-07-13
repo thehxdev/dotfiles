@@ -32,7 +32,7 @@
 
         nvidia = {
             open = true;
-            package = config.boot.kernelPackages.nvidiaPackages.production;
+            branch = "stable";
             modesetting.enable = true;
             powerManagement.enable = false;
             prime = {
@@ -102,10 +102,11 @@
     services = {
         xserver = {
             enable = true;
-            # videoDrivers = [
-            #     "amdgpu"
-            #     "nvidia"
-            # ];
+            videoDrivers = [
+                # "modesetting"
+                "amdgpu"
+                "nvidia"
+            ];
         };
         hypridle.enable = false;
 
