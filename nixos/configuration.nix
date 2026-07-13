@@ -157,6 +157,11 @@
         };
 
         flatpak.enable = true;
+
+        emacs = {
+          enable = true;
+          defaultEditor = false;
+        };
     };
 
     programs = {
@@ -368,18 +373,20 @@
             # llvm
             # llvmPackages.clang
             # llvmPackages.clang-tools
-            gcc
-            gdb
-            gnumake
-            cmake
+            # gcc
+            # gdb
+            # gnumake
+            # cmake
+            neovim
             distrobox
+            # toolbox
 
             # Man pages
-            man-pages
-            man-pages-posix
-            glibc.dev
-            gcc.man
-            binutils.man
+            # man-pages
+            # man-pages-posix
+            # glibc.dev
+            # gcc.man
+            # binutils.man
 
             # Misc.
             usbutils
