@@ -1,5 +1,20 @@
 ;; -*- coding: utf-8-unix -*-
 
+;; This is a temporary fix for NixOS shell environment.
+;; In the terminal run:
+;;   $ echo -n "$PATH" > "$HOME/.PATH"
+(setq
+ exec-path
+ (split-string
+  (replace-regexp-in-string
+   "[ \t\n]*$"
+   ""
+   (with-temp-buffer
+     (unless (ignore-errors (insert-file-contents "~/.PATH")) "")
+     (buffer-string)))
+  path-separator))
+(setq shell-command-switch "-ic")
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load-file custom-file)
 
