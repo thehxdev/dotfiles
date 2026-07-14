@@ -1,465 +1,558 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, options, ... }: {
 
-    imports = [
-        # Include the results of the hardware scan.
-        ./hardware-configuration.nix
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./nix-alien.nix
+  ];
+
+
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+
+    graphics.enable = true;
+
+    nvidia = {
+      open = true;
+      branch = "stable";
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      prime = {
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+        nvidiaBusId = "PCI:01:0:0";
+        amdgpuBusId = "PCI:65:0:0";
+      };
+    };
+  };
+
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
+  networking = {
+    hostName = "nixos";
+    enableIPv6 = true;
+    networkmanager = {
+      enable = true;
+      dns = "default";
+    };
+    firewall.enable = false;
+    resolvconf.enable = false;
+  };
+  time.timeZone = "Asia/Tehran";
+
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    enable = true;
+    font = "Lat2-Terminus16";
+    useXkbConfig = true; # use xkbOptions in tty.
+  };
+
+  users = {
+    users.hx = {
+      isNormalUser = true;
+      home = "/home/hx";
+      extraGroups = [
+        "wheel"
+        "video"
+        "audio"
+        "networkmanager"
+        "libvirtd"
+        "kvm"
+        "qemu-libvirtd"
+      ];
+    };
+
+    defaultUserShell = pkgs.zsh;
+  };
+
+  documentation = {
+    man.enable = true;
+    nixos.enable = false;
+    dev.enable = true;
+  };
+
+  services = {
+    xserver = {
+      enable = true;
+      videoDrivers = [
+        # "modesetting"
+        "amdgpu"
+        "nvidia"
+      ];
+    };
+    hypridle.enable = false;
+
+    zram-generator.enable = true;
+
+    journald.extraConfig = ''
+      SystemMaxUse=25M
+      SystemMaxFileSize=10M
+    '';
+
+    acpid.enable = true;
+    gvfs.enable = true;
+
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = false;
+      };
+
+      gdm.enable = false;
+    };
+
+    desktopManager = {
+      plasma6.enable = true;
+      gnome.enable = false;
+    };
+
+    gnome = {
+      games.enable = false;
+      core-developer-tools.enable = false;
+    };
+
+    pipewire = {
+      enable = true;
+      audio.enable = true;
+      wireplumber.enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+    };
+
+    blueman.enable = false;
+
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+      };
+    };
+
+    flatpak.enable = true;
+
+    emacs = {
+      enable = true;
+      defaultEditor = false;
+    };
+  };
+
+  programs = {
+    nix-ld = {
+      enable = true;
+      # I took list of packages from the link below:
+      #   https://unix.stackexchange.com/questions/522822/different-methods-to-run-a-non-nixos-executable-on-nixos
+      # although I changed and updated the list. Some of the were deprecated.
+      libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
+        libpcap
+
+        stdenv.cc.cc
+        openssl
+        libxkbcommon
+        libXcomposite
+        libXtst
+        libXrandr
+        libXext
+        libX11
+        libXfixes
+        libGL
+        libva
+        pipewire
+        libxcb
+        libXdamage
+        libxshmfence
+        libXxf86vm
+        libelf
+        icu
+        glib
+        gtk2
+        gtk3
+        gtk4
+        bzip2
+        libXinerama
+        libXcursor
+        libXrender
+        libXScrnSaver
+        libXi
+        libSM
+        libICE
+        gnome2.GConf
+        nspr
+        nss
+        cups
+        libcap
+        SDL
+        SDL_image
+        SDL_ttf
+        SDL_mixer
+        SDL2
+        SDL2_ttf
+        SDL2_image
+        SDL2_ttf
+        SDL2_mixer
+        sdl3
+        sdl3-ttf
+        sdl3-image
+        sdl3-mixer
+        libusb1
+        dbus-glib
+        ffmpeg
+        libudev0-shim
+        libXt
+        libXmu
+        libogg
+        libvorbis
+        glew
+        glew_1_10
+        libidn
+        tbb
+        flac
+        freeglut
+        libjpeg
+        libpng
+        libpng12
+        libsamplerate
+        libmikmod
+        libtheora
+        libtiff
+        pixman
+        speex
+        libappindicator-gtk2
+        libdbusmenu-gtk2
+        libindicator-gtk2
+        libcaca
+        libcanberra
+        libgcrypt
+        libvpx
+        librsvg
+        libXft
+        libvdpau
+        pango
+        cairo
+        atk
+        gdk-pixbuf
+        fontconfig
+        freetype
+        dbus
+        expat
+        libdrm
+        mesa
+      ]);
+    };
+
+    firefox.enable = true;
+
+    appimage = {
+      enable = true;
+      binfmt = true;
+      package = pkgs.appimage-run.override {
+        extraPkgs = pkgs: with pkgs; [
+          # missing libraries here, e.g.: `pkgs.libepoxy`
+        ];
+      };
+    };
+
+    hyprland = {
+      enable = false;
+      withUWSM = true;
+      xwayland.enable = true;
+    };
+    hyprlock.enable = false;
+    uwsm.enable = false;
+    waybar.enable = false;
+
+    xwayland.enable = true;
+
+    virt-manager.enable = true;
+
+    git = {
+      enable = true;
+      config = {
+        init = {
+          defaultBranch = "master";
+        };
+      };
+    };
+
+    zsh = {
+      enable = true;
+      enableBashCompletion = true;
+      enableCompletion = true;
+      histSize = 20000;
+
+      syntaxHighlighting.enable = true;
+      ohMyZsh = {
+        enable = true;
+        plugins = [
+          "git"
+          "sudo"
+        ];
+        theme = "robbyrussell";
+      };
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+
+    # yazi = {
+    #   enable = false;
+    #   settings = {
+    #     yazi = {
+    #       opener = {
+    #         edit = [ { run = "nvim \"$@\""; block = true; } ];
+    #         play = [ { run = "mpv --force-window --hwdec=gpux \"$@\""; orphan = true; } ];
+    #         open-image = [ { run = "imv \"$@\""; } ];
+    #         open-pdf = [ { run = "evince \"$@\""; orphan = true; } ];
+    #       };
+    #       open = {
+    #         rules = [
+    #           { mime = "video/*"; use = "play"; }
+    #           { mime = "audio/*"; use = "play"; }
+    #           { mime = "image/*"; use = "open-image"; }
+    #           { mime = "text/*"; use = "edit"; }
+    #           { mime = "application/pdf"; use = "open-pdf"; }
+    #         ];
+    #       };
+    #     };
+    #   };
+    # };
+
+    thunar = {
+      enable = false;
+      plugins = [];
+    };
+
+    tmux = {
+      enable = true;
+      historyLimit = 20000;
+      keyMode = "emacs";
+      plugins = with pkgs.tmuxPlugins; [ yank ];
+      extraConfig = ''
+        set -g allow-passthrough on
+        set -ga update-environment TERM
+        set -ga update-environment TERM_PROGRAM
+        set -s escape-time 0
+        set -sa terminal-features ",xterm-*:RGB"
+        set -g base-index 1
+        set -g pane-base-index 1
+        set-window-option -g pane-base-index 1
+        set-option -g renumber-windows on
+        bind-key -T copy-mode-vi v send-keys -X begin-selection
+        bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+      '';
+    };
+
+    evince.enable = true;
+
+    mtr.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  }; # End programs
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-gtk
+      # xdg-desktop-portal-hyprland
+    ];
+    config = {
+      hyprland.preffered = [ "hyprland" "gtk" ];
+    };
+  };
+
+  environment = {
+    shellAliases = {
+      la   = "eza -lha --group-directories-first";
+      ll   = "eza -lh --group-directories-first";
+      nv   = "nvim";
+      tm   = "tmux";
+      tma  = "tmux at";
+      ip   = "ip -c=auto";
+      gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4";
+      blt  = "bluetoothctl";
+    };
+
+    variables = {
+      EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
+    };
+
+    sessionVariables = {};
+
+    systemPackages = with pkgs; [
+      kitty
+
+      # CLI tools
+      fzf
+      ripgrep
+      fd
+      eza
+      curlFull
+      aria2
+      # bat
+      jq
+      # tokei
+      htop
+      # btop
+      tree-sitter
+
+      ## Archive
+      unzip
+      zip
+      gzip
+      zstd
+      lz4
+
+      # Multimedia
+      ffmpeg
+      # x264
+      # x265
+      # libvpx
+      mpv
+      # imv
+
+      # Hyprland and Wayland related
+      # hyprcursor
+      # hyprsunset
+      # hyprpaper
+      # hyprlauncher
+      # brightnessctl
+      # wl-clipboard
+      # grim
+      # wayfreeze
+      # satty
+      # slurp
+      # mint-cursor-themes
+      # flat-remix-gtk
+      # flat-remix-icon-theme
+      # dconf
+      # walker
+
+      # Minimal developer tools
+      # llvm
+      # llvmPackages.clang
+      # llvmPackages.clang-tools
+      # gcc
+      # gdb
+      # gnumake
+      # cmake
+      neovim
+      distrobox
+      # toolbox
+
+      # Man pages
+      # man-pages
+      # man-pages-posix
+      # glibc.dev
+      # gcc.man
+      # binutils.man
+
+      # Misc.
+	    file
+      binutils
+      usbutils
+      openssl
+    ]; # end systemPackages
+
+    plasma6.excludePackages = with pkgs.kdePackages; [
+      yakuake
+      discover
+      cantor
+      dragon
+      elisa
+      # gwenview
+      kalm
+      kalzium
+      kate
+      kbackup
+
+      # Games
+      bovo
+      bomber
+      granatier
+      kanagram
+      kapman
+      katomic
+      kblackbox
+      kblocks
+      kbounce
+      kbreakout
     ];
 
+    etc."distrobox/distrobox.conf".text = ''
+      container_additional_volumes="/nix/store:/nix/store:ro"
+    '';
+  };
 
-    nix = {
-        settings.experimental-features = [ "nix-command" "flakes" ];
-        extraOptions = ''
-            keep-outputs = true
-            keep-derivations = true
-        '';
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
     };
-    nixpkgs.config = {
-        allowUnfree = true;
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+  };
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      vazir-fonts
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      font-awesome
+      nerd-fonts.iosevka
+      nerd-fonts.caskaydia-cove
+      # nerd-fonts.jetbrains-mono
+    ];
+    fontconfig = {
+      defaultFonts = {
+        sansSerif = [ "Noto Sans" "Vazirmatn" ];
+        serif = [ "Noto Serif" "Vazirmatn" ];
+        monospace = [ "CaskaydiaCove Nerd Font SemiLight" ];
+      };
     };
+  };
 
-    hardware = {
-        bluetooth = {
-            enable = true;
-            powerOnBoot = true;
-            settings = {
-                General = {
-                    Enable = "Source,Sink,Media,Socket";
-                };
-            };
-        };
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+  };
 
-        graphics.enable = true;
-
-        nvidia = {
-            open = true;
-            branch = "stable";
-            modesetting.enable = true;
-            powerManagement.enable = false;
-            prime = {
-                offload = {
-                    enable = true;
-                    enableOffloadCmd = true;
-                };
-                nvidiaBusId = "PCI:01:0:0";
-                amdgpuBusId = "PCI:65:0:0";
-            };
-        };
-    };
-
-    boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
-    };
-
-    zramSwap = {
-        enable = true;
-        algorithm = "zstd";
-    };
-
-    networking = {
-        hostName = "nixos";
-        enableIPv6 = true;
-        networkmanager = {
-            enable = true;
-            dns = "default";
-        };
-        firewall.enable = false;
-        resolvconf.enable = false;
-    };
-    time.timeZone = "Asia/Tehran";
-
-    i18n.defaultLocale = "en_US.UTF-8";
-    console = {
-        enable = true;
-        font = "Lat2-Terminus16";
-        useXkbConfig = true; # use xkbOptions in tty.
-    };
-
-    users = {
-        users.hx = {
-            isNormalUser = true;
-            home = "/home/hx";
-            extraGroups = [
-                "wheel"
-                "video"
-                "audio"
-                "networkmanager"
-                "libvirtd"
-                "kvm"
-                "qemu-libvirtd"
-            ];
-        };
-
-        defaultUserShell = pkgs.zsh;
-    };
-
-    documentation = {
-        man.enable = true;
-        nixos.enable = false;
-        dev.enable = true;
-    };
-
-    services = {
-        xserver = {
-            enable = true;
-            videoDrivers = [
-                # "modesetting"
-                "amdgpu"
-                "nvidia"
-            ];
-        };
-        hypridle.enable = false;
-
-        zram-generator.enable = true;
-
-        journald.extraConfig = ''
-            SystemMaxUse=25M
-            SystemMaxFileSize=10M
-        '';
-
-        acpid.enable = true;
-        gvfs.enable = true;
-
-        displayManager = {
-            sddm = {
-                enable = true;
-                wayland.enable = false;
-            };
-
-            gdm.enable = false;
-        };
-
-        desktopManager = {
-            plasma6.enable = true;
-            gnome.enable = false;
-        };
-
-        gnome = {
-            games.enable = false;
-            core-developer-tools.enable = false;
-        };
-
-        pipewire = {
-            enable = true;
-            audio.enable = true;
-            wireplumber.enable = true;
-            alsa.enable = true;
-            pulse.enable = true;
-        };
-
-        blueman.enable = false;
-
-        libinput = {
-            enable = true;
-            touchpad = {
-                naturalScrolling = true;
-                tapping = true;
-            };
-        };
-
-        flatpak.enable = true;
-
-        # emacs = {
-        #   enable = true;
-        #   defaultEditor = false;
-        # };
-    };
-
-    programs = {
-        nix-ld = {
-            enable = true;
-            libraries = with pkgs; [
-                # Add any missing dynamic libraries for unpackaged programs
-            ];
-        };
-
-        firefox.enable = true;
-
-        appimage = {
-            enable = true;
-            binfmt = true;
-            package = pkgs.appimage-run.override {
-                extraPkgs = pkgs: with pkgs; [
-                    # missing libraries here, e.g.: `pkgs.libepoxy`
-                ];
-            };
-        };
-
-        hyprland = {
-            enable = false;
-            withUWSM = true;
-            xwayland.enable = true;
-        };
-        hyprlock.enable = false;
-        uwsm.enable = false;
-        waybar.enable = false;
-
-        xwayland.enable = true;
-
-        virt-manager.enable = true;
-
-        git = {
-            enable = true;
-            config = {
-                init = {
-                    defaultBranch = "master";
-                };
-            };
-        };
-
-        zsh = {
-            enable = true;
-            enableBashCompletion = true;
-            enableCompletion = true;
-            histSize = 20000;
-
-            syntaxHighlighting.enable = true;
-            ohMyZsh = {
-                enable = true;
-                plugins = [
-                    "git"
-                    "sudo"
-                ];
-                theme = "robbyrussell";
-            };
-        };
-
-        neovim = {
-            enable = true;
-            defaultEditor = true;
-        };
-
-        yazi = {
-            enable = false;
-            settings = {
-                yazi = {
-                    opener = {
-                        edit = [ { run = "nvim \"$@\""; block = true; } ];
-                        play = [ { run = "mpv --force-window --hwdec=gpux \"$@\""; orphan = true; } ];
-                        open-image = [ { run = "imv \"$@\""; } ];
-                        open-pdf = [ { run = "evince \"$@\""; orphan = true; } ];
-                    };
-
-                    open = {
-                        rules = [
-                            { mime = "video/*"; use = "play"; }
-                            { mime = "audio/*"; use = "play"; }
-                            { mime = "image/*"; use = "open-image"; }
-                            { mime = "text/*"; use = "edit"; }
-                            { mime = "application/pdf"; use = "open-pdf"; }
-                        ];
-                    };
-                };
-            };
-        };
-
-        thunar = {
-            enable = false;
-            plugins = [];
-        };
-
-        tmux = {
-            enable = true;
-            historyLimit = 20000;
-            keyMode = "emacs";
-            plugins = with pkgs.tmuxPlugins; [ yank ];
-            extraConfig = ''
-                set -g allow-passthrough on
-                set -ga update-environment TERM
-                set -ga update-environment TERM_PROGRAM
-
-                set -s escape-time 0
-                set -sa terminal-features ",xterm-*:RGB"
-
-                set -g base-index 1
-                set -g pane-base-index 1
-                set-window-option -g pane-base-index 1
-                set-option -g renumber-windows on
-
-                bind-key -T copy-mode-vi v send-keys -X begin-selection
-                bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-            '';
-        };
-
-        evince.enable = true;
-
-        mtr.enable = true;
-        gnupg.agent = {
-            enable = true;
-            enableSSHSupport = true;
-        };
-    }; # End programs
-
-    xdg.portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-            kdePackages.xdg-desktop-portal-kde
-            xdg-desktop-portal-gtk
-            # xdg-desktop-portal-hyprland
-        ];
-        config = {
-            hyprland.preffered = [ "hyprland" "gtk" ];
-        };
-    };
-
-    environment = {
-        shellAliases = {
-            la   = "eza -lha --group-directories-first";
-            ll   = "eza -lh --group-directories-first";
-            nv   = "nvim";
-            tm   = "tmux";
-            tma  = "tmux at";
-            ip   = "ip -c=auto";
-            gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4";
-            blt  = "bluetoothctl";
-        };
-
-        variables = {
-            EDITOR = "nvim";
-            MANPAGER = "nvim +Man!";
-        };
-
-        sessionVariables = {};
-
-        systemPackages = with pkgs; [
-            kitty
-
-            # CLI tools
-            fzf
-            ripgrep
-            fd
-            eza
-            curlFull
-            aria2
-            # bat
-            jq
-            # tokei
-            htop
-            # btop
-            tree-sitter
-
-            ## Archive
-            unzip
-            zip
-            gzip
-            zstd
-            lz4
-
-            # Multimedia
-            ffmpeg
-            # x264
-            # x265
-            # libvpx
-            mpv
-            # imv
-
-            # Hyprland and Wayland related
-            # hyprcursor
-            # hyprsunset
-            # hyprpaper
-            # hyprlauncher
-            # brightnessctl
-            # wl-clipboard
-            # grim
-            # wayfreeze
-            # satty
-            # slurp
-            # mint-cursor-themes
-            # flat-remix-gtk
-            # flat-remix-icon-theme
-            # dconf
-            # walker
-
-            # Minimal developer tools
-            # llvm
-            # llvmPackages.clang
-            # llvmPackages.clang-tools
-            # gcc
-            # gdb
-            # gnumake
-            # cmake
-            neovim
-            distrobox
-            # toolbox
-
-            # Man pages
-            # man-pages
-            # man-pages-posix
-            # glibc.dev
-            # gcc.man
-            # binutils.man
-
-            # Misc.
-            usbutils
-            openssl
-        ]; # end systemPackages
-
-        plasma6.excludePackages = with pkgs.kdePackages; [
-            yakuake
-            discover
-            cantor
-            dragon
-            elisa
-            # gwenview
-            kalm
-            kalzium
-            kate
-            kbackup
-        
-            # Games
-            bovo
-            bomber
-            granatier
-            kanagram
-            kapman
-            katomic
-            kblackbox
-            kblocks
-            kbounce
-            kbreakout
-        ];
-
-        etc."distrobox/distrobox.conf".text = ''
-  container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
-        '';
-    };
-
-    virtualisation = {
-        podman = {
-            enable = true;
-            dockerCompat = true;
-        };
-        libvirtd.enable = true;
-        spiceUSBRedirection.enable = true;
-    };
-
-    fonts = {
-        enableDefaultPackages = true;
-        packages = with pkgs; [
-            vazir-fonts
-            noto-fonts
-            noto-fonts-cjk-sans
-            noto-fonts-cjk-serif
-            noto-fonts-color-emoji
-            font-awesome
-            nerd-fonts.iosevka
-            nerd-fonts.caskaydia-cove
-            # nerd-fonts.jetbrains-mono
-        ];
-        fontconfig = {
-            defaultFonts = {
-                sansSerif = [ "Noto Sans" "Vazirmatn" ];
-                serif = [ "Noto Serif" "Vazirmatn" ];
-                monospace = [ "CaskaydiaCove Nerd Font SemiLight" ];
-            };
-        };
-    };
-
-    security = {
-        rtkit.enable = true;
-        polkit.enable = true;
-    };
-
-    qt.enable = true;
-    system.stateVersion = "26.05";
+  qt.enable = true;
+  system.stateVersion = "26.05";
 }
