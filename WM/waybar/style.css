@@ -1,0 +1,43 @@
+/* ===================================================== */
+/* GLOBAL                                                */
+/* ===================================================== */
+
+* {
+    color: @foreground;
+    background-color: alpha(@background, 0.9);
+    border: none;
+    min-height: 0;
+    font-family: 'Iosevka NF';
+    font-size: 20px;
+}
+
+
+/* ===================================================== */
+/* LAYOUT SPACING                                        */
+/* ===================================================== */
+
+.modules-left {
+    margin-left: 10px;
+}
+
+.modules-right {
+    margin-right: 10px;
+}
+
+
+/* ===================================================== */
+/* RIGHT SIDE MODULES                                    */
+/* ===================================================== */
+
+#tray {
+    margin-right: 10px;
+}
+
+#language,
+#wireplumber,
+#bluetooth,
+#battery,
+#network {
+    margin-left: 10px;
+    margin-right: 10px;
+}

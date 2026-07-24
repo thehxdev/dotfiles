@@ -1,0 +1,119 @@
+{
+    // ======================================================
+    // BAR SETTINGS
+    // ======================================================
+    "reload_style_on_change": true,
+    "layer": "bottom",
+    "position": "bottom",
+    "spacing": 0,
+
+    // ======================================================
+    // MODULE PLACEMENT
+    // ======================================================
+    "modules-left": [
+        "niri/workspaces"
+    ],
+
+    "modules-center": [
+        "clock"
+    ],
+
+    "modules-right": [
+        "group/tray-expander",
+        "niri/language",
+        "wireplumber",
+        "bluetooth",
+        "network",
+        "battery"
+    ],
+
+    // ======================================================
+    // LEFT SIDE MODULES
+    // ======================================================
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5"
+        }
+    },
+
+    // ======================================================
+    // MIDDLE MODULES
+    // ======================================================
+
+    "clock": {
+        "format": "[{:%I:%M %p}]",
+        "format-alt": "[{:%e %B %A}]"
+    },
+
+    // ======================================================
+    // RIGHT SIDE MODULES
+    // ======================================================
+
+    "group/tray-expander": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 600,
+            "children-class": "tray-group-item"
+        },
+        "modules": ["tray"]
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 16
+    },
+
+    "niri/language": {
+        "format": "[{short}]"
+    },
+
+    "wireplumber": {
+	    "format": "[VOL {volume}%]"
+    },
+
+   "network": {
+        "format": "{icon}",
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰌘",
+        "format-disconnected": "󰤮",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "interval": 3,
+        "spacing": 1,
+        "on-click": "kitty -e nmtui"
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-connected": "",
+        "format-no-controller": "",
+        "tooltip-format": "Devices connected: {num_connections}",
+        "on-click": "kitty -e bluetoothctl"
+    },
+
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-discharging": "{icon}",
+        "format-charging": "{icon}",
+        "format-plugged": "",
+        "format-full": "󰂅",
+        "interval": 5,
+        "on-click": "omarchy-menu power",
+        "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+        "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+        "states": {
+            "warning": 20,
+            "critical": 10
+        },
+        "format-icons": {
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        }
+    }
+}
