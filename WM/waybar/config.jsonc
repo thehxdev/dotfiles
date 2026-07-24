@@ -10,13 +10,12 @@
     "modules-left": [
         "sway/workspaces",
         "sway/mode",
-        "sway/scratchpad"
-        // "custom/media"
+        "sway/scratchpad",
+        "sway/window"
     ],
 
-    // "modules-center": [
-    //     "sway/window"
-    // ],
+    "modules-center": [
+    ],
 
     "modules-right": [
         "bluetooth",
@@ -43,7 +42,7 @@
 
     "tray": {
         // "icon-size": 21,
-        "spacing": 10,
+        "spacing": 10
         // "icons": {
         //   "blueman": "bluetooth",
         //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
