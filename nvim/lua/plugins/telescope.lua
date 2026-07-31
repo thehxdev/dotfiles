@@ -14,7 +14,7 @@ return {
         { "<leader>ft", "<cmd>Telescope tags<cr>", desc = "Show project tags" },
     },
     config = function()
-        require('telescope').load_extension('fzf')
+        -- require('telescope').load_extension('fzf')
     end,
     opts = {
         defaults = {

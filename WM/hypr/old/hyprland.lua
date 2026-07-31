@@ -1,9 +1,3 @@
------------------
------- ENV ------
------------------
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-
 ------------------
 ---- MONITORS ----
 ------------------
@@ -11,9 +5,9 @@ hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
     output   = "",
-    mode     = "prefered",
+    mode     = "preferred",
     position = "auto",
-    scale    = "1.25",
+    scale    = "auto",
 })
 
 
@@ -215,8 +209,8 @@ hl.config({
         kb_options = "grp:win_space_toggle,ctrl:nocaps",
         kb_rules   = "",
 
-        repeat_delay = 230,
-        repeat_rate = 30,
+        repeat_delay = 230
+        repeat_rate = 30
 
         follow_mouse = 1,
 
@@ -249,7 +243,7 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal))
-local closeWindowBind = hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
+local closeWindowBind = hl.bind(mainMod .. " SHIFT + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
