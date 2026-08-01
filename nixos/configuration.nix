@@ -1,7 +1,6 @@
 { config, pkgs, options, ... }: {
 
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./nix-alien.nix
   ];
@@ -32,7 +31,7 @@
 
     nvidia = {
       open = true;
-      branch = "stable";
+      branch = "production";
       modesetting.enable = true;
       powerManagement.enable = false;
       prime = {
@@ -46,9 +45,19 @@
     };
   };
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    kernelParams = [
+      # These kernel parameters prevent amdgpu driver from
+      # crashing and freezing the whole system. But causes
+      # more energy and battery usage.
+      # https://bbs.archlinux.org/viewtopic.php?pid=2239072#p2239072
+      "amdgpu.runpm=0"
+      "amdgpu.dcdebugmask=0x10"
+    ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   zramSwap = {
@@ -72,7 +81,7 @@
   console = {
     enable = true;
     font = "Lat2-Terminus16";
-    useXkbConfig = true; # use xkbOptions in tty.
+    useXkbConfig = true;
   };
 
   users = {
@@ -103,7 +112,6 @@
     xserver = {
       enable = true;
       videoDrivers = [
-        # "modesetting"
         "amdgpu"
         "nvidia"
       ];
@@ -172,7 +180,7 @@
       #   https://unix.stackexchange.com/questions/522822/different-methods-to-run-a-non-nixos-executable-on-nixos
       # although I changed and updated the list. Some of the were deprecated.
       libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
-        libpcap
+        libpcap.lib
 
         stdenv.cc.cc
         openssl
@@ -313,7 +321,6 @@
         enable = true;
         plugins = [
           "git"
-          "sudo"
         ];
         theme = "robbyrussell";
       };
@@ -372,7 +379,7 @@
       '';
     };
 
-    evince.enable = true;
+    evince.enable = false;
 
     mtr.enable = true;
     gnupg.agent = {
@@ -399,7 +406,7 @@
       ll   = "eza -lh --group-directories-first";
       nv   = "nvim";
       tm   = "tmux";
-      tma  = "tmux at";
+      # tma  = "tmux at";
       ip   = "ip -c=auto";
       gitc = "git clone --recurse-submodules --remote-submodules --shallow-submodules -j4";
       blt  = "bluetoothctl";
@@ -413,14 +420,15 @@
     sessionVariables = {};
 
     systemPackages = with pkgs; [
-      kitty
+      # kitty
+      ghostty
 
       # CLI tools
       fzf
       ripgrep
       fd
       eza
-      curlFull
+      curl
       aria2
       # bat
       jq
@@ -463,15 +471,16 @@
 
       # Minimal developer tools
       # llvm
-      # llvmPackages.clang
+      llvmPackages.clang
       # llvmPackages.clang-tools
-      # gcc
-      # gdb
-      # gnumake
+      gcc
+      gdb
+      gnumake
       # cmake
       neovim
       distrobox
       # toolbox
+      fossil
 
       # Man pages
       # man-pages
@@ -481,10 +490,16 @@
       # binutils.man
 
       # Misc.
-	    file
+      file
       binutils
       usbutils
       openssl
+
+      # This package is needed to create a virtual file-system in
+      # VirtManager/QEMU.
+      # https://discourse.nixos.org/t/virt-manager-cannot-find-virtiofsd/26752
+      # https://blog.sergeantbiggs.net/posts/file-sharing-with-qemu-and-virt-manager/
+      virtiofsd
     ]; # end systemPackages
 
     plasma6.excludePackages = with pkgs.kdePackages; [
@@ -513,7 +528,7 @@
     ];
 
     etc."distrobox/distrobox.conf".text = ''
-      container_additional_volumes="/nix/store:/nix/store:ro"
+      container_additional_volumes="/nix/store:/nix/store:ro /run/current-system/sw/bin:/binix:ro"
     '';
   };
 
@@ -536,14 +551,14 @@
       noto-fonts-color-emoji
       font-awesome
       nerd-fonts.iosevka
-      nerd-fonts.caskaydia-cove
+      # nerd-fonts.caskaydia-cove
       # nerd-fonts.jetbrains-mono
     ];
     fontconfig = {
       defaultFonts = {
         sansSerif = [ "Noto Sans" "Vazirmatn" ];
         serif = [ "Noto Serif" "Vazirmatn" ];
-        monospace = [ "CaskaydiaCove Nerd Font SemiLight" ];
+        monospace = [ "Iosevka Nerd Font Mono" ];
       };
     };
   };
