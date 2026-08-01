@@ -43,7 +43,8 @@ echo -n "$PATH" > $HOME/.PATH
 # alias cdo='cd ~/opt'
 # alias ip='ip -c=auto'
 # alias gitc='git clone --shallow-submodules --remote-submodules --recursive'
-alias ddev='distrobox enter dev'
+# alias ddev='distrobox enter dev'
+# alias ddeb='distrobox enter deb'
 
 # Yazi file manager
 function y() {

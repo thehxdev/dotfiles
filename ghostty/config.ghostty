@@ -1,5 +1,4 @@
 config-file = ./auto/theme.ghostty
-# theme = tokyonight
 font-size = 15
 font-family = Iosevka Nerd Font Mono
 font-feature = -calt
