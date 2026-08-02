@@ -18,8 +18,8 @@
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 
-;; (add-to-list 'default-frame-alist '(font . "Iosevka NFM-14"))
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove NFM SemiLight-14"))
+(add-to-list 'default-frame-alist '(font . "Iosevka NFM-14"))
+;; (add-to-list 'default-frame-alist '(font . "CaskaydiaCove NFM SemiLight-14"))
 ;; (add-to-list 'default-frame-alist '(font . "Cascadia Mono SemiLight-14"))
 ;; (add-to-list 'default-frame-alist '(font . "JetBrainsMono NFM Light-14"))
 ;; (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-14"))

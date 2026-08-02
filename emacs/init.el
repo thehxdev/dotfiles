@@ -105,12 +105,17 @@
  'yaml-mode
  'json-mode
  'markdown-mode
+ 'reformatter
+ 'zig-mode
+ 'lua-mode
  'go-mode
+ 'typescript-mode
+ ;; 'nix-mode
  'rust-mode)
 
 ;; (setq magit-auto-revert-mode nil)
-;; (global-set-key (kbd "C-c m s") 'magit-status)
-;; (global-set-key (kbd "C-c m l") 'magit-log)
+(global-set-key (kbd "C-c m s") 'magit-status)
+(global-set-key (kbd "C-c m l") 'magit-log)
 
 
 ;;; c-mode
@@ -123,13 +128,9 @@
                          (interactive)
                          (c-toggle-comment-style -1)))
 
-;;; simpc-mode
-;; (require 'simpc-mode)
-;; (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-
 ;;; odin-mode
-(require 'odin-mode)
-(add-to-list 'auto-mode-alist '("\\.odin" . odin-mode))
+;; (require 'odin-mode)
+;; (add-to-list 'auto-mode-alist '("\\.odin" . odin-mode))
 
 (c-set-offset 'comment-intro 0)
 (put 'dired-find-alternate-file 'disabled nil)
