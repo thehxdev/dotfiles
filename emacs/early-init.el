@@ -48,6 +48,15 @@
   (dolist (package packages)
     (straight-use-package package)))
 
+
+;;; Leuven theme
+(use-package leuven-theme
+  :straight t
+  :config
+  (load-theme 'leuven t))
+
 ;;; Gruvbox theme
-(hx/install-packages 'gruvbox-theme)
-(load-theme 'gruvbox-dark-medium t)
+;; (use-package gruvbox-theme
+;;   :straight t
+;;   :config
+;;   (load-theme 'gruvbox-dark-medium t)) 
