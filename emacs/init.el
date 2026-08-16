@@ -1,4 +1,4 @@
-;; -*- coding: utf-8-unix -*-
+﻿;; -*- coding: utf-8-auto; lexical-binding: t; -*-
 
 ;; This is a temporary fix for NixOS shell environment.
 ;; In the terminal run:
@@ -27,11 +27,13 @@
 
 (setq-default tab-width 4
               indent-tabs-mode nil
+              bidi-inhibit-bpa t
+              cache-long-scans t
               compilation-scoll-output t)
 
 ;; (setq display-line-numbers-type 'relative)
 (setq scroll-conservatively 4
-      scroll-margin 4
+      scroll-margin 2
       split-width-threshold nil)
 
 ;;; ido mode
@@ -66,7 +68,7 @@
 
 (global-set-key (kbd "C-c f") 'astyle-buffer)
 
-;; (require 'treesit)
+(require 'treesit)
 
 ;;; Multiple cursors
 (straight-use-package 'multiple-cursors)
@@ -110,6 +112,8 @@
  'lua-mode
  'go-mode
  'typescript-mode
+ 'cuda-mode
+ 'php-mode
  ;; 'nix-mode
  'rust-mode)
 
@@ -134,3 +138,9 @@
 
 (c-set-offset 'comment-intro 0)
 (put 'dired-find-alternate-file 'disabled nil)
+
+;;; Eglot (LSP)
+;; (require 'eglot)
+;; (add-to-list 'eglot-server-programs
+;;              '((python-mode python-ts-mode)
+;;                "basedpyright-langserver" "--stdio"))

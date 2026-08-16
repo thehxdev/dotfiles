@@ -1,4 +1,4 @@
-;; -*- coding: utf-8-unix -*-
+﻿;; -*- coding: utf-8-auto; lexical-binding: t; -*-
 
 (setq gc-cons-percentage 0.6
       inhibit-startup-screen t
@@ -14,9 +14,11 @@
 (set-default-coding-systems 'utf-8)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
+;; (scroll-bar-mode -1)
+(scroll-bar-mode 1)
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
+(global-so-long-mode 1)
 
 (add-to-list 'default-frame-alist '(font . "Iosevka NFM-14"))
 ;; (add-to-list 'default-frame-alist '(font . "CaskaydiaCove NFM SemiLight-14"))
