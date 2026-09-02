@@ -3,17 +3,28 @@
 ;; This is a temporary fix for NixOS shell environment.
 ;; In the terminal run:
 ;;   $ echo -n "$PATH" > "$HOME/.PATH"
-;; (setq
-;;  exec-path
-;;  (split-string
-;;   (replace-regexp-in-string
-;;    "[ \t\n]*$"
-;;    ""
-;;    (with-temp-buffer
-;;      (unless (ignore-errors (insert-file-contents "~/.PATH")) "")
-;;      (buffer-string)))
-;;   path-separator))
-;; (setq shell-command-switch "-ic")
+(setq
+ exec-path
+ (append
+  exec-path
+  (split-string
+    (replace-regexp-in-string
+     "[ \t\n]*$"
+     ""
+     (with-temp-buffer
+       (unless (ignore-errors (insert-file-contents "~/.PATH")) "")
+       (buffer-string)))
+    path-separator)))
+
+(setenv
+ "PATH"
+ (concat
+  (string-join (exec-path) ":")
+  ":"
+  (getenv "PATH")))
+
+(setq shell-command-switch "-ic")
+
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load-file custom-file)
@@ -27,21 +38,15 @@
 
 (setq-default tab-width 4
               indent-tabs-mode nil
-              bidi-inhibit-bpa t
-              cache-long-scans t
+              ;; bidi-inhibit-bpa t
+              ;; cache-long-scans t
               compilation-scoll-output t)
 
 ;; (setq display-line-numbers-type 'relative)
 (setq scroll-conservatively 4
       scroll-margin 2
       split-width-threshold nil)
-
-;;; ido mode
-(require 'ido)
-(ido-mode t)
-(ido-everywhere t)
-(setq-default ido-use-filename-at-point nil)
-
+(which-key-mode 1)
 
 ;;; dired-x
 (with-eval-after-load 'dired
@@ -80,14 +85,35 @@
 ;; (global-set-key (kbd "C-;")     'mark-word)
 
 ;;; Smex and Ido
+;;; ido mode
+(require 'ido)
+(ido-mode t)
+(ido-everywhere t)
+(setq-default ido-use-filename-at-point nil)
 (hx/install-packages 'smex 'ido-completing-read+)
 (global-set-key (kbd "M-x") 'smex)
 (require 'ido-completing-read+)
 
+
 ;;; Helm
-(hx/install-packages 'helm)
-(setq helm-ff-transformer-show-only-basename nil)
-(global-set-key (kbd "C-c h r") 'helm-recentf)
+;; (hx/install-packages 'helm)
+;; (helm-mode 1)
+;; (setq helm-reuse-last-window-split-state        t
+;;       helm-commands-using-frame                 '(completion-at-point helm-imenu
+;;                                                   helm-imenu-in-all-buffers)
+;;       helm-always-two-windows                   t
+;;       helm-split-window-default-side            'below
+;;       helm-use-frame-when-more-than-two-windows t
+;;       helm-use-frame-when-no-suitable-window    t
+;;       helm-frame-background-color               "DarkSlateGray"
+;;       helm-move-to-line-cycle-in-source         t
+;;       helm-autoresize-max-height                80   ; it is %.
+;;       helm-autoresize-min-height                20   ; it is %.
+;;       helm-follow-mode-persistent               t
+;;       helm-visible-mark-prefix                  "✓"
+;;       helm-kill-real-or-display-selection       'real)
+;; (global-set-key (kbd "C-c h r") 'helm-recentf)
+;; (global-set-key (kbd "M-x") 'helm-M-x)
 
 
 ;;; Company mode
@@ -99,7 +125,6 @@
 (hx/install-packages 'smartparens)
 (require 'smartparens-config)
 (smartparens-global-mode)
-
 
 (hx/install-packages
  'cl-lib
@@ -115,7 +140,8 @@
  'cuda-mode
  'php-mode
  ;; 'nix-mode
- 'rust-mode)
+ 'rust-mode
+ 'vc-fossil)
 
 ;; (setq magit-auto-revert-mode nil)
 (global-set-key (kbd "C-c m s") 'magit-status)
@@ -135,12 +161,11 @@
 ;;; odin-mode
 ;; (require 'odin-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.odin" . odin-mode))
-
 (c-set-offset 'comment-intro 0)
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;;; Eglot (LSP)
-;; (require 'eglot)
-;; (add-to-list 'eglot-server-programs
-;;              '((python-mode python-ts-mode)
-;;                "basedpyright-langserver" "--stdio"))
+(require 'eglot)
+(add-to-list 'eglot-server-programs
+             '((python-mode python-ts-mode)
+               "basedpyright-langserver" "--stdio"))

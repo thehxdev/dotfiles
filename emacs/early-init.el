@@ -1,5 +1,13 @@
 ﻿;; -*- coding: utf-8-auto; lexical-binding: t; -*-
 
+
+(when (and (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+  (setq native-comp-deferred-compilation t
+        native-comp-async-query-on-exit t
+        native-comp-async-jobs-number 4
+        native-comp-async-report-warnings-errors 'silent))
+
 (setq gc-cons-percentage 0.6
       inhibit-startup-screen t
       native-comp-speed 2
@@ -18,9 +26,9 @@
 (scroll-bar-mode 1)
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
-(global-so-long-mode 1)
+;; (global-so-long-mode 1)
 
-(add-to-list 'default-frame-alist '(font . "Iosevka NFM-14"))
+(add-to-list 'default-frame-alist '(font . "Iosevka NFM-16"))
 ;; (add-to-list 'default-frame-alist '(font . "CaskaydiaCove NFM SemiLight-14"))
 ;; (add-to-list 'default-frame-alist '(font . "Cascadia Mono SemiLight-14"))
 ;; (add-to-list 'default-frame-alist '(font . "JetBrainsMono NFM Light-14"))
@@ -54,11 +62,12 @@
 ;;; Leuven theme
 (use-package leuven-theme
   :straight t
-  :config
-  (load-theme 'leuven t))
+  ;; :config
+  ;; (load-theme 'leuven t)
+  )
 
 ;;; Gruvbox theme
-;; (use-package gruvbox-theme
-;;   :straight t
-;;   :config
-;;   (load-theme 'gruvbox-dark-medium t))
+(use-package gruvbox-theme
+  :straight t
+  :config
+  (load-theme 'gruvbox-dark-medium t))
