@@ -1,6 +1,8 @@
-require("keymaps")
-require("options")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-require("lazyvim")
+require("options")
+require("keymaps")
+require("lazy-init")
 require("colorscheme")
 require("autocmds")

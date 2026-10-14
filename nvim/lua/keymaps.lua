@@ -1,79 +1,52 @@
-local opts = { noremap = true, silent = true }
+local set = vim.keymap.set
+local silent = { silent = true }
 
--- Shorten function name
-local keymap = vim.keymap.set
+-- Disable space default behavior
+set({ "n", "v" }, "<Space>", "<Nop>", silent)
 
---Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- Window navigation
+set("n", "<C-h>", "<C-w>h", silent)
+set("n", "<C-j>", "<C-w>j", silent)
+set("n", "<C-k>", "<C-w>k", silent)
+set("n", "<C-l>", "<C-w>l", silent)
+set("n", "<leader>wh", "<C-w>h", { desc = "Window left", silent = true })
+set("n", "<leader>wj", "<C-w>j", { desc = "Window down", silent = true })
+set("n", "<leader>wk", "<C-w>k", { desc = "Window up", silent = true })
+set("n", "<leader>wl", "<C-w>l", { desc = "Window right", silent = true })
+set("n", "<leader>wc", "<C-w>c", { desc = "Close window", silent = true })
+set("n", "<leader>wv", "<C-w>v", { desc = "Vertical split", silent = true })
+set("n", "<leader>ws", "<C-w>s", { desc = "Horizontal split", silent = true })
 
+-- Window resizing
+set("n", "<C-Up>", "<cmd>resize -2<cr>", silent)
+set("n", "<C-Down>", "<cmd>resize +2<cr>", silent)
+set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", silent)
+set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", silent)
 
--- Normal --
--- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
-keymap("n", "<leader>wh", "<C-w>h", opts)
-keymap("n", "<leader>wj", "<C-w>j", opts)
-keymap("n", "<leader>wk", "<C-w>k", opts)
-keymap("n", "<leader>wl", "<C-w>l", opts)
-keymap("n", "<leader>wc", "<C-w>c", opts)
-keymap("n", "<leader>wv", "<C-w>v", opts)
-keymap("n", "<leader>ws", "<C-w>s", opts)
-
--- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
--- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
-keymap("n", "<S-m>", ":bdelete<CR>", opts)
-keymap("n", "<S-j>", ":<CR>", opts) -- disable Shift + j
+-- Buffer navigation
+set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer", silent = true })
+set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Previous buffer", silent = true })
+set("n", "<S-m>", "<cmd>bdelete<cr>", { desc = "Delete buffer", silent = true })
+set("n", "<S-j>", "<Nop>", silent)
 
 -- Move text up and down
-keymap("n", "<A-j>", ":m .+1<CR>==", opts)
-keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+set("n", "<A-j>", "<cmd>m .+1<cr>==", silent)
+set("n", "<A-k>", "<cmd>m .-2<cr>==", silent)
+set("v", "<A-j>", ":m '>+1<cr>gv=gv", silent)
+set("v", "<A-k>", ":m '<-2<cr>gv=gv", silent)
 
-
--- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv^", opts)
-keymap("v", ">", ">gv^", opts)
+set("v", "<", "<gv^", silent)
+set("v", ">", ">gv^", silent)
 
--- Move text up and down
-keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
-keymap("v", "p", '"_dP', opts)
+-- Paste without overwriting default register
+set("v", "p", '"_dP', silent)
 
+-- Actions
+set("n", "U", "<cmd>redo<cr>", silent)
+set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all", silent = true })
+set("n", "<leader>t", "<cmd>set invexpandtab<cr>", { desc = "Toggle expandtab", silent = true })
 
--- Visual Block --
--- Move text up and down
-keymap("x", "J", ":m '>+1<CR>gv=gv", opts)
-keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
-keymap("x", "<A-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
-
-
--- Terminal --
--- Better terminal navigation
--- keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
--- keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
--- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
--- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-
--- NeoTree
--- keymap("n", "<leader>e", ":Neotree toggle<CR>", opts)
-
-keymap("n", "U", ":redo<cr>", opts)
-keymap("n", "<leader>qq", ":qa<cr>", opts)
-keymap("n", "<leader>t", ":set invexpandtab<CR>", opts)
-keymap("n", "<leader>sf", ":TSDisable highlight<CR>:syntax off<CR>", opts)
-keymap("n", "<leader>sn", ":TSEnable highlight<CR>:syntax on<CR>", opts)
-keymap("n", "<leader>lf", ":LspStop<CR>", opts)
-keymap("n", "<leader>ln", ":LspStart<CR>", opts)
-keymap("n", "<C-[>", "<Esc>", opts)
+-- LSP control
+set("n", "<leader>lf", "<cmd>LspStop<cr>", { desc = "LSP Stop", silent = true })
+set("n", "<leader>ln", "<cmd>LspStart<cr>", { desc = "LSP Start", silent = true })
