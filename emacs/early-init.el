@@ -1,73 +1,36 @@
-﻿;; -*- coding: utf-8-auto; lexical-binding: t; -*-
+﻿;;; early-init.el --- Early initialization -*- coding: utf-8-auto; lexical-binding: t; -*-
 
+;; Optimization: Disable file-name-handler during startup
+(defvar hx--file-name-handler-alist-orig file-name-handler-alist)
+(setq file-name-handler-alist nil)
 
-(when (and (fboundp 'native-comp-available-p)
-           (native-comp-available-p))
-  (setq native-comp-deferred-compilation t
-        native-comp-async-query-on-exit t
-        native-comp-async-jobs-number 4
-        native-comp-async-report-warnings-errors 'silent))
+;; Optimization: Maximize garbage collection threshold during startup
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
 
-(setq gc-cons-percentage 0.6
-      inhibit-startup-screen t
-      native-comp-speed 2
-      initial-frame-alist '((top . 30) (left . 30) (width . 120) (height . 35)))
-
-;; Temporarily increase GC threshold during startup
-(setq gc-cons-threshold most-positive-fixnum)
-
+;; Reset optimizations once Emacs starts
 (add-hook 'emacs-startup-hook
-          (lambda () (setq gc-cons-threshold (* 500 1024 1024))))
+          (lambda ()
+            (setq gc-cons-threshold (* 64 1024 1024)
+                  gc-cons-percentage 0.1
+                  file-name-handler-alist hx--file-name-handler-alist-orig)))
+
+;; Native compilation settings
+(when (featurep 'native-compile)
+  (setq native-comp-async-report-warnings-errors 'silent
+        native-comp-async-query-on-exit t
+        native-comp-async-jobs-number 4)
+  (when (boundp 'native-comp-jit-compilation)
+    (setq native-comp-jit-compilation t)))
+
+;; UI / Frame early setup (suppress GUI clutter before rendering)
+(setq package-enable-at-startup nil
+      inhibit-startup-screen t
+      initial-frame-alist '((top . 30) (left . 30) (width . 120) (height . 35)))
 
 (set-default-coding-systems 'utf-8)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-;; (scroll-bar-mode -1)
 (scroll-bar-mode 1)
-(global-display-line-numbers-mode 1)
-(global-hl-line-mode 1)
-;; (global-so-long-mode 1)
 
-(add-to-list 'default-frame-alist '(font . "Iosevka NFM-16"))
-;; (add-to-list 'default-frame-alist '(font . "CaskaydiaCove NFM SemiLight-14"))
-;; (add-to-list 'default-frame-alist '(font . "Cascadia Mono SemiLight-14"))
-;; (add-to-list 'default-frame-alist '(font . "JetBrainsMono NFM Light-14"))
-;; (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-14"))
-
-
-;;; Initialize Straight.el package manager
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-(setq package-enable-at-startup nil)
-
-
-(defun hx/install-packages (&rest packages)
-  (dolist (package packages)
-    (straight-use-package package)))
-
-
-;;; Leuven theme
-(use-package leuven-theme
-  :straight t
-  ;; :config
-  ;; (load-theme 'leuven t)
-  )
-
-;;; Gruvbox theme
-(use-package gruvbox-theme
-  :straight t
-  :config
-  (load-theme 'gruvbox-dark-medium t))
+;;; early-init.el ends here
