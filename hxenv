@@ -6,11 +6,12 @@ if ! command -v killall &>/dev/null; then
     }
 fi
 
+export EDITOR='nvim'
+export MANPAGER="nvim +Man!"
+export GOPROXY="https://goproxy.io,direct"
+
 export __HX_OPT_PATH="$HOME/opt"
 export __HX_OPT_GLOBAL_PATH="$__HX_OPT_PATH/_global"
-
-export GOPROXY="https://goproxy.io,direct"
-export JAVA_HOME="$__HX_OPT_GLOBAL_PATH/jdk-25.0.3+9"
 
 __PATH=""
 for p in $(ls -1 $__HX_OPT_GLOBAL_PATH); do
@@ -33,18 +34,19 @@ export PATH="$PATH:$__PATH"
 
 echo -n "$PATH" > $HOME/.PATH
 
-# export EDITOR='nvim'
-# export MANPAGER="nvim +Man!"
+alias rm='rm -i'
+alias nv='nvim'
+alias tm='tmux'
+alias ll='eza -lh --group-directories-first'
+alias la='eza -lha --group-directories-first'
+alias ip='ip -c=auto'
+alias gitc='git clone --shallow-submodules --remote-submodules --recursive'
+alias ec='emacsclient -c -n'
+alias ecw='emacsclient -c -nw'
 
-# alias nv='nvim'
-# alias tm='tmux'
-# alias ll='eza -lh --group-directories-first'
-# alias la='eza -lha --group-directories-first'
-# alias cdo='cd ~/opt'
-# alias ip='ip -c=auto'
-# alias gitc='git clone --shallow-submodules --remote-submodules --recursive'
-# alias ddev='distrobox enter dev'
-# alias ddeb='distrobox enter deb'
+function bs64decode() {
+    echo -n "$@" | base64 --decode ; echo
+}
 
 # Yazi file manager
 function y() {
@@ -53,6 +55,10 @@ function y() {
     IFS= read -r -d '' cwd < "$tmp"
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
+}
+
+function compress-video() {
+    ffmpeg -i "$1" -c:v libx264 -crf 30 -preset medium -c:a aac -b:a 128k "C_$1"
 }
 
 # FZF
@@ -68,5 +74,4 @@ export FZF_ALT_C_OPTS="
     --walker-skip ${__FZF_WALKER_SKIP}
     --preview 'eza -T -L 1 {}'"
 
-
-. "$HOME/.cargo/env"
+# source "$HOME/.fzf.zsh"
